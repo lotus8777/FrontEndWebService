@@ -22,89 +22,89 @@ namespace FrontEndWebService
         /// <summary>
         /// 前置机服务调用视图
         /// </summary>
-        /// <param name="org_code">组织机构代码</param>
-        /// <param name="view_param">查询参数</param>
-        /// <param name="verify_param">校验参数</param>
-        /// <param name="search_type">类型 1:his 2:lis 3:pacs 4:pe 5:yyh 默认his</param>
-        /// <param name="database_type">数据库类型 1:sqlserver 2:oracle</param>
+        /// <param name="orgCode">组织机构代码</param>
+        /// <param name="viewParam">查询参数</param>
+        /// <param name="verifyParam">校验参数</param>
+        /// <param name="searchType">类型 1:his 2:lis 3:pacs 4:pe 5:yyh 默认his</param>
+        /// <param name="databaseType">数据库类型 1:sqlserver 2:oracle</param>
         /// <returns></returns>
         [WebMethod(Description = "前置机服务--调用各医院视图", EnableSession = false)]
-        public string GetView(string org_code, string view_param, string verify_param, string search_type = null, string database_type = null)
+        public string GetView(string orgCode, string viewParam, string verifyParam, string searchType = null, string databaseType = null)
         {
-            org_code = org_code?.Trim();
-            view_param = view_param?.Trim();
-            verify_param = verify_param?.Trim();
-            search_type = search_type?.Trim();
-            database_type = database_type?.Trim();
-            if (string.IsNullOrEmpty(org_code) || org_code.Length != 9)
+            orgCode = orgCode?.Trim();
+            viewParam = viewParam?.Trim();
+            verifyParam = verifyParam?.Trim();
+            searchType = searchType?.Trim();
+            databaseType = databaseType?.Trim();
+            if (string.IsNullOrEmpty(orgCode) || orgCode.Length != 9)
                 return returnJson(-1, "组织机构代码错误");
-            if (string.IsNullOrEmpty(view_param) || !view_param.ToLower().StartsWith("select ") || view_param.ToLower().IndexOf(" v_") == -1)
+            if (string.IsNullOrEmpty(viewParam) || !viewParam.ToLower().StartsWith("select ") || viewParam.ToLower().IndexOf(" v_", StringComparison.Ordinal) == -1)
                 return returnJson(-1, "查询参数错误");
-            string cur_verify = GetMd5(org_code + ":" + view_param);
-            if (cur_verify != verify_param)
+            string curVerify = GetMd5(orgCode + ":" + viewParam);
+            if (curVerify != verifyParam)
                 return returnJson(-1, "校验参数错误");
             try
             {
-                if (string.IsNullOrEmpty(search_type))
-                    search_type = "his";
-                if (string.IsNullOrEmpty(database_type))
+                if (string.IsNullOrEmpty(searchType))
+                    searchType = "his";
+                if (string.IsNullOrEmpty(databaseType))
                 {
                     //富阳区妇幼保健院/富阳区第二人民医院/富阳区第三人民医院/富阳中医骨伤医院--杭州创业SQLServer，其他Oracle
-                    if (org_code == "470331285" || org_code == "470331293" || org_code == "470332499" || org_code == "470332560")
-                        database_type = "sqlserver";
+                    if (orgCode == "470331285" || orgCode == "470331293" || orgCode == "470332499" || orgCode == "470332560")
+                        databaseType = "sqlserver";
                     else
-                        database_type = "oracle";
+                        databaseType = "oracle";
                 }
-                if (database_type == "sqlserver")
+                if (databaseType == "sqlserver")
                 {
-                    string conn_str = string.Empty;
-                    if (search_type == "his" || search_type == "lis" || search_type == "pacs" || search_type == "pe" || search_type == "yyh")
-                        conn_str = ConfigurationManager.AppSettings["conn_sql_" + search_type];
+                    string connStr;
+                    if (searchType == "his" || searchType == "lis" || searchType == "pacs" || searchType == "pe" || searchType == "yyh")
+                        connStr = ConfigurationManager.AppSettings["conn_sql_" + searchType];
                     else
                         return returnJson(-1, "类型错误");
 
-                    using (SqlConnection conn = new SqlConnection { ConnectionString = conn_str })
+                    using (SqlConnection conn = new SqlConnection { ConnectionString = connStr })
                     {
                         conn.Open();
-                        using (SqlCommand com = new SqlCommand { Connection = conn, CommandType = CommandType.Text, CommandText = view_param })
+                        using (SqlCommand com = new SqlCommand { Connection = conn, CommandType = CommandType.Text, CommandText = viewParam })
                         {
                             com.CommandTimeout = 120;
                             using (SqlDataAdapter dataAdapter = new SqlDataAdapter())
                             {
-                                DataSet data_temp = new DataSet();
+                                DataSet dataTemp = new DataSet();
                                 dataAdapter.SelectCommand = com;//检索command设置
-                                dataAdapter.Fill(data_temp);//将检索结果保存到data_temp数据集
+                                dataAdapter.Fill(dataTemp);//将检索结果保存到data_temp数据集
 
-                                if (data_temp != null && data_temp.Tables != null && data_temp.Tables.Count > 0 && data_temp.Tables[0].Rows?.Count > 0)
-                                    return returnJson(1, "成功", ToJson(data_temp.Tables[0]));
+                                if (dataTemp.Tables.Count > 0 && dataTemp.Tables[0].Rows?.Count > 0)
+                                    return returnJson(1, "成功", ToJson(dataTemp.Tables[0]));
                                 else
                                     return returnJson(1, "成功");
                             }
                         }
                     }
                 }
-                else if (database_type == "oracle")
+                else if (databaseType == "oracle")
                 {
-                    string conn_str = string.Empty;
-                    if (search_type == "his" || search_type == "lis" || search_type == "pacs" || search_type == "pe" || search_type == "yyh")
-                        conn_str = ConfigurationManager.AppSettings["conn_ora_" + search_type];
+                    string connStr;
+                    if (searchType == "his" || searchType == "lis" || searchType == "pacs" || searchType == "pe" || searchType == "yyh")
+                        connStr = ConfigurationManager.AppSettings["conn_ora_" + searchType];
                     else
                         return returnJson(-1, "类型错误");
 
-                    using (OracleConnection conn = new OracleConnection { ConnectionString = conn_str })
+                    using (OracleConnection conn = new OracleConnection { ConnectionString = connStr })
                     {
                         conn.Open();
-                        using (OracleCommand com = new OracleCommand { Connection = conn, CommandType = CommandType.Text, CommandText = view_param })
+                        using (OracleCommand com = new OracleCommand { Connection = conn, CommandType = CommandType.Text, CommandText = viewParam })
                         {
                             com.CommandTimeout = 120;
                             using (OracleDataAdapter dataAdapter = new OracleDataAdapter())
                             {
-                                DataSet data_temp = new DataSet();
+                                DataSet dataTemp = new DataSet();
                                 dataAdapter.SelectCommand = com;//检索command设置
-                                dataAdapter.Fill(data_temp);//将检索结果保存到data_temp数据集
+                                dataAdapter.Fill(dataTemp);//将检索结果保存到data_temp数据集
 
-                                if (data_temp != null && data_temp.Tables != null && data_temp.Tables.Count > 0 && data_temp.Tables[0].Rows?.Count > 0)
-                                    return returnJson(1, "成功", ToJson(data_temp.Tables[0]));
+                                if (dataTemp.Tables.Count > 0 && dataTemp.Tables[0].Rows?.Count > 0)
+                                    return returnJson(1, "成功", ToJson(dataTemp.Tables[0]));
                                 else
                                     return returnJson(1, "成功");
                             }
@@ -146,23 +146,22 @@ namespace FrontEndWebService
         private string GetMd5(string data)
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-            byte[] bytValue, bytHash;
-            bytValue = Encoding.UTF8.GetBytes(data);
-            bytHash = md5.ComputeHash(bytValue);
+            var bytValue = Encoding.UTF8.GetBytes(data);
+            var bytHash = md5.ComputeHash(bytValue);
             md5.Clear();
             string sTemp = "";
-            for (int i = 0; i < bytHash.Length; i++)
+            foreach (var t in bytHash)
             {
-                sTemp += bytHash[i].ToString("X").PadLeft(2, '0');
+                sTemp += t.ToString("X").PadLeft(2, '0');
             }
             return sTemp.ToLower();
         }
 
         #region DateTable转json
         /// <summary>  
-        /// Datatable转换为Json  
+        /// DataTable转换为Json  
         /// </summary> 
-        /// <param name="dt">Datatable对象</param>  
+        /// <param name="dt">DataTable对象</param>  
         /// <returns>Json字符串</returns>  
         private string ToJson(DataTable dt)
         {
@@ -193,7 +192,7 @@ namespace FrontEndWebService
         /// <summary>
         /// 格式化字符型、日期型、布尔型
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="strValue"></param>
         /// <param name="type"></param>
         /// <returns></returns>
         private string StringFormat(string strValue, Type type)
@@ -215,15 +214,14 @@ namespace FrontEndWebService
         /// <returns></returns>
         private string String2Json(string s)
         {
-            if (string.IsNullOrEmpty(s))
-                return s;
+            if (string.IsNullOrEmpty(s)) return s;
             StringBuilder sb = new StringBuilder();
-            char[] c_arr = s.ToCharArray();
-            if (c_arr != null && c_arr.Length > 0)
+            char[] charArray = s.ToCharArray();
+            if (charArray.Length > 0)
             {
-                foreach (char c_item in c_arr)
+                foreach (char charItem in charArray)
                 {
-                    switch (c_item)
+                    switch (charItem)
                     {
                         case '\"':
                             sb.Append("\\\""); break;
@@ -242,7 +240,7 @@ namespace FrontEndWebService
                         case '\t':
                             sb.Append("\\t"); break;
                         default:
-                            sb.Append(c_item); break;
+                            sb.Append(charItem); break;
                     }
                 }
             }

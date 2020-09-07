@@ -1,25 +1,33 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Services;
-using System.Xml;
-
+using System.Xml.Linq;
+using FrontEndModel;
+using FrontEndRequestHandle;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 namespace FrontEndWebService
 {
     /// <summary>
-    /// WebServiceYygh 的摘要说明
+    ///     WebServiceYygh 的摘要说明
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [System.ComponentModel.ToolboxItem(false)]
-    // 若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消注释以下行。 
+    [ToolboxItem(false)]
+    // 若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消注释以下行。
     // [System.Web.Script.Services.ScriptService]
     public class WebServiceYygh : WebService
     {
+        private FrontEndContext ctx;
+        public WebServiceYygh()
+        {
+            ctx = new FrontEndContext();
+        }
         /// <summary>
-        /// 替换原有前置机服务
+        ///     替换原有前置机服务
         /// </summary>
         /// <param name="ProcName"></param>
         /// <param name="inXmlStr"></param>
@@ -27,104 +35,164 @@ namespace FrontEndWebService
         [WebMethod(Description = "前置机服务--调用各医院存储过程", EnableSession = false)]
         public string ExecProcedure(string ProcName, string inXmlStr)
         {
+            if (string.IsNullOrEmpty(ProcName))
+            {
+                return ReturnXml(-1, $"存储过程名称为空！/r/n", null);
+            }
+
+            if(string.IsNullOrEmpty(inXmlStr))
+            {
+                return ReturnXml(-1, $"传入参数为空！/r/n", null);
+            }
+            var record = new RequestRecord
+            {
+                ProcedureName = ProcName,
+                InXml = inXmlStr
+            };
+            string rtnXml;
+            string procedureName = ProcName.ToLower().Trim();
+            if (procedureName == "wsj_get_fsdyyb")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetMzFsdYy(inXmlStr);
+            }
+            else if(procedureName== "wsj_get_ghks")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetMzGhksXml(inXmlStr);
+            }
+            else
+            {
+                rtnXml = ExecDbProcedure(ProcName, inXmlStr);
+            }
+
             try
             {
-                string connStr_ora = ConfigurationManager.AppSettings["conn_ora_his"]?.Trim();
-                string connStr_sql = ConfigurationManager.AppSettings["conn_sql_his"]?.Trim();
-                if (!string.IsNullOrEmpty(connStr_ora))
+                record.OutXml = rtnXml;
+                record.ResponseTime = DateTime.Now;
+                ctx.RequestRecords.Add(record);
+                ctx.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return rtnXml;
+        }
+        /// <summary>
+        /// 执行数据库存储过程
+        /// </summary>
+        /// <param name="procedureName">存储过程名称</param>
+        /// <param name="inXml">xml参数</param>
+        /// <returns></returns>
+        private string ExecDbProcedure(string procedureName, string inXml)
+        {
+            string rtnXml;
+            try
+            {
+                var connStrOra = ConfigurationManager.AppSettings["conn_ora_his"]?.Trim();
+                var connStrSql = ConfigurationManager.AppSettings["conn_sql_his"]?.Trim();
+                if (!string.IsNullOrEmpty(connStrOra))
                 {
-                    using (var conncetion = new OracleConnection(connStr_ora))
-                    {
-                        conncetion.Open();
-                        using (var command = new OracleCommand(ProcName, conncetion))
-                        {
-                            command.CommandType = CommandType.StoredProcedure;
-                            command.CommandText = ProcName;
-                            //所有调用该WebService的超时时间(默认是100s)必须设置比command.CommandTimeout要小
-                            //调用存储过程超时，该接口返回-1（实际上结算可能是成功的，只不过比较耗时）
-                            //如果调用该WebService的超时时间比command.CommandTimeout要大，就会出现接收到-1而去撤销结算
-                            command.CommandTimeout = 110;
-
-                            command.Parameters.Add(new OracleParameter("inxml", OracleDbType.Clob, 60000)).Value = inXmlStr;
-                            command.Parameters.Add(new OracleParameter("outxml", OracleDbType.Clob, 60000)).Direction = ParameterDirection.Output;
-
-                            command.ExecuteNonQuery();
-                            if (command.Parameters[1]?.Value == null)
-                            {
-                                return returnXml(-1, "调用HIS存储过程发生错误！~r~n返回NULL", null);
-                            }
-                            else
-                            {
-                                var responseContent = command.Parameters[1].Value as Oracle.ManagedDataAccess.Types.OracleClob;
-                                return responseContent?.Value;
-                            }
-                        }
-                    }
+                    rtnXml = ExecuteOracleProcedure(procedureName, inXml, connStrOra);
                 }
-                else if (!string.IsNullOrEmpty(connStr_sql))
+                else if (!string.IsNullOrEmpty(connStrSql))
                 {
-                    using (var conncetion = new SqlConnection(connStr_sql))
-                    {
-                        conncetion.Open();
-                        using (var command = new SqlCommand(ProcName, conncetion))
-                        {
-                            command.CommandType = CommandType.StoredProcedure;
-                            command.CommandText = ProcName;
-                            //所有调用该WebService的超时时间(默认是100s)必须设置比command.CommandTimeout要小
-                            //调用存储过程超时，该接口返回-1（实际上结算可能是成功的，只不过比较耗时）
-                            //如果调用该WebService的超时时间比command.CommandTimeout要大，就会出现接收到-1而去撤销结算
-                            command.CommandTimeout = 110;
-
-                            SqlParameter para1 = new SqlParameter("inxml", SqlDbType.VarChar, 60000);
-                            para1.Value = inXmlStr;
-                            para1.Direction = ParameterDirection.Input;
-                            command.Parameters.Add(para1);
-
-                            SqlParameter para2 = new SqlParameter("outxml", SqlDbType.VarChar, 60000);
-                            para2.Direction = ParameterDirection.Output;
-                            command.Parameters.Add(para2);
-
-                            command.ExecuteNonQuery();
-                            if (command.Parameters[1]?.Value == null)
-                            {
-                                return returnXml(-1, "调用HIS存储过程发生错误！~r~n返回NULL", null);
-                            }
-                            else
-                            {
-                                var responseContent = command.Parameters[1].Value;
-                                return responseContent.ToString();
-                            }
-                        }
-                    }
+                    rtnXml = ExecuteSqlServerProcedure(procedureName, inXml, connStrSql);
                 }
                 else
-                    return returnXml(-1, "调用HIS存储过程发生错误！~r~n数据库连接配置错误", null);
+                {
+                    rtnXml = ReturnXml(-1, "调用HIS存储过程发生错误！~r~n数据库连接配置错误", null);
+                }
             }
             catch (Exception ex)
             {
-                return returnXml(-1, "调用HIS存储过程发生错误！~r~n" + ex.ToString(), null);
+                rtnXml = ReturnXml(-1, "调用HIS存储过程发生错误！~r~n" + ex, null);
             }
+            return rtnXml;
         }
-
-        private string returnXml(int RtnValue, string bzxx, string data)
+        private string ExecuteOracleProcedure(string procedureName, string inXml, string connectionString)
         {
-            XmlDocument outDoc = new XmlDocument();
-            XmlElement root = outDoc.CreateElement("YyghInterface");
-            outDoc.AppendChild(root);
-            XmlElement xmlelement_rtnvalue = outDoc.CreateElement("RtnValue");
-            xmlelement_rtnvalue.InnerText = RtnValue.ToString();
-            root.AppendChild(xmlelement_rtnvalue);
-            XmlElement xmlelement_bzxx = outDoc.CreateElement("bzxx");
-            xmlelement_bzxx.InnerText = bzxx;
-            root.AppendChild(xmlelement_bzxx);
+            string rtnXml;
+            using (var connection = new OracleConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new OracleCommand(procedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = procedureName;
+                    //所有调用该WebService的超时时间(默认是100s)必须设置比command.CommandTimeout要小
+                    //调用存储过程超时，该接口返回-1（实际上结算可能是成功的，只不过比较耗时）
+                    //如果调用该WebService的超时时间比command.CommandTimeout要大，就会出现接收到-1而去撤销结算
+                    command.CommandTimeout = 110;
+                    command.Parameters.Add(new OracleParameter("inXml", OracleDbType.Clob, 60000)).Value = inXml;
+                    command.Parameters.Add(new OracleParameter("outXml", OracleDbType.Clob, 60000)).Direction =
+                        ParameterDirection.Output;
+                    command.ExecuteNonQuery();
+                    if (command.Parameters[1]?.Value == null)
+                    {
+                        rtnXml = ReturnXml(-1, "调用HIS存储过程发生错误！~r~n返回NULL", null);
+                    }
+                    else
+                    {
+                        var responseContent = command.Parameters[1].Value as OracleClob;
+                        rtnXml = responseContent?.Value;
+                    }
+                }
+            }
+            return rtnXml;
+        }
+        private string ExecuteSqlServerProcedure(string procedureName, string inXml, string connectionString)
+        {
+            string rtnXml;
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new SqlCommand(procedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = procedureName;
+                    //所有调用该WebService的超时时间(默认是100s)必须设置比command.CommandTimeout要小
+                    //调用存储过程超时，该接口返回-1（实际上结算可能是成功的，只不过比较耗时）
+                    //如果调用该WebService的超时时间比command.CommandTimeout要大，就会出现接收到-1而去撤销结算
+                    command.CommandTimeout = 110;
+                    var para1 = new SqlParameter("inXml", SqlDbType.VarChar, 60000)
+                    {
+                        Value = inXml,
+                        Direction = ParameterDirection.Input
+                    };
+                    command.Parameters.Add(para1);
+                    var para2 = new SqlParameter("outxml", SqlDbType.VarChar, 60000)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    command.Parameters.Add(para2);
+                    command.ExecuteNonQuery();
+                    if (command.Parameters[1]?.Value == null)
+                    {
+                        rtnXml = ReturnXml(-1, "调用HIS存储过程发生错误！~r~n返回NULL", null);
+                    }
+                    else
+                    {
+                        var responseContent = command.Parameters[1].Value;
+                        rtnXml = responseContent.ToString();
+                    }
+                }
+            }
+            return rtnXml;
+        }
+        private string ReturnXml(int rtnValue, string bzxx, string data)
+        {
+            var xmlElement =
+                new XElement("YyghInterface",
+                    new XElement("RtnValue", rtnValue),
+                    new XElement("bzxx", bzxx)
+                );
             if (data != null)
             {
-                XmlElement xmlelement_data = outDoc.CreateElement("interface");
-                xmlelement_data.InnerXml = data;
-                root.AppendChild(xmlelement_data);
+                xmlElement.Add(new XElement("interface", data));
             }
-
-            return outDoc.InnerXml;
+            return xmlElement.ToString();
         }
     }
 }
