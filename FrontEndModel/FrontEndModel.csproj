@@ -115,6 +115,8 @@
     <Compile Include="MzGhks.cs" />
     <Compile Include="NpgSqlConfiguration.cs" />
     <Compile Include="PayDmzd.cs" />
+    <Compile Include="PayFkjl.cs" />
+    <Compile Include="PayFkrz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestRecord.cs" />
     <Compile Include="WsjGhks.cs" />

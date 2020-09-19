@@ -52,5 +52,7 @@ namespace FrontEndModel
         public virtual DbSet<zy_ryzd> zy_ryzd { get; set; }
         public virtual DbSet<zy_tbkk> zy_tbkk { get; set; }
         public virtual DbSet<zy_ypyf> zy_ypyf { get; set; }
+        public virtual DbSet<PayFkrz> PayFkrzSet { get; set; }
+        public virtual DbSet<PayFkjl> PayFkjlSet { get; set; }
     }
 }

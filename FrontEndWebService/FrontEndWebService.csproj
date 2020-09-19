@@ -128,7 +128,9 @@
     <Content Include="packages.config" />
     <Content Include="appconfig.json" />
     <None Include="Properties\PublishProfiles\10服务器.pubxml" />
-    <None Include="Properties\PublishProfiles\发布到yygh.pubxml" />
+    <None Include="Properties\PublishProfiles\yygh.pubxml" />
+    <None Include="Properties\PublishProfiles\yygh1.pubxml" />
+    <None Include="Properties\PublishProfiles\yygh2.pubxml" />
     <None Include="Properties\PublishProfiles\本地IIS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

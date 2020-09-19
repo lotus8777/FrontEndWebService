@@ -80,23 +80,23 @@ namespace FrontEndRequestHandle
         /// <returns></returns>
         private IList<WsjGhks> GetGhkses2() =>
             (from a in _ctx.MzGhksSet
-                where a.kfyypb == 1 && a.zfpb == 0
-                join b in from e in _ctx.PayDmzdSet where e.dmlb == "GHKS_DZ" select e
-                    on a.ksdm equals b.dmsb into aJoin
-                from t in aJoin.DefaultIfEmpty()
-                join c in from x in _ctx.GyDmzdSet where x.dmlb == 1165 select x
-                    on a.kswz equals c.dmsb into cJoin
-                from d in cJoin.DefaultIfEmpty()
-                select new WsjGhks
-                {
-                    bzdm = t.dmbz,
-                    ksdm = a.ksdm,
-                    ksmc = a.ksmc,
-                    zjpb = a.ghlb == 3 ? 1 : 0,
-                    ghje = a.ghf + a.zlf,
-                    zswz = d.dmmc,
-                    bzxx = a.zjsjap
-                }).ToList();
+             where a.kfyypb == 1 && a.zfpb == 0
+             join b in from e in _ctx.PayDmzdSet where e.dmlb == "GHKS_DZ" select e
+                 on a.ksdm equals b.dmsb into aJoin
+             from t in aJoin.DefaultIfEmpty()
+             join c in from x in _ctx.GyDmzdSet where x.dmlb == 1165 select x
+                 on a.kswz equals c.dmsb into cJoin
+             from d in cJoin.DefaultIfEmpty()
+             select new WsjGhks
+             {
+                 bzdm = t.dmbz,
+                 ksdm = a.ksdm,
+                 ksmc = a.ksmc,
+                 zjpb = a.ghlb == 3 ? 1 : 0,
+                 ghje = a.ghf + a.zlf,
+                 zswz = d.dmmc,
+                 bzxx = a.zjsjap
+             }).ToList();
 
         public string GetMzGhksXml2(string inXml)
         {
@@ -200,13 +200,13 @@ namespace FrontEndRequestHandle
                     var noUpload = _ctx.zy_fymx.Any(p => p.zyh == patient.ZYH && p.scbz == 0 && p.jscs == 0);
                     if (noUpload) throw new Exception("本次住院结算有未上传的明细记录");
                 }
-                var fee = GetInpatientFee(patient.ZYH, (int) (patient.yepb ?? 0));
+                var fee = GetInpatientFee(patient.ZYH, (int)(patient.yepb ?? 0));
                 //预交款
                 var yjk = _ctx.zy_tbkk.Where(p => p.zyh == patient.ZYH && p.zfpb == 0 && p.jscs == 0)
                     ?.Select(p => p.jkje).DefaultIfEmpty(0).Sum();
                 var clinic = GetInpatientClinicInfo(patient.ZYH, fee.cnt1);
                 var feeSummary = GetInpatientFeeSummary(patient.ZYH);
-              
+
                 xml.Add(
                     new XElement("RtnValue", 1),
                     new XElement("bzxx", "获取出院费用清单成功"),
@@ -315,7 +315,7 @@ namespace FrontEndRequestHandle
                             WHERE zr.ZDXH = gj.jbxh
                             AND zr.ZYH = {zyh}
                             AND zr.zdlb IN (3, 4)";
-            var query= _ctx.Database.SqlQuery<string>(sql).ToList();
+            var query = _ctx.Database.SqlQuery<string>(sql).ToList();
             if (!query.Any()) throw new Exception("出入院诊断获取失败！");
             return query;
         }
@@ -333,7 +333,7 @@ namespace FrontEndRequestHandle
                             AND zf.zyh = {zyh}
                             AND zf.jscs =0
                             GROUP BY gs.zxgb";
-            var query= _ctx.Database.SqlQuery<string>(sql).ToList();
+            var query = _ctx.Database.SqlQuery<string>(sql).ToList();
             if (!query.Any()) throw new Exception("费用分类数据获取失败！");
             return query;
         }
@@ -356,7 +356,7 @@ namespace FrontEndRequestHandle
                 var clinic = _ctx.Database.SqlQuery<Clinic>($"exec proc_wjj_outclinic {jzls.jzxh}").FirstOrDefault();
                 if (clinic == null) throw new Exception("获取门诊clinic信息失败");
                 //获取费用清单
-                var details = GetOutpatientFeeDetails((int) patient.brid, gc, (int) (patient.qybr ?? 0));
+                var details = GetOutpatientFeeDetails((int)patient.brid, gc, (int)(patient.qybr ?? 0));
                 clinic.FeeDetail = details.Select(p => p.Items.Count).DefaultIfEmpty(0).Sum();
                 //组装xml语句
                 xml.Add(
@@ -395,7 +395,7 @@ namespace FrontEndRequestHandle
         /// <returns></returns>
         private XElement GetOutpatientFeeXml(IList<Detail> details)
         {
-            var xml=new XElement("list");
+            var xml = new XElement("list");
             foreach (var detail in details)
             {
                 xml.Add(detail.ToXml());
@@ -494,6 +494,111 @@ namespace FrontEndRequestHandle
             }
 
             return ickh;
+        }
+
+        public string GetCodePayXml(string inXmlStr)
+        {
+            string yyjsls = string.Empty;
+            try
+            {
+                if (string.IsNullOrEmpty(inXmlStr)) throw new Exception("输入参数不能为空");
+                var xml = XElement.Parse(inXmlStr);
+                yyjsls = xml.Element("yyjsls")?.Value;
+                var pay = Convert.ToDecimal(xml.Element("pay")?.Value);
+                var zffs = xml.Element("zffs")?.Value;
+                try
+                {
+                    var fkrz = new PayFkrz
+                    {
+                        jydm = "hos_codepay",
+                        jylx = "1",
+                        yyjsls = yyjsls,
+                        xrrq = DateTime.Now,
+                        instr = inXmlStr
+                    };
+                    _ctx.PayFkrzSet.Add(fkrz);
+                    _ctx.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("业务日志保存失败/r/n" + e.Message);
+                }
+                var record = _ctx.PayFkjlSet.Find(yyjsls);
+                if (record == null)
+                {
+                    throw new Exception("PAY_FKJL查询失败");
+                }
+
+                if (record.Zfpb != 0)
+                {
+                    throw new Exception("该记录已作废");
+                }
+
+                if (record.State == 1)
+                {
+                    var outXml = ReturnXml(1, "已经成功", null);
+                    var fkrz = new PayFkrz
+                    {
+                        jydm = "hos_codepay",
+                        jylx = "2",
+                        yyjsls = yyjsls,
+                        xrrq = DateTime.Now,
+                        instr = outXml
+                    };
+                    _ctx.PayFkrzSet.Add(fkrz);
+                    _ctx.SaveChanges();
+                    return outXml;
+                }
+
+                if (record.State == -1)
+                {
+                    throw new Exception("该记录已冲正");
+                }
+                //更新PAY_FKJL表状态失败
+                try
+                {
+                    record.Pay2 = pay;
+                    record.Zffs = zffs;
+                    record.State = 1;
+                    _ctx.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("更新PAY_FKJL表状态失败/r/n" + e.Message);
+                }
+                return ReturnXml(1, "成功", null);
+
+            }
+            catch (Exception e)
+            {
+                var outXml = ReturnXml(-1, "hos_codepay"+e.Message, null);
+                var fkrz = new PayFkrz
+                {
+                    jydm = "hos_codepay",
+                    jylx = "2",
+                    yyjsls = yyjsls,
+                    xrrq = DateTime.Now,
+                    instr = outXml
+                };
+                _ctx.PayFkrzSet.Add(fkrz);
+                _ctx.SaveChanges();
+                return outXml;
+            }
+
+        }
+
+        private string ReturnXml(int rtnValue, string bzxx, string data)
+        {
+            var xmlElement =
+                new XElement("YyghInterface",
+                    new XElement("RtnValue", rtnValue),
+                    new XElement("bzxx", bzxx)
+                );
+            if (data != null)
+            {
+                xmlElement.Add(new XElement("interface", data));
+            }
+            return xmlElement.ToString();
         }
     }
 }

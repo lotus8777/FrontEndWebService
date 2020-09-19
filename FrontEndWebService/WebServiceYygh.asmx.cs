@@ -66,6 +66,11 @@ namespace FrontEndWebService
                 var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetPatientInvoice(inXmlStr);
             }
+            else if (procedureName== "hos_codepay")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetCodePayXml(inXmlStr);
+            }
             else
             {
                 rtnXml = ExecDbProcedure(ProcName, inXmlStr);
