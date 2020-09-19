@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FrontEndRequestHandle
 {
-    public static class XmlHandle
+    public static class GeneralTools
     {
         /// <summary>
         /// 返回最终xml字符串给局平台
@@ -29,6 +32,22 @@ namespace FrontEndRequestHandle
                 xmlElement.Add(new XElement("interface", data));
             }
             return xmlElement.ToString().Trim();
+        }
+
+        public static JObject GetJObjectFromFile(string path)
+        {
+            JObject jObject = null;
+            using (StreamReader sr = File.OpenText(path))
+            {
+                jObject = (JObject)JToken.ReadFrom(new JsonTextReader(sr));
+            }
+            return jObject;
+        }
+
+        public static string GetJsonFromFile(string path)
+        {
+           
+            return System.IO.File.ReadAllText(path);
         }
     }
 }

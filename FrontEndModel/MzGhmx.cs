@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FrontEndModel
 {
-
     [Table("ms_ghmx")]
-    public  class MzGhmx
+    public class MzGhmx
     {
         [Key]
         public decimal sbxh { get; set; }
+
         public decimal? brid { get; set; }
         public decimal? brxz { get; set; }
         public DateTime? ghsj { get; set; }
@@ -72,8 +72,10 @@ namespace FrontEndModel
         public decimal? JGID { get; set; }
         public DateTime? SFSJ { get; set; }
         public decimal? JZJE { get; set; }
+
         [ForeignKey("brid")]
         public virtual MzBrda MzBrda { get; set; }
+
         [ForeignKey("ksdm")]
         public virtual MzGhks MzGhks { get; set; }
     }

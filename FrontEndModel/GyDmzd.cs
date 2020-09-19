@@ -7,14 +7,16 @@ namespace FrontEndModel
     /// 公用-代码字典
     /// </summary>
     [Table("gy_dmzd")]
-    public  class GyDmzd
+    public class GyDmzd
     {
         [Key]
         [Column(Order = 0)]
         public decimal dmlb { get; set; }
+
         [Key]
         [Column(Order = 1)]
         public decimal dmsb { get; set; }
+
         public string srdm { get; set; }
         public string dmmc { get; set; }
         public string bzbm { get; set; }

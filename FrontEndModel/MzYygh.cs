@@ -12,6 +12,7 @@ namespace FrontEndModel
     {
         [Key]
         public decimal yyxh { get; set; }
+
         public string yymm { get; set; }
         public decimal brid { get; set; }
         public DateTime ghrq { get; set; }
@@ -37,6 +38,7 @@ namespace FrontEndModel
         public DateTime? tzsj { get; set; }
         public decimal? scbz { get; set; }
         public decimal? JGID { get; set; }
+
         [ForeignKey("ksdm")]
         public virtual MzGhks MzGhks { get; set; }
     }

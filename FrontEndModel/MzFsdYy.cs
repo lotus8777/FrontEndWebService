@@ -12,6 +12,7 @@ namespace FrontEndModel
     {
         [Key]
         public decimal jlxh { get; set; }
+
         public DateTime gzrq { get; set; }
         public string ksdm { get; set; }
         public string ysdm { get; set; }

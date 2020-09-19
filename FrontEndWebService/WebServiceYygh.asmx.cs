@@ -56,10 +56,15 @@ namespace FrontEndWebService
                 var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetMzFsdYy(inXmlStr);
             }
-            else if(procedureName== "wsj_get_ghks")
+            else if (procedureName == "wsj_get_ghks")
             {
                 var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetMzGhksXml(inXmlStr);
+            }
+            else if (procedureName == "hos_expense_invoices") 
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetPatientInvoice(inXmlStr);
             }
             else
             {

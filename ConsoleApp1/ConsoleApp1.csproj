@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="appconfig.json" />
     <None Include="Connected Services\newService\ConsoleApp1.newService.ExecProcedureResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

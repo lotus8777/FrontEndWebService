@@ -91,7 +91,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clinic.cs" />
+    <Compile Include="Detail.cs" />
+    <Compile Include="GlobalProperty.cs" />
     <Compile Include="GyDmzd.cs" />
+    <Compile Include="gy_jbbm.cs" />
+    <Compile Include="gy_ksdm.cs" />
+    <Compile Include="gy_xtcs.cs" />
+    <Compile Include="gy_ygdm.cs" />
+    <Compile Include="gy_ylsf.cs" />
+    <Compile Include="hzyb_dmzd.cs" />
+    <Compile Include="hzyb_ka63.cs" />
+    <Compile Include="ms_cf01.cs" />
+    <Compile Include="ms_cf02.cs" />
+    <Compile Include="ms_yj01.cs" />
+    <Compile Include="ms_yj02.cs" />
     <Compile Include="MzBrda.cs" />
     <Compile Include="MzGhmx.cs" />
     <Compile Include="MzYspb.cs" />
@@ -103,6 +117,17 @@
     <Compile Include="PayDmzd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestRecord.cs" />
+    <Compile Include="WsjGhks.cs" />
+    <Compile Include="yb_fydz.cs" />
+    <Compile Include="yb_ypdz_new.cs" />
+    <Compile Include="yk_typk.cs" />
+    <Compile Include="ys_mz_jbzd.cs" />
+    <Compile Include="ys_mz_jzls.cs" />
+    <Compile Include="ZyBrry.cs" />
+    <Compile Include="zy_fymx.cs" />
+    <Compile Include="zy_ryzd.cs" />
+    <Compile Include="zy_tbkk.cs" />
+    <Compile Include="zy_ypyf.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

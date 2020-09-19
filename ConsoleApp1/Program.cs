@@ -17,11 +17,12 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             //string inXml = "<interface><zzjgdm>470332499</zzjgdm><ksdm>1</ksdm><ysdm>140</ysdm><gzrq>2020.08.19</gzrq><zblb>1</zblb><ghlb>1</ghlb><zjpb>0</zjpb></interface>";
-            //string procName = "wsj_get_fsdyyb";
+            string procName = "hos_expense_invoices";
             //old.WebServiceYyghSoapClient client = new old.WebServiceYyghSoapClient();
             //var result = client.ExecProcedure(procName, inXml);
             ExecuteProcedureFactory epf =new ExecuteProcedureFactory();
-            string inXml = "<interface><zzjgdm>470332499</zzjgdm><mode>1</mode></interface>";
+            string inXml = @"<interface><acttype>1</acttype><actnumber>33011100047033249912020091410195900000000000000006</actnumber><list><actnumber>33011100047033249912020091410195900000000000000006</actnumber><jzlsh>518974</jzlsh><mzzyhm>2720422805</mzzyhm></list></interface>";
+            var result = new ExecuteProcedureFactory().GetPatientInvoice( inXml);
             //DateTime begin = DateTime.Now;
             //for (int i = 0; i < 100; i++)
             //{
@@ -40,7 +41,7 @@ namespace ConsoleApp1
             //TimeSpan ts1 = end1.Subtract(begin1);
             //Console.WriteLine($"100次总耗时{ts1.TotalMilliseconds}-平均时间{ts1.TotalMilliseconds / 100}");
 
-            var result = epf.GetMzGhksXml("<interface><zzjgdm>470332499</zzjgdm><mode>1</mode></interface>");
+            //var result = epf.GetMzGhksXml("<interface><zzjgdm>470332499</zzjgdm><mode>1</mode></interface>");
             Console.WriteLine(result);
             //newService.WebServiceYyghSoapClient newClient = new newService.WebServiceYyghSoapClient();
             //var newResult = newClient.ExecProcedure(procName, inXml);

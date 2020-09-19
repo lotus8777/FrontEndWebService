@@ -9,10 +9,11 @@ namespace FrontEndModel
     /// 门诊-挂号科室
     /// </summary>
     [Table("ms_ghks")]
-    public  class MzGhks
+    public class MzGhks
     {
         [Key]
         public string ksdm { get; set; }
+
         public string ksmc { get; set; }
         public decimal ghlb { get; set; }
         public string pydm { get; set; }
@@ -58,12 +59,11 @@ namespace FrontEndModel
         public decimal? SCBZ_YYH { get; set; }
         public string LXDH { get; set; }
         public decimal? JJRGHF { get; set; }
-    
-       
+
         public virtual ICollection<MzGhmx> ms_ghmx { get; set; }
-       
+
         public virtual ICollection<MzYspb> ms_yspb { get; set; }
-       
+
         public virtual ICollection<MzYygh> ms_yygh { get; set; }
     }
 }

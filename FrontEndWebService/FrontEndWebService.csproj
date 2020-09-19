@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="appconfig.json" />
     <None Include="Properties\PublishProfiles\10服务器.pubxml" />
     <None Include="Properties\PublishProfiles\发布到yygh.pubxml" />
     <None Include="Properties\PublishProfiles\本地IIS.pubxml" />
@@ -169,6 +170,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties appconfig_1json__JsonSchema="https://batect.dev/configSchema.json" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

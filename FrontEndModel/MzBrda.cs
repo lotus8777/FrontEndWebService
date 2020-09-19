@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 
 namespace FrontEndModel
 {
-    [Table("MzBrda")]
-    public  class MzBrda
+    [Table("ms_brda")]
+    public class MzBrda
     {
         [Key]
         public decimal brid { get; set; }
+
         public string mzhm { get; set; }
         public string brxm { get; set; }
         public string fyzh { get; set; }
@@ -136,7 +136,7 @@ namespace FrontEndModel
         public decimal? BRTZ { get; set; }
         public string CBDXZDM { get; set; }
         public decimal? TSTDBRXZ { get; set; }
-        
+
         public virtual ICollection<MzGhmx> MzGhmxCollection { get; set; }
     }
 }
