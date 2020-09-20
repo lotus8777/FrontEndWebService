@@ -13,13 +13,13 @@ namespace FrontEndModel
         public string Name { get; set; }
 
         /// <remarks/>
-        public int ItemNo { get; set; }
+        public int itemNo { get; set; }
 
         /// <remarks/>
-        public decimal ItemCost { get { return Items.Sum(p => p.ItemTotal); } }
+        public decimal itemCost { get { return Items.Sum(p => p.ItemTotal); } }
 
         /// <remarks/>
-        public virtual List<Item> Items { get; set; }
+        public virtual List<item> Items { get; set; }
 
         public XElement ToXml()
         {
@@ -42,9 +42,9 @@ namespace FrontEndModel
         }
     }
 
-    public class Item
+    public class item
     {
-        public decimal ItemNumber { get; set; }
+        public decimal itemNumber { get; set; }
 
         /// <remarks/>
         public int XMLB { get; set; }

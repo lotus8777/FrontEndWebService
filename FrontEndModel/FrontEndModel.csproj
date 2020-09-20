@@ -119,6 +119,7 @@
     <Compile Include="PayFkrz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestRecord.cs" />
+    <Compile Include="ToXElement.cs" />
     <Compile Include="WsjGhks.cs" />
     <Compile Include="yb_fydz.cs" />
     <Compile Include="yb_ypdz_new.cs" />

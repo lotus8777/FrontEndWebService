@@ -71,6 +71,11 @@ namespace FrontEndWebService
                 var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetCodePayXml(inXmlStr);
             }
+            else if (procedureName == "wsj_get_yspb")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetKsYsPb(inXmlStr);
+            }
             else
             {
                 rtnXml = ExecDbProcedure(ProcName, inXmlStr);

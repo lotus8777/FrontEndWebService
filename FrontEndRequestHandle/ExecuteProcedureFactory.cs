@@ -1,22 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Xml.Linq;
 using FrontEndModel;
 using Newtonsoft.Json;
-
 namespace FrontEndRequestHandle
 {
     public class ExecuteProcedureFactory
     {
         private readonly FrontEndContext _ctx;
-
         public ExecuteProcedureFactory()
         {
             _ctx = new FrontEndContext();
         }
-
+        /// <summary>
+        /// 获取某个科室所有医生排班状态
+        /// </summary>
+        /// <param name="inXml"></param>
+        /// <returns></returns>
+        public string GetKsYsPb(string inXml)
+        {
+            XElement root = null;
+            try
+            {
+                var xml = XElement.Parse(inXml);
+                var ksdm = xml.Element("ksdm")?.Value;
+                var ksrq = Convert.ToDateTime(xml.Element("ksrq")?.Value);
+                var zzrq = Convert.ToDateTime(xml.Element("zzrq")?.Value);
+                var list = getKsyspb(ksdm, ksrq, zzrq);
+                var interfaceXml = new XElement("interface");
+                foreach (var item in list)
+                {
+                    interfaceXml.Add(item.ToXml("row"));
+                }
+                root = new XElement("YyghInterface",
+                    new XElement("RtnValue", 1),
+                    new XElement("bzxx"),
+                    interfaceXml
+                );
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return root.ToString();
+        }
+        private IList<ksyspb> getKsyspb(string ksdm, DateTime kssj, DateTime jssj)
+        {
+            try
+            {
+               return _ctx.Database.SqlQuery<ksyspb>($"exec proc_wjj_yspb '{ksdm}','{kssj}','{jssj}'").ToList();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw new Exception("获取科室所有医生排班信息失败0"+e.Message); ;
+            }
+        }
         /// <summary>
         ///     门诊分时段预约号源
         /// </summary>
@@ -58,7 +101,6 @@ namespace FrontEndRequestHandle
                                 new XElement("jzsj2", item.jzsj.AddMinutes(30))
                             ));
                     }
-
                     rtnXml = document.ToString();
                 }
                 else
@@ -70,10 +112,8 @@ namespace FrontEndRequestHandle
             {
                 rtnXml = GeneralTools.ReturnXml(-1, "数据查询出现错误！~r~n" + e, null);
             }
-
             return rtnXml.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
         }
-
         /// <summary>
         ///     使用Linq方式获取科室排班信息
         /// </summary>
@@ -97,7 +137,6 @@ namespace FrontEndRequestHandle
                  zswz = d.dmmc,
                  bzxx = a.zjsjap
              }).ToList();
-
         public string GetMzGhksXml2(string inXml)
         {
             var xml = XElement.Parse(inXml);
@@ -116,17 +155,14 @@ namespace FrontEndRequestHandle
                 {
                     document.Root?.Element("interface")?.Add(item.ToXml());
                 }
-
                 rtnXml = document.ToString();
             }
             else
             {
                 rtnXml = GeneralTools.ReturnXml(-1, "没有查询到数据！~r~n", null);
             }
-
             return rtnXml;
         }
-
         public string GetMzGhksXml(string inXml)
         {
             var xml = XElement.Parse(inXml);
@@ -148,10 +184,8 @@ namespace FrontEndRequestHandle
             {
                 rtnXml = GeneralTools.ReturnXml(-1, "没有查询到数据！~r~n", null);
             }
-
             return rtnXml;
         }
-
         public string GetPatientInvoice(string inXml)
         {
             try
@@ -172,7 +206,6 @@ namespace FrontEndRequestHandle
                 {
                     return GetInpatientInvoices(gc);
                 }
-
                 return GetOutpatientInvoices(gc);
             }
             catch (Exception exception)
@@ -183,7 +216,6 @@ namespace FrontEndRequestHandle
                 ).ToString();
             }
         }
-
         /// <summary>
         ///     住院病人费用清单
         /// </summary>
@@ -206,7 +238,6 @@ namespace FrontEndRequestHandle
                     ?.Select(p => p.jkje).DefaultIfEmpty(0).Sum();
                 var clinic = GetInpatientClinicInfo(patient.ZYH, fee.cnt1);
                 var feeSummary = GetInpatientFeeSummary(patient.ZYH);
-
                 xml.Add(
                     new XElement("RtnValue", 1),
                     new XElement("bzxx", "获取出院费用清单成功"),
@@ -238,10 +269,8 @@ namespace FrontEndRequestHandle
             {
                 throw e;
             }
-
             return xml.ToString();
         }
-
         /// <summary>
         ///     验证住院病人是否可以结算
         /// </summary>
@@ -259,7 +288,6 @@ namespace FrontEndRequestHandle
             if (patient.YDJSBZ == 0) throw new Exception("该就诊信息移动结算检测未通过");
             return patient;
         }
-
         private (int cnt1, int cnt2, decimal zjje1, decimal zjje2) GetInpatientFee(int zyh, int yepb)
         {
             int cnt1;
@@ -286,11 +314,9 @@ namespace FrontEndRequestHandle
                 cnt1 = mx.Sum(p => p.count);
                 zjje1 = mx.Sum(p => p.zjje);
             }
-
             if (cnt2 + cnt1 == 0) throw new Exception("本次住院结算无费用明细数据");
             return (cnt1, cnt2, zjje1, zjje2);
         }
-
         private Clinic GetInpatientClinicInfo(int zyh, int count)
         {
             var clinic = _ctx.Database.SqlQuery<Clinic>($"exec proc_wjj_inclinic {zyh}").FirstOrDefault();
@@ -300,7 +326,6 @@ namespace FrontEndRequestHandle
             clinic.FeeDetail = count;
             return clinic;
         }
-
         /// <summary>
         ///     获取住院病人临床诊断
         /// </summary>
@@ -319,7 +344,6 @@ namespace FrontEndRequestHandle
             if (!query.Any()) throw new Exception("出入院诊断获取失败！");
             return query;
         }
-
         /// <summary>
         /// 获取住院费用分类信息
         /// </summary>
@@ -337,7 +361,6 @@ namespace FrontEndRequestHandle
             if (!query.Any()) throw new Exception("费用分类数据获取失败！");
             return query;
         }
-
         /// <summary>
         /// 拼接门诊病人费用字符串
         /// </summary>
@@ -371,7 +394,7 @@ namespace FrontEndRequestHandle
                         new XElement("ChargeType", 1),
                         new XElement("YLLB", 11), //门诊的医疗类别为11，固定值
                         new XElement("DisAudNo"),
-                        new XElement("FeeTotal", details.Sum(p => p.ItemCost)),
+                        new XElement("FeeTotal", details.Sum(p => p.itemCost)),
                         new XElement("ZFFY", 0),
                         new XElement("yjje", 0),
                         new XElement("DisMark", 0),
@@ -387,7 +410,6 @@ namespace FrontEndRequestHandle
             }
             return xml.ToString();
         }
-
         /// <summary>
         /// 获取门诊费用明细XML
         /// </summary>
@@ -400,10 +422,8 @@ namespace FrontEndRequestHandle
             {
                 xml.Add(detail.ToXml());
             }
-
             return xml;
         }
-
         /// <summary>
         ///     获取门诊费用详单
         /// </summary>
@@ -424,7 +444,6 @@ namespace FrontEndRequestHandle
             {
                 djsj1 = webCfsj;
             }
-
             //获取费用清单
             var sql = $"exec proc_wjj_cfyj {brid},'{cfsj}','{webCfsj}','{djsj1}'";
             var list = _ctx.Database.SqlQuery<Detail>(sql).ToList();
@@ -436,11 +455,11 @@ namespace FrontEndRequestHandle
                     {
                         if (item.Type == 1)
                         {
-                            item.Items = _ctx.Database.SqlQuery<Item>($"exec proc_wjj_cfmx {item.ItemNo}").ToList();
+                            item.Items = _ctx.Database.SqlQuery<item>($"exec proc_wjj_cfmx {item.itemNo}").ToList();
                         }
                         else
                         {
-                            item.Items = _ctx.Database.SqlQuery<Item>($"exec proc_wjj_yjmx {item.ItemNo}").ToList();
+                            item.Items = _ctx.Database.SqlQuery<item>($"exec proc_wjj_yjmx {item.itemNo}").ToList();
                         }
                     }
                 }
@@ -453,10 +472,8 @@ namespace FrontEndRequestHandle
             {
                 throw new Exception("没有获取到费用清单");
             }
-
             return list;
         }
-
         /// <summary>
         ///     返回医保类型代码
         /// </summary>
@@ -470,10 +487,8 @@ namespace FrontEndRequestHandle
             {
                 return "02";
             }
-
             return "08";
         }
-
         /// <summary>
         ///     返回医保ic卡信息
         /// </summary>
@@ -483,25 +498,24 @@ namespace FrontEndRequestHandle
         /// <returns></returns>
         public string GetIcInfor(string ickh, string ybkh, string icxx)
         {
+            if (string.IsNullOrEmpty(ickh)) ickh = "";
+            if (string.IsNullOrEmpty(ybkh)) ybkh = "";
+            if (string.IsNullOrEmpty(icxx)) icxx = "";
             if (ickh.Length <= 30)
             {
                 if (ybkh.Length >= 30)
                 {
                     return ybkh;
                 }
-
                 if (icxx.Length > 100) return icxx.Trim().Substring(0, 50).Trim();
             }
-
             return ickh;
         }
-
         public string GetCodePayXml(string inXmlStr)
         {
             string yyjsls = string.Empty;
             try
             {
-                if (string.IsNullOrEmpty(inXmlStr)) throw new Exception("输入参数不能为空");
                 var xml = XElement.Parse(inXmlStr);
                 yyjsls = xml.Element("yyjsls")?.Value;
                 var pay = Convert.ToDecimal(xml.Element("pay")?.Value);
@@ -528,12 +542,10 @@ namespace FrontEndRequestHandle
                 {
                     throw new Exception("PAY_FKJL查询失败");
                 }
-
                 if (record.Zfpb != 0)
                 {
                     throw new Exception("该记录已作废");
                 }
-
                 if (record.State == 1)
                 {
                     var outXml = ReturnXml(1, "已经成功", null);
@@ -549,7 +561,6 @@ namespace FrontEndRequestHandle
                     _ctx.SaveChanges();
                     return outXml;
                 }
-
                 if (record.State == -1)
                 {
                     throw new Exception("该记录已冲正");
@@ -567,11 +578,10 @@ namespace FrontEndRequestHandle
                     throw new Exception("更新PAY_FKJL表状态失败/r/n" + e.Message);
                 }
                 return ReturnXml(1, "成功", null);
-
             }
             catch (Exception e)
             {
-                var outXml = ReturnXml(-1, "hos_codepay"+e.Message, null);
+                var outXml = ReturnXml(-1, "hos_codepay" + e.Message, null);
                 var fkrz = new PayFkrz
                 {
                     jydm = "hos_codepay",
@@ -584,9 +594,7 @@ namespace FrontEndRequestHandle
                 _ctx.SaveChanges();
                 return outXml;
             }
-
         }
-
         private string ReturnXml(int rtnValue, string bzxx, string data)
         {
             var xmlElement =
