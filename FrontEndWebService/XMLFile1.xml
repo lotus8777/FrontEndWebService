@@ -1,47 +1,33 @@
-﻿<YyghInterface>
-	<RtnValue>1</RtnValue>
-	<bzxx>获取就诊费用清单成功</bzxx>
-	<interface>
-		<HospitalCode>9104</HospitalCode>
-		<Operator>613</Operator>
-		<CVX_CardType>02</CVX_CardType>
-		<ICInfo>330183D156000005001B81CD5F78C984</ICInfo>
-		<ChargeType>4</ChargeType>
-		<YLLB>21</YLLB>
-		<DisAudNo></DisAudNo>
-		<FeeTotal>9155.2300</FeeTotal>
-		<ZFFY>0.0000</ZFFY>
-		<yjje>0.0000</yjje>
-		<DisMark>0</DisMark>
-		<OperatorName></OperatorName>
-		<Clinic>
-			<ClinicNo>Z28280</ClinicNo>
-			<ClinicDate>2020-09-18T10:09:14.540</ClinicDate>
-			<DeptCode>933</DeptCode>
-			<DeptGBCode>
-			</DeptGBCode>
-			<DeptName>二病区</DeptName>
-			<DocName>郭玉娟</DocName>
-			<DocSfzh>YB201533142411527198707260107</DocSfzh>
-			<DisCode>I10.x00</DisCode>
-			<DisName>高血压</DisName>
-			<DisDesc></DisDesc>
-			<FeeDetail>734</FeeDetail>
-			<CYZD>
-				<Item>I10.x00</Item>
-				<Item>F01.900</Item>
-				<Item>D69.600</Item>
-			</CYZD>
-		</Clinic>
-		<zyfymx>
-			<I01>872.34</I01>
-			<I04>330.00</I04>
-			<I05>174.00</I05>
-			<I06>2186.90</I06>
-			<I07>310.00</I07>
-			<I08>2286.20</I08>
-			<I10>124.89</I10>
-			<I99>2870.90</I99>
-		</zyfymx>
-	</interface>
-</YyghInterface>
+<interface>
+	<zzjgdm>470332499</zzjgdm>
+	<brxx>
+		<sfzh>43128119801219142X</sfzh>
+		<brxm>莫燕君</brxm>
+		<brxb>2</brxb>
+		<smkno>G17588054</smkno>
+		<grbh />
+		<csny>1980-12-19</csny>
+		<jtdz>环山乡柏树下村</jtdz>
+		<gddh>13858112406</gddh>
+		<tel>13777580794</tel>
+		<ybkh>330183D156000005010A6E2F11942065</ybkh>
+		<cardtype>1</cardtype>
+		<cardnum>2105574524</cardnum>
+		<yldylb>11</yldylb>
+	</brxx>
+	<ghxx>
+		<ghlb>1</ghlb>
+		<bzdm />
+		<ksdm>1</ksdm>
+		<ghly>一体机</ghly>
+		<ysdm>140</ysdm>
+		<gzrq>2020-09-21</gzrq>
+		<zblb>2</zblb>
+		<jzxh>75</jzxh>
+		<jzsj>2020-09-21 16:21:00</jzsj>
+		<jzsj2>2020-09-21 16:51:00</jzsj2>
+		<zjpb>0</zjpb>
+		<ghje>15</ghje>
+	</ghxx>
+	<source_type>3</source_type>
+</interface>

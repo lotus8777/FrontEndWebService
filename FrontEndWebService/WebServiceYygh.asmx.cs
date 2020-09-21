@@ -76,6 +76,17 @@ namespace FrontEndWebService
                 var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetKsYsPb(inXmlStr);
             }
+            else if (procedureName == "wsj_ghcl")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetGhcl(inXmlStr);
+            }
+            else if(procedureName=="wsj_thcl")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetThcl(inXmlStr);
+            }
+
             else
             {
                 rtnXml = ExecDbProcedure(ProcName, inXmlStr);

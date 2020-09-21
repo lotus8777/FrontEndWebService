@@ -21,7 +21,8 @@ namespace FrontEndModel
             //生成表名为单数
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-
+        //MzyyGhxx
+        public virtual DbSet<MzyyGhxx> MzyyGhxxSet { get; set; }
         public virtual DbSet<RequestRecord> RequestRecords { get; set; }
         public virtual DbSet<MzFsdYy> MzFsdYySet { get; set; }
         public virtual DbSet<ZyBrry> ZyBrrySet { get; set; }
@@ -54,5 +55,7 @@ namespace FrontEndModel
         public virtual DbSet<zy_ypyf> zy_ypyf { get; set; }
         public virtual DbSet<PayFkrz> PayFkrzSet { get; set; }
         public virtual DbSet<PayFkjl> PayFkjlSet { get; set; }
+        public virtual DbSet<MzIdentity> MzIdentitySet { get; set; }
+        public virtual DbSet<MzYgpj> MzYgpjSet { get; set; }
     }
 }

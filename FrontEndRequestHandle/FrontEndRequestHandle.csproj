@@ -59,7 +59,8 @@
   <ItemGroup>
     <Compile Include="ExecuteProcedureFactory.cs" />
     <Compile Include="GenericConfig.cs" />
-    <Compile Include="JsonHandle.cs" />
+    <Compile Include="GhclParameter.cs" />
+    <Compile Include="ConvertToObject.cs" />
     <Compile Include="ksyspb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GeneralTools.cs" />

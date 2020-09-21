@@ -49,5 +49,6 @@ namespace FrontEndRequestHandle
            
             return System.IO.File.ReadAllText(path);
         }
+
     }
 }

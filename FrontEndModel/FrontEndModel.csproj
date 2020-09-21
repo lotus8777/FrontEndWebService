@@ -108,11 +108,15 @@
     <Compile Include="ms_yj02.cs" />
     <Compile Include="MzBrda.cs" />
     <Compile Include="MzGhmx.cs" />
+    <Compile Include="MzIdentity.cs" />
+    <Compile Include="MzYgpj.cs" />
+    <Compile Include="MzYhkqy.cs" />
     <Compile Include="MzYspb.cs" />
     <Compile Include="MzYygh.cs" />
     <Compile Include="MzFsdYy.cs" />
     <Compile Include="FrontEndContext.cs" />
     <Compile Include="MzGhks.cs" />
+    <Compile Include="MzyyGhxx.cs" />
     <Compile Include="NpgSqlConfiguration.cs" />
     <Compile Include="PayDmzd.cs" />
     <Compile Include="PayFkjl.cs" />
