@@ -12,7 +12,7 @@ using Oracle.ManagedDataAccess.Types;
 namespace FrontEndWebService
 {
     /// <summary>
-    ///     WebServiceYygh 的摘要说明
+    /// WebServiceYygh 的摘要说明
     /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
@@ -86,7 +86,21 @@ namespace FrontEndWebService
                 var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetThcl(inXmlStr);
             }
-
+            else if (procedureName=="hos_orders")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetHosOrders(inXmlStr);
+            }
+            else if (procedureName == "wsj_get_dqjzdl")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetQdJzxh(inXmlStr);
+            }
+            else if (procedureName == "wsj_fyqd_get")
+            {
+                var epf = new ExecuteProcedureFactory();
+                rtnXml = epf.GetWsjFyqd(inXmlStr);
+            }
             else
             {
                 rtnXml = ExecDbProcedure(ProcName, inXmlStr);

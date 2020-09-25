@@ -4,17 +4,12 @@ namespace FrontEndModel
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class gy_ksdm
+    [Table("gy_ksdm")]
+    public class GyKsdm
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public gy_ksdm()
-        {
-            gy_ylsf = new HashSet<gy_ylsf>();
-        }
-
         [Key]
         [Column(TypeName = "numeric")]
-        public decimal ksdm { get; set; }
+        public int ksdm { get; set; }
 
         [StringLength(50)]
         public string ksmc { get; set; }
@@ -104,7 +99,5 @@ namespace FrontEndModel
         [StringLength(20)]
         public string WXYKT_KSDM { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<gy_ylsf> gy_ylsf { get; set; }
     }
 }

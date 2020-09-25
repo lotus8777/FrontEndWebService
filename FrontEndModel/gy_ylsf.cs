@@ -3,7 +3,8 @@ namespace FrontEndModel
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class gy_ylsf
+    [Table("gy_ylsf")]
+    public class GyYlsf
     {
         [Key]
         [Column(TypeName = "numeric")]
@@ -142,6 +143,6 @@ namespace FrontEndModel
         [Column(TypeName = "numeric")]
         public decimal? LBDM { get; set; }
 
-        public virtual gy_ksdm gy_ksdm { get; set; }
+        public virtual GyKsdm gy_ksdm { get; set; }
     }
 }

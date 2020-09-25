@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
+
 namespace FrontEndRequestHandle
 {
     public static  class ConvertToObject<T> where T:new()
@@ -44,6 +47,31 @@ namespace FrontEndRequestHandle
                 
                 throw new Exception("xml转换为对象时出错"+e.Message);
             }
+        }
+
+        public static T XmlDeserialize(string inXml)
+        {
+            using (StringReader reader=new StringReader(inXml))
+            {
+                var type = typeof(T);
+                XmlSerializer serializer = new XmlSerializer(type);
+                return (T)serializer.Deserialize(reader);
+            }
+        }
+        public static string XmlSerialize(T t)
+        {
+            string outStr;
+            using (MemoryStream stream = new MemoryStream())
+            {
+                var type = typeof(T);
+                XmlSerializer serializer = new XmlSerializer(type);
+                serializer.Serialize(stream,t);
+                stream.Position = 0;
+                StreamReader reader=new StreamReader(stream);
+                outStr = reader.ReadToEnd();
+                reader.Dispose();
+            }
+            return outStr;
         }
     }
 }

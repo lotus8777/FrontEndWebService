@@ -91,12 +91,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="gy_brxz.cs" />
+    <Compile Include="GySfxm.cs" />
+    <Compile Include="gy_sypc.cs" />
+    <Compile Include="GyZfbl.cs" />
+    <Compile Include="HosOrder.cs" />
     <Compile Include="Clinic.cs" />
     <Compile Include="Detail.cs" />
     <Compile Include="GlobalProperty.cs" />
     <Compile Include="GyDmzd.cs" />
     <Compile Include="gy_jbbm.cs" />
-    <Compile Include="gy_ksdm.cs" />
+    <Compile Include="GyKsdm.cs" />
     <Compile Include="gy_xtcs.cs" />
     <Compile Include="gy_ygdm.cs" />
     <Compile Include="gy_ylsf.cs" />
@@ -131,6 +137,7 @@
     <Compile Include="ys_mz_jbzd.cs" />
     <Compile Include="ys_mz_jzls.cs" />
     <Compile Include="ZyBrry.cs" />
+    <Compile Include="ZyBqyz.cs" />
     <Compile Include="zy_fymx.cs" />
     <Compile Include="zy_ryzd.cs" />
     <Compile Include="zy_tbkk.cs" />

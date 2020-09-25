@@ -22,6 +22,8 @@ namespace FrontEndModel
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
         //MzyyGhxx
+        public virtual DbSet<GySfxm> GySfxmSet { get; set; }
+        public virtual DbSet<ZyBqyz> ZyBqyzSet { get; set; }
         public virtual DbSet<MzyyGhxx> MzyyGhxxSet { get; set; }
         public virtual DbSet<RequestRecord> RequestRecords { get; set; }
         public virtual DbSet<MzFsdYy> MzFsdYySet { get; set; }
@@ -34,10 +36,10 @@ namespace FrontEndModel
         public virtual DbSet<MzYygh> MzYyghSet { get; set; }
         public virtual DbSet<PayDmzd> PayDmzdSet { get; set; }
         public virtual DbSet<gy_jbbm> gy_jbbm { get; set; }
-        public virtual DbSet<gy_ksdm> gy_ksdm { get; set; }
+        public virtual DbSet<GyKsdm> gy_ksdm { get; set; }
         public virtual DbSet<gy_xtcs> gy_xtcs { get; set; }
         public virtual DbSet<gy_ygdm> gy_ygdm { get; set; }
-        public virtual DbSet<gy_ylsf> gy_ylsf { get; set; }
+        public virtual DbSet<GyYlsf> gy_ylsf { get; set; }
         public virtual DbSet<hzyb_dmzd> hzyb_dmzd { get; set; }
         public virtual DbSet<hzyb_ka63> hzyb_ka63 { get; set; }
         public virtual DbSet<ms_cf01> ms_cf01 { get; set; }

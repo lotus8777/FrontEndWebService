@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -933,5 +934,12 @@ namespace FrontEndModel
 
         [Column(TypeName = "numeric")]
         public int YDJSBZ { get; set; }
+
+        [ForeignKey("BRKS")]
+        public virtual GyKsdm KsBrks { get; set; }
+
+        public virtual GyBrxz GyBrxz { get; set; }
+        public virtual IList<zy_tbkk> Jkmx { get; set; }
+        public virtual IList<zy_fymx> Fymx { get; set; }
     }
 }

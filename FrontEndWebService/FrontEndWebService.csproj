@@ -111,6 +111,7 @@
     <Content Include="zy.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="CommonService.asmx.cs">
       <DependentUpon>CommonService.asmx</DependentUpon>
       <SubType>Component</SubType>
