@@ -1,4 +1,4 @@
-namespace FrontEndModel
+namespace FE.Model.Hrp275
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -9,95 +9,96 @@ namespace FrontEndModel
     {
         [Key]
         [Column(TypeName = "numeric")]
-        public int ksdm { get; set; }
+        public int Ksdm { get; set; }
 
         [StringLength(50)]
-        public string ksmc { get; set; }
+        public string Ksmc { get; set; }
 
         [StringLength(6)]
-        public string pydm { get; set; }
+        public string Pydm { get; set; }
 
         [StringLength(20)]
-        public string jgbm { get; set; }
+        public string Jgbm { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? sjks { get; set; }
+        public decimal? Sjks { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? hsks { get; set; }
+        public decimal? Hsks { get; set; }
 
         [Required]
         [StringLength(1)]
-        public string mzsy { get; set; }
+        public string Mzsy { get; set; }
 
         [Required]
         [StringLength(1)]
-        public string yjsy { get; set; }
+        public string Yjsy { get; set; }
 
         [Required]
         [StringLength(1)]
-        public string zysy { get; set; }
+        public string Zysy { get; set; }
 
         [Required]
         [StringLength(1)]
-        public string bqsy { get; set; }
+        public string Bqsy { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? edcw { get; set; }
+        public decimal? Edcw { get; set; }
 
         [StringLength(10)]
-        public string plsx { get; set; }
+        public string Plsx { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? mydpjgb { get; set; }
+        public decimal? Mydpjgb { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? mydpj { get; set; }
+        public decimal? Mydpj { get; set; }
 
         [StringLength(10)]
-        public string kslc { get; set; }
+        public string Kslc { get; set; }
 
         [StringLength(15)]
-        public string ksdh { get; set; }
+        public string Ksdh { get; set; }
 
         [StringLength(32)]
-        public string wsjdm { get; set; }
+        public string Wsjdm { get; set; }
 
         [StringLength(32)]
-        public string ybdm { get; set; }
+        public string Ybdm { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? jgid { get; set; }
+        public decimal? Jgid { get; set; }
 
-        [Column(TypeName = "numeric")]
-        public decimal? BGLX_YYH { get; set; }
+        [Column("bglx_yyh", TypeName = "numeric")]
+        public decimal? BglxYyh { get; set; }
 
-        [Column(TypeName = "numeric")]
-        public decimal? SCBZ_YYH { get; set; }
+        [Column("scbz_yyh", TypeName = "numeric")]
+        public decimal? ScbzYyh { get; set; }
 
         [StringLength(20)]
-        public string KSMM1 { get; set; }
+        public string Ksmm1 { get; set; }
 
         [StringLength(20)]
-        public string KSMM2 { get; set; }
+        public string Ksmm2 { get; set; }
 
         [StringLength(250)]
-        public string BZXX { get; set; }
+        public string Bzxx { get; set; }
 
         [StringLength(20)]
-        public string LXDH { get; set; }
+        public string Lxdh { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? BQLX { get; set; }
+        public decimal? Bqlx { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? CWQX { get; set; }
+        public decimal? Cwqx { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? ZXYBZ { get; set; }
+        public decimal? Zxybz { get; set; }
 
         [StringLength(20)]
-        public string WXYKT_KSDM { get; set; }
+        [Column("wxykt_ksdm")]
+        public string WxyktKsdm { get; set; }
 
     }
 }

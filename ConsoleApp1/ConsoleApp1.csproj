@@ -120,9 +120,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FrontEndRequestHandle\FrontEndRequestHandle.csproj">
+    <ProjectReference Include="..\FE.Context\FE.Context.csproj">
+      <Project>{E5A823CB-BDA2-411B-B7B7-FF03EA9343B2}</Project>
+      <Name>FE.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrontEndRequestHandle\FE.Handle.Request.csproj">
       <Project>{653ddc6f-61ce-40c5-ad20-73451db5c427}</Project>
-      <Name>FrontEndRequestHandle</Name>
+      <Name>FE.Handle.Request</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,20 +4,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
 
-namespace FrontEndModel
+namespace FE.Model.Hrp275
 {
 
     [Table("GyZfbl")]
     public  class GyZfbl
     {
         [Key,Column(Order=1)]
-        public decimal sfxm { get; set; }
+        public decimal Sfxm { get; set; }
         [Key, Column(Order = 2)]
-        public decimal brxz { get; set; }
-        public decimal zfbl { get; set; }
-        public decimal? ZYZFBL { get; set; }
+        public decimal Brxz { get; set; }
+        public decimal Zfbl { get; set; }
+        public decimal? Zyzfbl { get; set; }
     
         public virtual GyBrxz GyBrxz { get; set; }
-        public virtual GySfxm gy_sfxm { get; set; }
+        public virtual GySfxm GySfxm { get; set; }
     }
 }

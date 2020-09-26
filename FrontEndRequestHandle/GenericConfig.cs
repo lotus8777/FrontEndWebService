@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrontEndRequestHandle
+namespace FE.Handle.Request
 {
     public class GenericConfig
     {

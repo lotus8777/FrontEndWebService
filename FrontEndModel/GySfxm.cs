@@ -4,38 +4,40 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FrontEndModel
+namespace FE.Model.Hrp275
 {
 
-    [Table("GySfxm")]
+    [Table("gy_sfxm")]
     public class GySfxm
     {
 
 
         [Key]
-        public decimal sfxm { get; set; }
-        public string sfmc { get; set; }
-        public string mcsx { get; set; }
-        public decimal fyfl { get; set; }
-        public decimal mzsy { get; set; }
-        public decimal zysy { get; set; }
-        public decimal mzgb { get; set; }
-        public decimal zygb { get; set; }
-        public decimal fylb { get; set; }
-        public string pydm { get; set; }
-        public decimal? bxxm { get; set; }
-        public string kmbm { get; set; }
-        public string plsx { get; set; }
-        public decimal? ybgb { get; set; }
-        public string mzcjgb { get; set; }
-        public string zycjgb { get; set; }
-        public decimal? nbgb { get; set; }
-        public decimal? zyfpdy { get; set; }
-        public decimal? mzfpdy { get; set; }
-        public string zxgb { get; set; }
-        public decimal? LBDM { get; set; }
-        public decimal? wsj_xmgb { get; set; }
-        public decimal? wsj_xmgb_zy { get; set; }
+        public decimal Sfxm { get; set; }
+        public string Sfmc { get; set; }
+        public string Mcsx { get; set; }
+        public decimal Fyfl { get; set; }
+        public decimal Mzsy { get; set; }
+        public decimal Zysy { get; set; }
+        public decimal Mzgb { get; set; }
+        public decimal Zygb { get; set; }
+        public decimal Fylb { get; set; }
+        public string Pydm { get; set; }
+        public decimal? Bxxm { get; set; }
+        public string Kmbm { get; set; }
+        public string Plsx { get; set; }
+        public decimal? Ybgb { get; set; }
+        public string Mzcjgb { get; set; }
+        public string Zycjgb { get; set; }
+        public decimal? Nbgb { get; set; }
+        public decimal? Zyfpdy { get; set; }
+        public decimal? Mzfpdy { get; set; }
+        public string Zxgb { get; set; }
+        public decimal? Lbdm { get; set; }
+        [Column("wsj_xmgb")]
+        public decimal? WsjXmgb { get; set; }
+        [Column("wsj_xmgb_zy")]
+        public decimal? WsjXmgbZy { get; set; }
         public virtual ICollection<GyYlsf> GyYlsf { get; set; }
         public virtual ICollection<GyZfbl> GyZfbl { get; set; }
     }

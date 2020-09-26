@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FrontEndModel
+namespace FE.Model.Hrp275
 {
     /// <summary>
     /// 公用-代码字典
@@ -11,20 +11,20 @@ namespace FrontEndModel
     {
         [Key]
         [Column(Order = 0)]
-        public decimal dmlb { get; set; }
+        public decimal Dmlb { get; set; }
 
         [Key]
         [Column(Order = 1)]
-        public decimal dmsb { get; set; }
+        public decimal Dmsb { get; set; }
 
-        public string srdm { get; set; }
-        public string dmmc { get; set; }
-        public string bzbm { get; set; }
-        public decimal xtsb { get; set; }
-        public string dmsb_emr { get; set; }
-        public string dmlb_emr { get; set; }
-        public string MPICODE { get; set; }
-        public decimal? LXZT { get; set; }
-        public decimal? ZFPB { get; set; }
+        public string Srdm { get; set; }
+        public string Dmmc { get; set; }
+        public string Bzbm { get; set; }
+        public decimal Xtsb { get; set; }
+        public string DmsbEmr { get; set; }
+        public string DmlbEmr { get; set; }
+        public string Mpicode { get; set; }
+        public decimal? Lxzt { get; set; }
+        public decimal? Zfpb { get; set; }
     }
 }

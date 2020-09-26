@@ -5,8 +5,9 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Services;
 using System.Xml.Linq;
-using FrontEndModel;
-using FrontEndRequestHandle;
+using FE.Handle.Request;
+using FE.Model.Hrp275;
+using FE.Context;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 namespace FrontEndWebService
@@ -44,61 +45,54 @@ namespace FrontEndWebService
             {
                 return ReturnXml(-1, $"传入参数为空！/r/n", null);
             }
-            var record = new RequestRecord
+            var record = new WjjRequest
             {
                 ProcedureName = ProcName,
                 InXml = inXmlStr
             };
             string rtnXml;
             string procedureName = ProcName.ToLower().Trim();
+            var epf = new ExecuteProcedureFactory(ctx);
             if (procedureName == "wsj_get_fsdyyb")
             {
-                var epf = new ExecuteProcedureFactory();
+               
                 rtnXml = epf.GetMzFsdYy(inXmlStr);
             }
             else if (procedureName == "wsj_get_ghks")
             {
-                var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetMzGhksXml(inXmlStr);
             }
             else if (procedureName == "hos_expense_invoices") 
             {
-                var epf = new ExecuteProcedureFactory();
+                
                 rtnXml = epf.GetPatientInvoice(inXmlStr);
             }
             else if (procedureName== "hos_codepay")
             {
-                var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetCodePayXml(inXmlStr);
             }
             else if (procedureName == "wsj_get_yspb")
             {
-                var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetKsYsPb(inXmlStr);
             }
             else if (procedureName == "wsj_ghcl")
             {
-                var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetGhcl(inXmlStr);
             }
             else if(procedureName=="wsj_thcl")
             {
-                var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetThcl(inXmlStr);
             }
             else if (procedureName=="hos_orders")
             {
-                var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetHosOrders(inXmlStr);
             }
             else if (procedureName == "wsj_get_dqjzdl")
             {
-                var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetQdJzxh(inXmlStr);
             }
             else if (procedureName == "wsj_fyqd_get")
             {
-                var epf = new ExecuteProcedureFactory();
                 rtnXml = epf.GetWsjFyqd(inXmlStr);
             }
             else

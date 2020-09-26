@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrontEndModel
+namespace FE.Model.Hrp275
 {
     [Table("pay_fkrz")]
     public class PayFkrz
@@ -15,26 +15,26 @@ namespace FrontEndModel
         /// 记录序号
         /// </summary>
         [Key]
-        public int jlxh { get; set; }
+        public int Jlxh { get; set; }
         /// <summary>
         /// 入参
         /// </summary>
-        public string instr { get; set; }
+        public string Instr { get; set; }
         /// <summary>
         /// 交易代码
         /// </summary>
-        public string jydm { get; set; }
+        public string Jydm { get; set; }
         /// <summary>
         /// 交易类型
         /// </summary>
-        public string jylx { get; set; }
+        public string Jylx { get; set; }
         /// <summary>
         /// 写入日期
         /// </summary>
-        public DateTime xrrq { get; set; }
+        public DateTime Xrrq { get; set; }
         /// <summary>
         /// 医院结算流水
         /// </summary>
-        public string yyjsls { get; set; }
+        public string Yyjsls { get; set; }
     }
 }

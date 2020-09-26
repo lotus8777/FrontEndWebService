@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrontEndModel
+namespace FE.Model.Hrp275
 {
     [Table("pay_fkjl")]
     public class PayFkjl

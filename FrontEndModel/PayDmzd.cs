@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FrontEndModel
+namespace FE.Model.Hrp275
 {
     /// <summary>
     /// 支付-代码字典
@@ -11,14 +11,14 @@ namespace FrontEndModel
     {
         [Key]
         [Column(Order = 0)]
-        public string dmlb { get; set; }
+        public string Dmlb { get; set; }
 
         [Key]
         [Column(Order = 1)]
-        public string dmsb { get; set; }
+        public string Dmsb { get; set; }
 
-        public string dmmc { get; set; }
-        public string dmbz { get; set; }
-        public string pydm { get; set; }
+        public string Dmmc { get; set; }
+        public string Dmbz { get; set; }
+        public string Pydm { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FrontEndModel
+namespace FE.Model.Hrp275
 {
     /// <summary>
     ///   Defines the <see cref="ZyBrry" />
@@ -13,933 +13,944 @@ namespace FrontEndModel
     {
         [Key]
         [Column(TypeName = "numeric")]
-        public int ZYH { get; set; }
+        public int Zyh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ZYHM
         /// </summary>
         [Required]
         [StringLength(8)]
-        public string ZYHM { get; set; }
+        public string Zyhm { get; set; }
 
         /// <summary>
         ///   Gets or sets the BAHM
         /// </summary>
         [StringLength(8)]
-        public string BAHM { get; set; }
+        public string Bahm { get; set; }
 
         /// <summary>
         ///   Gets or sets the MZHM
         /// </summary>
         [StringLength(12)]
-        public string MZHM { get; set; }
+        public string Mzhm { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRXZ
         /// </summary>
         [Column(TypeName = "numeric")]
-        public int BRXZ { get; set; }
+        public decimal Brxz { get; set; }
 
         /// <summary>
         ///   Gets or sets the GFZH
         /// </summary>
         [StringLength(20)]
-        public string GFZH { get; set; }
+        public string Gfzh { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRXM
         /// </summary>
         [Required]
         [StringLength(40)]
-        public string BRXM { get; set; }
+        public string Brxm { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRXB
         /// </summary>
         [Column(TypeName = "numeric")]
-        public int BRXB { get; set; }
+        public int Brxb { get; set; }
 
         /// <summary>
         ///   Gets or sets the CSNY
         /// </summary>
-        public DateTime? CSNY { get; set; }
+        public DateTime? Csny { get; set; }
 
         /// <summary>
         ///   Gets or sets the SFZH
         /// </summary>
         [StringLength(20)]
-        public string SFZH { get; set; }
+        public string Sfzh { get; set; }
 
         /// <summary>
         ///   Gets or sets the HYZK
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? HYZK { get; set; }
+        public decimal? Hyzk { get; set; }
 
         /// <summary>
         ///   Gets or sets the ZYDM
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? ZYDM { get; set; }
+        public decimal? Zydm { get; set; }
 
         /// <summary>
         ///   Gets or sets the SFDM
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? SFDM { get; set; }
+        public decimal? Sfdm { get; set; }
 
         /// <summary>
         ///   Gets or sets the JGDM
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? JGDM { get; set; }
+        public decimal? Jgdm { get; set; }
 
         /// <summary>
         ///   Gets or sets the MZDM
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? MZDM { get; set; }
+        public decimal? Mzdm { get; set; }
 
         /// <summary>
         ///   Gets or sets the GJDM
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? GJDM { get; set; }
+        public decimal? Gjdm { get; set; }
 
         /// <summary>
         ///   Gets or sets the DWBH
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? DWBH { get; set; }
+        public decimal? Dwbh { get; set; }
 
         /// <summary>
         ///   Gets or sets the GZDW
         /// </summary>
         [StringLength(40)]
-        public string GZDW { get; set; }
+        public string Gzdw { get; set; }
 
         /// <summary>
         ///   Gets or sets the DWDH
         /// </summary>
         [StringLength(16)]
-        public string DWDH { get; set; }
+        public string Dwdh { get; set; }
 
         /// <summary>
         ///   Gets or sets the DWYB
         /// </summary>
         [StringLength(6)]
-        public string DWYB { get; set; }
+        public string Dwyb { get; set; }
 
         /// <summary>
         ///   Gets or sets the HKDZ
         /// </summary>
         [StringLength(40)]
-        public string HKDZ { get; set; }
+        public string Hkdz { get; set; }
 
         /// <summary>
         ///   Gets or sets the HKYB
         /// </summary>
         [StringLength(6)]
-        public string HKYB { get; set; }
+        public string Hkyb { get; set; }
 
         /// <summary>
         ///   Gets or sets the LXRM
         /// </summary>
         [StringLength(10)]
-        public string LXRM { get; set; }
+        public string Lxrm { get; set; }
 
         /// <summary>
         ///   Gets or sets the LXGX
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? LXGX { get; set; }
+        public decimal? Lxgx { get; set; }
 
         /// <summary>
         ///   Gets or sets the LXDZ
         /// </summary>
         [StringLength(40)]
-        public string LXDZ { get; set; }
+        public string Lxdz { get; set; }
 
         /// <summary>
         ///   Gets or sets the LXDH
         /// </summary>
         [StringLength(16)]
-        public string LXDH { get; set; }
+        public string Lxdh { get; set; }
 
         /// <summary>
         ///   Gets or sets the PZHM
         /// </summary>
         [StringLength(10)]
-        public string PZHM { get; set; }
+        public string Pzhm { get; set; }
 
         /// <summary>
         ///   Gets or sets the SBHM
         /// </summary>
         [StringLength(20)]
-        public string SBHM { get; set; }
+        public string Sbhm { get; set; }
 
         /// <summary>
         ///   Gets or sets the DBRM
         /// </summary>
         [StringLength(10)]
-        public string DBRM { get; set; }
+        public string Dbrm { get; set; }
 
         /// <summary>
         ///   Gets or sets the DBGX
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? DBGX { get; set; }
+        public decimal? Dbgx { get; set; }
 
         /// <summary>
         ///   Gets or sets the ZZTX
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? ZZTX { get; set; }
+        public decimal? Zztx { get; set; }
 
         /// <summary>
         ///   Gets or sets the DBBZ
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? DBBZ { get; set; }
+        public decimal? Dbbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRKS
         /// </summary>
         [Column(TypeName = "numeric")]
-        public int BRKS { get; set; }
+        public int Brks { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRBQ
         /// </summary>
         [Column(TypeName = "numeric")]
-        public int? BRBQ { get; set; }
+        public int? Brbq { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRCH
         /// </summary>
         [StringLength(6)]
-        public string BRCH { get; set; }
+        public string Brch { get; set; }
 
         /// <summary>
         ///   Gets or sets the DJRQ
         /// </summary>
-        public DateTime DJRQ { get; set; }
+        public DateTime Djrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the RYRQ
         /// </summary>
-        public DateTime RYRQ { get; set; }
+        public DateTime Ryrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the CYRQ
         /// </summary>
-        public DateTime? CYRQ { get; set; }
+        public DateTime? Cyrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the CYPB
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal CYPB { get; set; }
+        public decimal Cypb { get; set; }
 
         /// <summary>
         ///   Gets or sets the CYFS
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? CYFS { get; set; }
+        public decimal? Cyfs { get; set; }
 
         /// <summary>
         ///   Gets or sets the CZGH
         /// </summary>
         [StringLength(10)]
-        public string CZGH { get; set; }
+        public string Czgh { get; set; }
 
         /// <summary>
         ///   Gets or sets the RYQK
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? RYQK { get; set; }
+        public decimal? Ryqk { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRQK
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? BRQK { get; set; }
+        public decimal? Brqk { get; set; }
 
         /// <summary>
         ///   Gets or sets the HLJB
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? HLJB { get; set; }
+        public decimal? Hljb { get; set; }
 
         /// <summary>
         ///   Gets or sets the YSDM
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? YSDM { get; set; }
+        public decimal? Ysdm { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRXX
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? BRXX { get; set; }
+        public decimal? Brxx { get; set; }
 
         /// <summary>
         ///   Gets or sets the hzks
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? hzks { get; set; }
+        public decimal? Hzks { get; set; }
 
         /// <summary>
         ///   Gets or sets the jcks
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? jcks { get; set; }
+        public decimal? Jcks { get; set; }
 
         /// <summary>
         ///   Gets or sets the MZYS
         /// </summary>
         [StringLength(10)]
-        public string MZYS { get; set; }
+        public string Mzys { get; set; }
 
         /// <summary>
         ///   Gets or sets the ZYYS
         /// </summary>
         [StringLength(10)]
-        public string ZYYS { get; set; }
+        public string Zyys { get; set; }
 
         /// <summary>
         ///   Gets or sets the ZSYS
         /// </summary>
         [StringLength(10)]
-        public string ZSYS { get; set; }
+        public string Zsys { get; set; }
 
         /// <summary>
         ///   Gets or sets the ZZYS
         /// </summary>
         [StringLength(10)]
-        public string ZZYS { get; set; }
+        public string Zzys { get; set; }
 
         /// <summary>
         ///   Gets or sets the qzrq
         /// </summary>
-        public DateTime? qzrq { get; set; }
+        public DateTime? Qzrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the ksrq
         /// </summary>
-        public DateTime? ksrq { get; set; }
+        public DateTime? Ksrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the jsrq
         /// </summary>
-        public DateTime? jsrq { get; set; }
+        public DateTime? Jsrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the jscs
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal jscs { get; set; }
+        public decimal Jscs { get; set; }
 
         /// <summary>
         ///   Gets or sets the jzrq
         /// </summary>
-        public DateTime? jzrq { get; set; }
+        public DateTime? Jzrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the hzrq
         /// </summary>
-        public DateTime? hzrq { get; set; }
+        public DateTime? Hzrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the XGPB
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal XGPB { get; set; }
+        public decimal Xgpb { get; set; }
 
         /// <summary>
         ///   Gets or sets the bapb
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal bapb { get; set; }
+        public decimal Bapb { get; set; }
 
         /// <summary>
         ///   Gets or sets the brgl
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? brgl { get; set; }
+        public decimal? Brgl { get; set; }
 
         /// <summary>
         ///   Gets or sets the brkl
         /// </summary>
         [StringLength(6)]
-        public string brkl { get; set; }
+        public string Brkl { get; set; }
 
         /// <summary>
         ///   Gets or sets the bz
         /// </summary>
         [StringLength(250)]
-        public string bz { get; set; }
+        public string Bz { get; set; }
 
         /// <summary>
         ///   Gets or sets the brqm
         /// </summary>
         [StringLength(32)]
-        public string brqm { get; set; }
+        public string Brqm { get; set; }
 
         /// <summary>
         ///   Gets or sets the jtdh
         /// </summary>
         [StringLength(16)]
-        public string jtdh { get; set; }
+        public string Jtdh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ybkh
         /// </summary>
         [StringLength(50)]
-        public string ybkh { get; set; }
+        public string Ybkh { get; set; }
 
         /// <summary>
         ///   Gets or sets the jzkh
         /// </summary>
         [StringLength(40)]
-        public string jzkh { get; set; }
+        public string Jzkh { get; set; }
 
         /// <summary>
         ///   Gets or sets the SZYS
         /// </summary>
         [StringLength(10)]
-        public string SZYS { get; set; }
+        public string Szys { get; set; }
 
         /// <summary>
         ///   Gets or sets the zlxz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? zlxz { get; set; }
+        public decimal? Zlxz { get; set; }
 
         /// <summary>
         ///   Gets or sets the spje
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? spje { get; set; }
+        public decimal? Spje { get; set; }
 
         /// <summary>
         ///   Gets or sets the sjzy
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? sjzy { get; set; }
+        public decimal? Sjzy { get; set; }
 
         /// <summary>
         ///   Gets or sets the djbz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal djbz { get; set; }
+        public decimal Djbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the djid
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal djid { get; set; }
+        public decimal Djid { get; set; }
 
         /// <summary>
         ///   Gets or sets the djje
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal djje { get; set; }
+        public decimal Djje { get; set; }
 
         /// <summary>
         ///   Gets or sets the ysjs
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? ysjs { get; set; }
+        public decimal? Ysjs { get; set; }
 
         /// <summary>
         ///   Gets or sets the zkzt
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? zkzt { get; set; }
+        public decimal? Zkzt { get; set; }
 
         /// <summary>
         ///   Gets or sets the grbh_yh
         /// </summary>
         [StringLength(30)]
-        public string grbh_yh { get; set; }
+        [Column("grbh_yh")]
+        public string GrbhYh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ybkh_yh
         /// </summary>
         [StringLength(30)]
-        public string ybkh_yh { get; set; }
+        [Column("ybkh_yh")]
+        public string YbkhYh { get; set; }
 
         /// <summary>
         ///   Gets or sets the rylb_yh
         /// </summary>
-        public decimal? rylb_yh { get; set; }
+        [Column("rylb_yh")]
+        public decimal? RylbYh { get; set; }
 
         /// <summary>
         ///   Gets or sets the lbmc_yh
         /// </summary>
         [StringLength(30)]
-        public string lbmc_yh { get; set; }
+        [Column("lbmc_yh")]
+        public string LbmcYh { get; set; }
 
         /// <summary>
         ///   Gets or sets the knxx_yh
         /// </summary>
         [StringLength(30)]
-        public string knxx_yh { get; set; }
+        [Column("knxx_yh")]
+        public string KnxxYh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ywxlh_yh
         /// </summary>
         [StringLength(30)]
-        public string ywxlh_yh { get; set; }
+        [Column("ywxlh_yh")]
+        public string YwxlhYh { get; set; }
 
         /// <summary>
         ///   Gets or sets the zycs_yh
         /// </summary>
-        public decimal? zycs_yh { get; set; }
+        [Column("zycs_yh")]
+        public decimal? ZycsYh { get; set; }
 
         /// <summary>
         ///   Gets or sets the bargainingid
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? bargainingid { get; set; }
+        public decimal? Bargainingid { get; set; }
 
         /// <summary>
         ///   Gets or sets the yylsh
         /// </summary>
         [StringLength(40)]
-        public string yylsh { get; set; }
+        public string Yylsh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ycts
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? ycts { get; set; }
+        public decimal? Ycts { get; set; }
 
         /// <summary>
         ///   Gets or sets the khmm
         /// </summary>
         [StringLength(10)]
-        public string khmm { get; set; }
+        public string Khmm { get; set; }
 
         /// <summary>
         ///   Gets or sets the grbh
         /// </summary>
         [StringLength(20)]
-        public string grbh { get; set; }
+        public string Grbh { get; set; }
 
         /// <summary>
         ///   Gets or sets the bzbh
         /// </summary>
         [StringLength(10)]
-        public string bzbh { get; set; }
+        public string Bzbh { get; set; }
 
         /// <summary>
         ///   Gets or sets the qgyz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? qgyz { get; set; }
+        public decimal? Qgyz { get; set; }
 
         /// <summary>
         ///   Gets or sets the dylb
         /// </summary>
         [StringLength(4)]
-        public string dylb { get; set; }
+        public string Dylb { get; set; }
 
         /// <summary>
         ///   Gets or sets the icmw
         /// </summary>
         [StringLength(500)]
-        public string icmw { get; set; }
+        public string Icmw { get; set; }
 
         /// <summary>
         ///   Gets or sets the rylx
         /// </summary>
-        public decimal? rylx { get; set; }
+        public decimal? Rylx { get; set; }
 
         /// <summary>
         ///   Gets or sets the cjbz_ry
         /// </summary>
-        public decimal? cjbz_ry { get; set; }
+        [Column("cjbz_ry")]
+        public decimal? CjbzRy { get; set; }
 
         /// <summary>
         ///   Gets or sets the smkwkh
         /// </summary>
         [StringLength(20)]
-        public string smkwkh { get; set; }
+        public string Smkwkh { get; set; }
 
         /// <summary>
         ///   Gets or sets the kzhm
         /// </summary>
         [StringLength(30)]
-        public string kzhm { get; set; }
+        public string Kzhm { get; set; }
 
         /// <summary>
         ///   Gets or sets the jsdh
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? jsdh { get; set; }
+        public decimal? Jsdh { get; set; }
 
         /// <summary>
         ///   Gets or sets the scjl
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? scjl { get; set; }
+        public decimal? Scjl { get; set; }
 
         /// <summary>
         ///   Gets or sets the gwyjb
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? gwyjb { get; set; }
+        public decimal? Gwyjb { get; set; }
 
         /// <summary>
         ///   Gets or sets the icd9
         /// </summary>
         [StringLength(10)]
-        public string icd9 { get; set; }
+        public string Icd9 { get; set; }
 
         /// <summary>
         ///   Gets or sets the zxlsh
         /// </summary>
         [StringLength(30)]
-        public string zxlsh { get; set; }
+        public string Zxlsh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ylrylb
         /// </summary>
         [StringLength(10)]
-        public string ylrylb { get; set; }
+        public string Ylrylb { get; set; }
 
         /// <summary>
         ///   Gets or sets the fjrylb
         /// </summary>
         [StringLength(10)]
-        public string fjrylb { get; set; }
+        public string Fjrylb { get; set; }
 
         /// <summary>
         ///   Gets or sets the icxx
         /// </summary>
         [Column(TypeName = "text")]
-        public string icxx { get; set; }
+        public string Icxx { get; set; }
 
         /// <summary>
         ///   Gets or sets the ickh
         /// </summary>
         [StringLength(30)]
-        public string ickh { get; set; }
+        public string Ickh { get; set; }
 
         /// <summary>
         ///   Gets or sets the dnzhye
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? dnzhye { get; set; }
+        public decimal? Dnzhye { get; set; }
 
         /// <summary>
         ///   Gets or sets the lnzhye
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? lnzhye { get; set; }
+        public decimal? Lnzhye { get; set; }
 
         /// <summary>
         ///   Gets or sets the scxh
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? scxh { get; set; }
+        public decimal? Scxh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ryxz
         /// </summary>
         [StringLength(2)]
-        public string ryxz { get; set; }
+        public string Ryxz { get; set; }
 
         /// <summary>
         ///   Gets or sets the cbxz
         /// </summary>
         [StringLength(8)]
-        public string cbxz { get; set; }
+        public string Cbxz { get; set; }
 
         /// <summary>
         ///   Gets or sets the scbz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? scbz { get; set; }
+        public decimal? Scbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the tsbz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? tsbz { get; set; }
+        public decimal? Tsbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the cayldh
         /// </summary>
         [StringLength(20)]
-        public string cayldh { get; set; }
+        public string Cayldh { get; set; }
 
         /// <summary>
         ///   Gets or sets the yldh
         /// </summary>
         [StringLength(20)]
-        public string yldh { get; set; }
+        public string Yldh { get; set; }
 
         /// <summary>
         ///   Gets or sets the zylx
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? zylx { get; set; }
+        public decimal? Zylx { get; set; }
 
         /// <summary>
         ///   Gets or sets the tsbzbz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? tsbzbz { get; set; }
+        public decimal? Tsbzbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the cabzlx
         /// </summary>
         [StringLength(50)]
-        public string cabzlx { get; set; }
+        public string Cabzlx { get; set; }
 
         /// <summary>
         ///   Gets or sets the cajzlx
         /// </summary>
         [StringLength(50)]
-        public string cajzlx { get; set; }
+        public string Cajzlx { get; set; }
 
         /// <summary>
         ///   Gets or sets the cahmlx
         /// </summary>
         [StringLength(50)]
-        public string cahmlx { get; set; }
+        public string Cahmlx { get; set; }
 
         /// <summary>
         ///   Gets or sets the caxsbz
         /// </summary>
         [StringLength(2)]
-        public string caxsbz { get; set; }
+        public string Caxsbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the cazh
         /// </summary>
         [StringLength(30)]
-        public string cazh { get; set; }
+        public string Cazh { get; set; }
 
         /// <summary>
         ///   Gets or sets the cazjlx
         /// </summary>
         [StringLength(50)]
-        public string cazjlx { get; set; }
+        public string Cazjlx { get; set; }
 
         /// <summary>
         ///   Gets or sets the cadxbz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? cadxbz { get; set; }
+        public decimal? Cadxbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the bxlx
         /// </summary>
         [StringLength(20)]
-        public string bxlx { get; set; }
+        public string Bxlx { get; set; }
 
         /// <summary>
         ///   Gets or sets the grzhye
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? grzhye { get; set; }
+        public decimal? Grzhye { get; set; }
 
         /// <summary>
         ///   Gets or sets the rylxmc
         /// </summary>
         [StringLength(30)]
-        public string rylxmc { get; set; }
+        public string Rylxmc { get; set; }
 
         /// <summary>
         ///   Gets or sets the xzqydm
         /// </summary>
         [StringLength(6)]
-        public string xzqydm { get; set; }
+        public string Xzqydm { get; set; }
 
         /// <summary>
         ///   Gets or sets the yjsrq
         /// </summary>
-        public DateTime? yjsrq { get; set; }
+        public DateTime? Yjsrq { get; set; }
 
         /// <summary>
         ///   Gets or sets the qfsdbz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? qfsdbz { get; set; }
+        public decimal? Qfsdbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the zjje
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? zjje { get; set; }
+        public decimal? Zjje { get; set; }
 
         /// <summary>
         ///   Gets or sets the jfje
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? jfje { get; set; }
+        public decimal? Jfje { get; set; }
 
         /// <summary>
         ///   Gets or sets the jsje
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? jsje { get; set; }
+        public decimal? Jsje { get; set; }
 
         /// <summary>
         ///   Gets or sets the qfje
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? qfje { get; set; }
+        public decimal? Qfje { get; set; }
 
         /// <summary>
         ///   Gets or sets the qfdbbz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? qfdbbz { get; set; }
+        public decimal? Qfdbbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the qfdbyy
         /// </summary>
         [StringLength(100)]
-        public string qfdbyy { get; set; }
+        public string Qfdbyy { get; set; }
 
         /// <summary>
         ///   Gets or sets the yllb
         /// </summary>
         [StringLength(3)]
-        public string yllb { get; set; }
+        public string Yllb { get; set; }
 
         /// <summary>
         ///   Gets or sets the cbd_xzdm
         /// </summary>
         [StringLength(6)]
-        public string cbd_xzdm { get; set; }
+        [Column("cbd_xzdm")]
+        public string CbdXzdm { get; set; }
 
         /// <summary>
         ///   Gets or sets the blbbh
         /// </summary>
         [StringLength(20)]
-        public string blbbh { get; set; }
+        public string Blbbh { get; set; }
 
         /// <summary>
         ///   Gets or sets the qypb
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? qypb { get; set; }
+        public decimal? Qypb { get; set; }
 
         /// <summary>
         ///   Gets or sets the qybr
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? qybr { get; set; }
+        public decimal? Qybr { get; set; }
 
         /// <summary>
         ///   Gets or sets the dasc
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? dasc { get; set; }
+        public decimal? Dasc { get; set; }
 
         /// <summary>
         ///   Gets or sets the actnumber
         /// </summary>
         [StringLength(60)]
-        public string actnumber { get; set; }
+        public string Actnumber { get; set; }
 
         /// <summary>
         ///   Gets or sets the url
         /// </summary>
         [StringLength(255)]
-        public string url { get; set; }
+        public string Url { get; set; }
 
         /// <summary>
         ///   Gets or sets the bllx
         /// </summary>
         [StringLength(3)]
-        public string bllx { get; set; }
+        public string Bllx { get; set; }
 
         /// <summary>
         ///   Gets or sets the jzbh
         /// </summary>
         [StringLength(20)]
-        public string jzbh { get; set; }
+        public string Jzbh { get; set; }
 
         /// <summary>
         ///   Gets or sets the dbz
         /// </summary>
         [StringLength(3)]
-        public string dbz { get; set; }
+        public string Dbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the dyzt
         /// </summary>
         [StringLength(10)]
-        public string dyzt { get; set; }
+        public string Dyzt { get; set; }
 
         /// <summary>
         ///   Gets or sets the cardno
         /// </summary>
         [StringLength(40)]
-        public string cardno { get; set; }
+        public string Cardno { get; set; }
 
         /// <summary>
         ///   Gets or sets the jtbc
         /// </summary>
         [StringLength(20)]
-        public string jtbc { get; set; }
+        public string Jtbc { get; set; }
 
         /// <summary>
         ///   Gets or sets the bjbz
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? bjbz { get; set; }
+        public decimal? Bjbz { get; set; }
 
         /// <summary>
         ///   Gets or sets the bjdj
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? bjdj { get; set; }
+        public decimal? Bjdj { get; set; }
 
         /// <summary>
         ///   Gets or sets the yepb
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? yepb { get; set; }
+        public decimal? Yepb { get; set; }
 
         /// <summary>
         ///   Gets or sets the zszpb
         /// </summary>
         [Column(TypeName = "numeric")]
-        public decimal? zszpb { get; set; }
+        public decimal? Zszpb { get; set; }
 
         /// <summary>
         ///   Gets or sets the rylb
         /// </summary>
         [StringLength(10)]
-        public string rylb { get; set; }
+        public string Rylb { get; set; }
 
         /// <summary>
         ///   Gets or sets the ygys
         /// </summary>
         [StringLength(10)]
-        public string ygys { get; set; }
+        public string Ygys { get; set; }
 
         /// <summary>
         ///   Gets or sets the brlx
         /// </summary>
-        public decimal brlx { get; set; }
+        public decimal Brlx { get; set; }
 
         [Column(TypeName = "numeric")]
-        public int YDJSBZ { get; set; }
+        public int Ydjsbz { get; set; }
 
-        [ForeignKey("BRKS")]
+        [ForeignKey("Brks")]
         public virtual GyKsdm KsBrks { get; set; }
-
+        [ForeignKey("Brxz")]
         public virtual GyBrxz GyBrxz { get; set; }
-        public virtual IList<zy_tbkk> Jkmx { get; set; }
-        public virtual IList<zy_fymx> Fymx { get; set; }
+        [ForeignKey("Zyh")]
+        public virtual IList<ZyTbkk> Jkmx { get; set; }
+        [ForeignKey("Zyh")]
+        public virtual IList<ZyFymx> Fymx { get; set; }
     }
 }
