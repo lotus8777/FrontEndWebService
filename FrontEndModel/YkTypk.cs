@@ -170,11 +170,11 @@ namespace FE.Model.Hrp275
         public decimal? Ycyl { get; set; }
 
         [StringLength(30)]
-        public string YbbmYh { get; set; }
+        public string Ybbm_Yh { get; set; }
 
-        public decimal? YbflYh { get; set; }
+        public decimal? Ybfl_Yh { get; set; }
 
-        public decimal? ShbzYh { get; set; }
+        public decimal? Shbz_Yh { get; set; }
 
         [Column(TypeName = "numeric")]
         public decimal? Zxjl { get; set; }
@@ -194,16 +194,16 @@ namespace FE.Model.Hrp275
 
         public decimal? Yyxz { get; set; }
 
-        public decimal? MzxlLx { get; set; }
+        public decimal? Mzxl_Lx { get; set; }
 
         [StringLength(20)]
         public string Nbbm { get; set; }
 
         [StringLength(6)]
-        public string YpyfYs { get; set; }
+        public string Ypyf_Ys { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? MrjlYs { get; set; }
+        public decimal? Mrjl_Ys { get; set; }
 
         [Column(TypeName = "numeric")]
         public decimal? Ybfl { get; set; }
@@ -360,7 +360,7 @@ namespace FE.Model.Hrp275
         public string Ddddw { get; set; }
 
         [StringLength(20)]
-        public string NbbmLs { get; set; }
+        public string Nbbm_Ls { get; set; }
 
         [Column(TypeName = "numeric")]
         public decimal? Hlyybfbz { get; set; }

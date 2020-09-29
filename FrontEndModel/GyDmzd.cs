@@ -21,8 +21,8 @@ namespace FE.Model.Hrp275
         public string Dmmc { get; set; }
         public string Bzbm { get; set; }
         public decimal Xtsb { get; set; }
-        public string DmsbEmr { get; set; }
-        public string DmlbEmr { get; set; }
+        public string Dmsb_Emr { get; set; }
+        public string Dmlb_Emr { get; set; }
         public string Mpicode { get; set; }
         public decimal? Lxzt { get; set; }
         public decimal? Zfpb { get; set; }

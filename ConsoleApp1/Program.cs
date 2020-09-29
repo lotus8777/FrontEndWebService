@@ -20,11 +20,14 @@ namespace ConsoleApp1
             //string inXml = "<interface><zzjgdm>470332499</zzjgdm><ksdm>1</ksdm><ysdm>140</ysdm><gzrq>2020.08.19</gzrq><zblb>1</zblb><ghlb>1</ghlb><zjpb>0</zjpb></interface>";
             string procName = "hos_expense_invoices";
             FrontEndContext ctx=new FrontEndContext();
+
+           var str= ctx.ZyBrrySet.FirstOrDefault()?.Brxm;
+            Console.WriteLine(str);
             //old.WebServiceYyghSoapClient client = new old.WebServiceYyghSoapClient();
             //var result = client.ExecProcedure(procName, inXml);
-            ExecuteProcedureFactory epf =new ExecuteProcedureFactory(ctx);
-            string inXml = @"<interface><acttype>1</acttype><actnumber>33011100047033249912020091410195900000000000000006</actnumber><list><actnumber>33011100047033249912020091410195900000000000000006</actnumber><jzlsh>518974</jzlsh><mzzyhm>2720422805</mzzyhm></list></interface>";
-            var result = epf.GetPatientInvoice( inXml);
+            // ExecuteProcedureFactory epf =new ExecuteProcedureFactory(ctx);
+            // string inXml = @"<interface><acttype>1</acttype><actnumber>33011100047033249912020091410195900000000000000006</actnumber><list><actnumber>33011100047033249912020091410195900000000000000006</actnumber><jzlsh>518974</jzlsh><mzzyhm>2720422805</mzzyhm></list></interface>";
+            //var result = epf.GetPatientInvoice( inXml);
             //DateTime begin = DateTime.Now;
             //for (int i = 0; i < 100; i++)
             //{
@@ -44,7 +47,7 @@ namespace ConsoleApp1
             //Console.WriteLine($"100次总耗时{ts1.TotalMilliseconds}-平均时间{ts1.TotalMilliseconds / 100}");
 
             //var result = epf.GetMzGhksXml("<interface><zzjgdm>470332499</zzjgdm><mode>1</mode></interface>");
-            Console.WriteLine(result);
+            //Console.WriteLine(result);
             //newService.WebServiceYyghSoapClient newClient = new newService.WebServiceYyghSoapClient();
             //var newResult = newClient.ExecProcedure(procName, inXml);
             //Console.WriteLine(newResult);

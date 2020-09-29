@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.Contracts;
 
 namespace FE.Model.Hrp275
 {
@@ -34,10 +35,14 @@ namespace FE.Model.Hrp275
         public DateTime? Jzrq { get; set; }
         public DateTime? Czrq { get; set; }
         public string Jzkh { get; set; }
-        public string GrbhYh { get; set; }
-        public string BxhYh { get; set; }
-        public decimal? RylbYh { get; set; }
-        public string LbmcYh { get; set; }
+
+        public string Grbh_Yh { get; set; }
+
+        public string Bxh_Yh { get; set; }
+
+        public decimal? Rylb_Yh { get; set; }
+
+        public string Lbmc_Yh { get; set; }
         public decimal? Gwyjb { get; set; }
         public string Ybkh { get; set; }
         public string Icmw { get; set; }
@@ -59,7 +64,7 @@ namespace FE.Model.Hrp275
         public string Kzhm { get; set; }
         public string Rylxmc { get; set; }
         public string Xzqydm { get; set; }
-        public string RylbFy { get; set; }
+        public string Rylb_Fy { get; set; }
         public decimal? Jdksdm { get; set; }
         public DateTime? Jdrq { get; set; }
         public int? Dwbz { get; set; }
@@ -77,22 +82,22 @@ namespace FE.Model.Hrp275
         public string Cardno { get; set; }
         public string Rylb { get; set; }
         public string Yldy { get; set; }
-        public string JzdzShengBm { get; set; }
-        public string JzdzShiBm { get; set; }
-        public string JzdzXianBm { get; set; }
-        public string JzdzJiedaoBm { get; set; }
-        public string JzdzSheng { get; set; }
-        public string JzdzShi { get; set; }
-        public string JzdzXian { get; set; }
-        public string JzdzJiedao { get; set; }
-        public string JzdzCun { get; set; }
-        public string JzdzLupaihao { get; set; }
+        public string Jzdz_Sheng_Bm { get; set; }
+        public string Jzdz_Shi_Bm { get; set; }
+        public string Jzdz_Xian_Bm { get; set; }
+        public string Jzdz_Jiedao_Bm { get; set; }
+        public string Jzdz_Sheng { get; set; }
+        public string Jzdz_Shi { get; set; }
+        public string Jzdz_Xian { get; set; }
+        public string Jzdz_Jiedao { get; set; }
+        public string Jzdz_Cun { get; set; }
+        public string Jzdz_Lupaihao { get; set; }
         public string Jhdh { get; set; }
         public string Jhrm { get; set; }
         public string Zjhm { get; set; }
-        public string HkdzQtdz { get; set; }
-        public string XzzDh { get; set; }
-        public string XzzYb { get; set; }
+        public string Hkdz_Qtdz { get; set; }
+        public string Xzz_Dh { get; set; }
+        public string Xzz_Yb { get; set; }
         public string Zxr { get; set; }
         public string Sbhm { get; set; }
         public string Dbrm { get; set; }
@@ -100,7 +105,7 @@ namespace FE.Model.Hrp275
         public string Lxrm { get; set; }
         public string Lxdh { get; set; }
         public string Jdr { get; set; }
-        public string XzzQtdz { get; set; }
+        public string Xzz_Qtdz { get; set; }
         public string Jhdz { get; set; }
         public string Mpiid { get; set; }
         public string Zfbid { get; set; }
@@ -112,13 +117,13 @@ namespace FE.Model.Hrp275
         public decimal? Ssscd { get; set; }
         public decimal? Bslzt { get; set; }
         public decimal? Brsg { get; set; }
-        public decimal? HkdzX { get; set; }
-        public decimal? HkdzSqs { get; set; }
-        public decimal? XzzS { get; set; }
-        public decimal? JgdmS { get; set; }
-        public decimal? CsdX { get; set; }
-        public decimal? CsdS { get; set; }
-        public decimal? CsdSqs { get; set; }
+        public decimal? Hkdz_X { get; set; }
+        public decimal? Hkdz_Sqs { get; set; }
+        public decimal? Xzz_S { get; set; }
+        public decimal? Jgdm_S { get; set; }
+        public decimal? Csd_X { get; set; }
+        public decimal? Csd_S { get; set; }
+        public decimal? Csd_Sqs { get; set; }
         public decimal? Zxbz { get; set; }
         public decimal? Zztx { get; set; }
         public decimal? Lxgx { get; set; }
@@ -127,11 +132,11 @@ namespace FE.Model.Hrp275
         public decimal? Sfdm { get; set; }
         public decimal? Dbgx { get; set; }
         public decimal? Jdjg { get; set; }
-        public decimal? JgdmSqs { get; set; }
-        public decimal? XzzX { get; set; }
-        public decimal? HkdzS { get; set; }
+        public decimal? Jgdm_Sqs { get; set; }
+        public decimal? Xzz_X { get; set; }
+        public decimal? Hkdz_S { get; set; }
         public decimal? Zjlx { get; set; }
-        public decimal? XzzSqs { get; set; }
+        public decimal? Xzz_Sqs { get; set; }
         public decimal? Gsscd { get; set; }
         public decimal? Brtz { get; set; }
         public string Cbdxzdm { get; set; }

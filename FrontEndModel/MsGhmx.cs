@@ -56,7 +56,7 @@ namespace FE.Model.Hrp275
         public decimal Sffs { get; set; }
         public decimal Jzzt { get; set; }
         public string Ywxlh { get; set; }
-        public string BusiType { get; set; }
+        public string Busi_Type { get; set; }
         public decimal? Tsbbz { get; set; }
         public string Jbbm { get; set; }
         public decimal? Tcjj { get; set; }

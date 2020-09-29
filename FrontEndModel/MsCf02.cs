@@ -1,8 +1,11 @@
+
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace FE.Model.Hrp275
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+
     [Table("ms_cf02")]
     public class MsCf02
     {
@@ -190,7 +193,7 @@ namespace FE.Model.Hrp275
         public decimal? Sybz { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? YbSfkb { get; set; }
+        public decimal? Yb_Sfkb { get; set; }
 
         public virtual MsCf01 MsCf01 { get; set; }
     }

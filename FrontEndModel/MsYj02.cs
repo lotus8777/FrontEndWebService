@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 namespace FE.Model.Hrp275
 {
     using System.ComponentModel.DataAnnotations;
@@ -103,8 +105,10 @@ namespace FE.Model.Hrp275
         public decimal? Cxbz { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? YbSfkb { get; set; }
+        public decimal? Yb_Sfkb { get; set; }
 
         public virtual MsYj01 MsYj01 { get; set; }
+        [ForeignKey("Ylxh")]
+        public virtual GyYlsf GyYlsf { get; set; }
     }
 }

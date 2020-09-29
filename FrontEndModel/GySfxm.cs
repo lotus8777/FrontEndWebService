@@ -11,7 +11,6 @@ namespace FE.Model.Hrp275
     public class GySfxm
     {
 
-
         [Key]
         public decimal Sfxm { get; set; }
         public string Sfmc { get; set; }
@@ -34,10 +33,8 @@ namespace FE.Model.Hrp275
         public decimal? Mzfpdy { get; set; }
         public string Zxgb { get; set; }
         public decimal? Lbdm { get; set; }
-        [Column("wsj_xmgb")]
-        public decimal? WsjXmgb { get; set; }
-        [Column("wsj_xmgb_zy")]
-        public decimal? WsjXmgbZy { get; set; }
+        public decimal? Wsj_Xmgb { get; set; }
+        public decimal? Wsj_Xmgb_Zy { get; set; }
         public virtual ICollection<GyYlsf> GyYlsf { get; set; }
         public virtual ICollection<GyZfbl> GyZfbl { get; set; }
     }

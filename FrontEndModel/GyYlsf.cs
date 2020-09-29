@@ -81,11 +81,11 @@ namespace FE.Model.Hrp275
         public decimal? Lislx { get; set; }
 
         [StringLength(30)]
-        public string YbbmYh { get; set; }
+        public string Ybbm_Yh { get; set; }
 
-        public decimal? YbflYh { get; set; }
+        public decimal? Ybfl_Yh { get; set; }
 
-        public decimal? ShbzYh { get; set; }
+        public decimal? Shbz_Yh { get; set; }
 
         [StringLength(2)]
         public string Xmgb { get; set; }
@@ -142,7 +142,7 @@ namespace FE.Model.Hrp275
 
         [Column(TypeName = "numeric")]
         public decimal? Lbdm { get; set; }
-
-        public virtual GyKsdm GyKsdm { get; set; }
+        [ForeignKey("Fygb")]
+        public virtual GySfxm GySfxm { get; set; }
     }
 }

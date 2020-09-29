@@ -30,34 +30,34 @@ namespace FE.Model.Hrp275
         public string Fydj { get; set; }
 
         [StringLength(3)]
-        public string SflbS { get; set; }
+        public string Sflb_S { get; set; }
 
         [StringLength(3)]
-        public string SplxS { get; set; }
+        public string Splx_S { get; set; }
 
         [StringLength(3)]
-        public string FydjS { get; set; }
+        public string Fydj_S { get; set; }
 
         [StringLength(3)]
-        public string FydjLx { get; set; }
+        public string Fydj_Lx { get; set; }
 
         [StringLength(3)]
-        public string SflbLx { get; set; }
+        public string Sflb_Lx { get; set; }
 
         [StringLength(3)]
-        public string SplxLx { get; set; }
+        public string Splx_Lx { get; set; }
 
         [StringLength(3)]
-        public string FydjTc { get; set; }
+        public string Fydj_Tc { get; set; }
 
         [StringLength(3)]
-        public string SflbTc { get; set; }
+        public string Sflb_Tc { get; set; }
 
         [StringLength(3)]
-        public string SplxTc { get; set; }
+        public string Splx_Tc { get; set; }
 
         [StringLength(3)]
-        public string SplxSlx { get; set; }
+        public string Splx_Slx { get; set; }
 
         [StringLength(20)]
         public string Sjdm { get; set; }
@@ -66,7 +66,7 @@ namespace FE.Model.Hrp275
         public decimal? Bjbz { get; set; }
 
         [StringLength(20)]
-        public string SjdmLs { get; set; }
+        public string Sjdm_Ls { get; set; }
 
         [Key]
         [Column(Order = 1)]
@@ -78,6 +78,6 @@ namespace FE.Model.Hrp275
         public string Bzdw { get; set; }
 
         [StringLength(3)]
-        public string HzybSflb { get; set; }
+        public string Hzyb_Sflb { get; set; }
     }
 }

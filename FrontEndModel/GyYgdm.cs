@@ -63,9 +63,9 @@ namespace FE.Model.Hrp275
         [Column(TypeName = "text")]
         public string Ysjj { get; set; }
 
-        public DateTime? JzsjSw { get; set; }
+        public DateTime? Jzsj_Sw { get; set; }
 
-        public DateTime? JzsjXw { get; set; }
+        public DateTime? Jzsj_Xw { get; set; }
 
         [Required]
         [StringLength(10)]
@@ -118,10 +118,11 @@ namespace FE.Model.Hrp275
         public decimal? Jgid { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? BglxYyh { get; set; }
+        public decimal? Bglx_Yyh { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? ScbzYyh { get; set; }
+
+        public decimal? Scbz_Yyh { get; set; }
 
         [StringLength(5)]
         public string Yszc { get; set; }

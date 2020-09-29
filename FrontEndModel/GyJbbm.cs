@@ -34,7 +34,7 @@ namespace FE.Model.Hrp275
         public string Fjbm { get; set; }
 
         [StringLength(16)]
-        public string JbbmYh { get; set; }
+        public string Jbbm_Yh { get; set; }
 
         public decimal? Ybsy { get; set; }
 

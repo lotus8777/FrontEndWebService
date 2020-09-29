@@ -103,6 +103,7 @@
     <Compile Include="GyYlsf.cs" />
     <Compile Include="HzybDmzd.cs" />
     <Compile Include="HzybKa63.cs" />
+    <Compile Include="hzyb_jsjl.cs" />
     <Compile Include="MsCf01.cs" />
     <Compile Include="MsCf02.cs" />
     <Compile Include="MsYj01.cs" />

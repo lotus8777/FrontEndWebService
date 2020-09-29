@@ -1,15 +1,16 @@
-﻿using System;
+﻿using FE.Context;
+using FE.Handle.Request;
+using FE.Model.Hrp275;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
+using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Services;
 using System.Xml.Linq;
-using FE.Handle.Request;
-using FE.Model.Hrp275;
-using FE.Context;
-using Oracle.ManagedDataAccess.Client;
-using Oracle.ManagedDataAccess.Types;
+
 namespace FrontEndWebService
 {
     /// <summary>
@@ -23,10 +24,12 @@ namespace FrontEndWebService
     public class WebServiceYygh : WebService
     {
         private FrontEndContext ctx;
+
         public WebServiceYygh()
         {
             ctx = new FrontEndContext();
         }
+
         /// <summary>
         ///     替换原有前置机服务
         /// </summary>
@@ -41,7 +44,7 @@ namespace FrontEndWebService
                 return ReturnXml(-1, $"存储过程名称为空！/r/n", null);
             }
 
-            if(string.IsNullOrEmpty(inXmlStr))
+            if (string.IsNullOrEmpty(inXmlStr))
             {
                 return ReturnXml(-1, $"传入参数为空！/r/n", null);
             }
@@ -55,19 +58,17 @@ namespace FrontEndWebService
             var epf = new ExecuteProcedureFactory(ctx);
             if (procedureName == "wsj_get_fsdyyb")
             {
-               
                 rtnXml = epf.GetMzFsdYy(inXmlStr);
             }
             else if (procedureName == "wsj_get_ghks")
             {
                 rtnXml = epf.GetMzGhksXml(inXmlStr);
             }
-            else if (procedureName == "hos_expense_invoices") 
+            else if (procedureName == "hos_expense_invoices")
             {
-                
                 rtnXml = epf.GetPatientInvoice(inXmlStr);
             }
-            else if (procedureName== "hos_codepay")
+            else if (procedureName == "hos_codepay")
             {
                 rtnXml = epf.GetCodePayXml(inXmlStr);
             }
@@ -79,11 +80,11 @@ namespace FrontEndWebService
             {
                 rtnXml = epf.GetGhcl(inXmlStr);
             }
-            else if(procedureName=="wsj_thcl")
+            else if (procedureName == "wsj_thcl")
             {
                 rtnXml = epf.GetThcl(inXmlStr);
             }
-            else if (procedureName=="hos_orders")
+            else if (procedureName == "hos_orders")
             {
                 rtnXml = epf.GetHosOrders(inXmlStr);
             }
@@ -94,6 +95,10 @@ namespace FrontEndWebService
             else if (procedureName == "wsj_fyqd_get")
             {
                 rtnXml = epf.GetWsjFyqd(inXmlStr);
+            }
+            else if (procedureName == "hos_invoice")
+            {
+                rtnXml = epf.GetHosInvoice(inXmlStr);
             }
             else
             {
@@ -113,6 +118,7 @@ namespace FrontEndWebService
             }
             return rtnXml;
         }
+
         /// <summary>
         /// 执行数据库存储过程
         /// </summary>
@@ -145,6 +151,7 @@ namespace FrontEndWebService
             }
             return rtnXml;
         }
+
         private string ExecuteOracleProcedure(string procedureName, string inXml, string connectionString)
         {
             string rtnXml;
@@ -176,6 +183,7 @@ namespace FrontEndWebService
             }
             return rtnXml;
         }
+
         private string ExecuteSqlServerProcedure(string procedureName, string inXml, string connectionString)
         {
             string rtnXml;
@@ -215,6 +223,7 @@ namespace FrontEndWebService
             }
             return rtnXml;
         }
+
         private string ReturnXml(int rtnValue, string bzxx, string data)
         {
             var xmlElement =

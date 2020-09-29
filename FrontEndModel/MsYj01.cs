@@ -44,7 +44,7 @@ namespace FE.Model.Hrp275
         public DateTime? Zxrq { get; set; }
 
         [Column(TypeName = "numeric")]
-        public decimal? Zxks { get; set; }
+        public int? Zxks { get; set; }
 
         [StringLength(10)]
         public string Zxys { get; set; }
@@ -128,5 +128,7 @@ namespace FE.Model.Hrp275
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MsYj02> MsYj02 { get; set; }
+        [ForeignKey("Zxks")]
+        public virtual GyKsdm GyKsdm { get; set; }
     }
 }

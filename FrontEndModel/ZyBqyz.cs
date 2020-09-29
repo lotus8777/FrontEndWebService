@@ -122,14 +122,14 @@ namespace FE.Model.Hrp275
         public string Erzyh { get; set; }
         public decimal? Mzdjbz { get; set; }
         public decimal? Jysj { get; set; }
-        public decimal? ScbzYh { get; set; }
-        public decimal? YhScbz { get; set; }
+        public decimal? Scbz_Yh { get; set; }
+        public decimal? Yh_Scbz { get; set; }
         public decimal? Scbz { get; set; }
         public decimal? Jmbz { get; set; }
         public decimal? Scylcs { get; set; }
         public decimal? Yldfbz { get; set; }
         public decimal? Yefbz { get; set; }
         public decimal? Ybzfpb { get; set; }
-        public decimal? YbSfkb { get; set; }
+        public decimal? Yb_Sfkb { get; set; }
     }
 }

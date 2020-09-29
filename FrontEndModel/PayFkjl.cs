@@ -29,7 +29,7 @@ namespace FE.Model.Hrp275
         public string Zfgh { get; set; }
         [Column(TypeName = "decimal")]
         public int State { get; set; }
-        public string ActNumber { get; set; }
+        public string Actnumber { get; set; }
         public string Brxm { get; set; }
         public string Tel { get; set; }
         public string Sfzh { get; set; }

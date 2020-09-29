@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.Data.Entity;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting;
@@ -164,8 +165,8 @@ namespace FE.Handle.Request
                         {
                             fydj = p.Key.fydj,
                             fymc = p.Key.fymc,
-                            fysl = p.Sum(t=>t.Fysl),
-                            zfje = p.Sum(t=>t.Zjje),
+                            fysl = p.Sum(t => t.Fysl),
+                            zfje = p.Sum(t => t.Zjje),
                             yblb = p.Key.YPLX,
                             fydm = p.Key.fyxh,
                             fyje = p.Sum(t => t.Zjje)
@@ -187,7 +188,7 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                return ReturnXml(-1, "获取住院费用清单失败"+e.InnerException?.Message,null);
+                return ReturnXml(-1, "获取住院费用清单失败" + e.InnerException?.Message, null);
             }
         }
 
@@ -1004,7 +1005,7 @@ namespace FE.Handle.Request
             try
             {
                 var patient = VerifyInpatient(actNumber);
-                var cvxCardType = GetCvxCardType(_config.HZYB_BRXZ, _config.WXYB_BRXZ, patient.Brxz.ToString());
+                var cvxCardType = GetCvxCardType(_config.HZYB_BRXZ, _config.WXYB_BRXZ, patient.Brxz.ToString(CultureInfo.InvariantCulture));
                 if (cvxCardType != "08")
                 {
                     var noUpload = _ctx.ZyFymxSet.Any(p => p.Zyh == patient.Zyh && p.Scbz == 0 && p.Jscs == 0);
@@ -1130,7 +1131,7 @@ namespace FE.Handle.Request
         private IList<string> GetInpatientFeeSummary(int zyh)
         {
             var sql = $@"select (ISNULL(gs.zxgb, '99'))+'-'+ CAST(SUM(zf.zjje) AS VARCHAR)
-                            FROM zy_fymx zf,GySfxm gs
+                            FROM zy_fymx zf,gy_sfxm gs
                             WHERE zf.fyxm = gs.sfxm
                             AND zf.zyh = {zyh}
                             AND zf.jscs =0
@@ -1436,6 +1437,31 @@ namespace FE.Handle.Request
             catch (Exception e)
             {
                 return ReturnXml(-1, "取就诊序号时发生错误，" + e.Message, null);
+            }
+        }
+
+        /// <summary>
+        /// 获取发票费用明细
+        /// </summary>
+        /// <param name="inXmlStr"></param>
+        /// <returns></returns>
+        public string GetHosInvoice(string inXmlStr)
+        {
+            try
+            {
+                var nodeList = GetXmlNodes(inXmlStr);
+                var actNumber = nodeList.FirstOrDefault(p => p.Name == "actnumber")?.Value;
+                var fphm = nodeList.FirstOrDefault(p => p.Name == "fphm")?.Value;
+                var yjfy = _ctx.MsYj02Set
+                    .Include(p => p.GyYlsf)
+                    .Include(p => p.MsYj01)
+                    .FirstOrDefault();
+                return null;
+            }
+            catch (Exception e)
+            {
+                return ReturnXml(-1, e.InnerException.Message, null);
+                throw;
             }
         }
     }

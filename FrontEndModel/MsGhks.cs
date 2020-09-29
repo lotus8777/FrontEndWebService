@@ -55,8 +55,8 @@ namespace FE.Model.Hrp275
         public string Bzdm { get; set; }
         public decimal Jgid { get; set; }
         public string Ddxx { get; set; }
-        public decimal? BglxYyh { get; set; }
-        public decimal? ScbzYyh { get; set; }
+        public decimal? Bglx_Yyh { get; set; }
+        public decimal? Scbz_Yyh { get; set; }
         public string Lxdh { get; set; }
         public decimal? Jjrghf { get; set; }
 

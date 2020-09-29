@@ -75,16 +75,16 @@ namespace FE.Model.Hrp275
 
         [Column(TypeName = "numeric")]
         public decimal? Xuey2 { get; set; }
-
-        public int? BkCrb { get; set; }
-
-        public int? BkJsb { get; set; }
-
-        public int? BkTnb { get; set; }
-
-        public int? BkGxy { get; set; }
-
-        public int? BkZl { get; set; }
+        [Column("bk_crb")]
+        public int? Bk_Crb { get; set; }
+        [Column("bk_jsb")]
+        public int? Bk_Jsb { get; set; }
+        [Column("bk_tnb")]
+        public int? Bk_Tnb { get; set; }
+        [Column("bk_gxy")]
+        public int? Bk_Gxy { get; set; }
+        [Column("bk_zl")]
+        public int? Bk_Zl { get; set; }
 
         [Column(TypeName = "numeric")]
         public decimal? Zhiye { get; set; }
@@ -95,11 +95,11 @@ namespace FE.Model.Hrp275
         [Column(TypeName = "numeric")]
         public decimal? Rzzt { get; set; }
 
-        [Column(TypeName = "numeric")]
-        public decimal? YcsYs { get; set; }
+        [Column("ycs_ys",TypeName = "numeric")]
+        public decimal? Ycs_Ys { get; set; }
 
-        [Column(TypeName = "numeric")]
-        public decimal? YcsCs { get; set; }
+        [Column("ycs_cs",TypeName = "numeric")]
+        public decimal? Ycs_Cs { get; set; }
 
         [Column(TypeName = "numeric")]
         public decimal? Yz { get; set; }

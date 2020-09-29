@@ -463,47 +463,47 @@ namespace FE.Model.Hrp275
         /// </summary>
         [StringLength(30)]
         [Column("grbh_yh")]
-        public string GrbhYh { get; set; }
+        public string Grbh_Yh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ybkh_yh
         /// </summary>
         [StringLength(30)]
         [Column("ybkh_yh")]
-        public string YbkhYh { get; set; }
+        public string Ybkh_Yh { get; set; }
 
         /// <summary>
         ///   Gets or sets the rylb_yh
         /// </summary>
         [Column("rylb_yh")]
-        public decimal? RylbYh { get; set; }
+        public decimal? Rylb_Yh { get; set; }
 
         /// <summary>
         ///   Gets or sets the lbmc_yh
         /// </summary>
         [StringLength(30)]
         [Column("lbmc_yh")]
-        public string LbmcYh { get; set; }
+        public string Lbmc_Yh { get; set; }
 
         /// <summary>
         ///   Gets or sets the knxx_yh
         /// </summary>
         [StringLength(30)]
         [Column("knxx_yh")]
-        public string KnxxYh { get; set; }
+        public string Knxx_Yh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ywxlh_yh
         /// </summary>
         [StringLength(30)]
         [Column("ywxlh_yh")]
-        public string YwxlhYh { get; set; }
+        public string Ywxlh_Yh { get; set; }
 
         /// <summary>
         ///   Gets or sets the zycs_yh
         /// </summary>
         [Column("zycs_yh")]
-        public decimal? ZycsYh { get; set; }
+        public decimal? Zycs_Yh { get; set; }
 
         /// <summary>
         ///   Gets or sets the bargainingid
@@ -568,7 +568,7 @@ namespace FE.Model.Hrp275
         ///   Gets or sets the cjbz_ry
         /// </summary>
         [Column("cjbz_ry")]
-        public decimal? CjbzRy { get; set; }
+        public decimal? Cjbz_Ry { get; set; }
 
         /// <summary>
         ///   Gets or sets the smkwkh
@@ -826,7 +826,7 @@ namespace FE.Model.Hrp275
         /// </summary>
         [StringLength(6)]
         [Column("cbd_xzdm")]
-        public string CbdXzdm { get; set; }
+        public string Cbd_Xzdm { get; set; }
 
         /// <summary>
         ///   Gets or sets the blbbh

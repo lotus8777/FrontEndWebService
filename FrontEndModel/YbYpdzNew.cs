@@ -41,7 +41,7 @@ namespace FE.Model.Hrp275
         public string Splx { get; set; }
 
         [StringLength(3)]
-        public string SplxSlx { get; set; }
+        public string Splx_Slx { get; set; }
 
         [Column(TypeName = "numeric")]
         public decimal? Bjbz { get; set; }
@@ -56,7 +56,7 @@ namespace FE.Model.Hrp275
         public string Zhxs { get; set; }
 
         [StringLength(3)]
-        public string HzybSflb { get; set; }
+        public string Hzyb_Sflb { get; set; }
 
         [StringLength(20)]
         public string Bzdw { get; set; }

@@ -69,11 +69,8 @@ namespace FE.Model.Hrp275
         [Column(TypeName = "numeric")]
         public decimal? Jgid { get; set; }
 
-        [Column("bglx_yyh", TypeName = "numeric")]
-        public decimal? BglxYyh { get; set; }
-
-        [Column("scbz_yyh", TypeName = "numeric")]
-        public decimal? ScbzYyh { get; set; }
+        public decimal? Bglx_Yyh { get; set; }
+        public decimal? Scbz_Yyh { get; set; }
 
         [StringLength(20)]
         public string Ksmm1 { get; set; }
@@ -97,8 +94,7 @@ namespace FE.Model.Hrp275
         public decimal? Zxybz { get; set; }
 
         [StringLength(20)]
-        [Column("wxykt_ksdm")]
-        public string WxyktKsdm { get; set; }
+        public string Wxykt_Ksdm { get; set; }
 
     }
 }

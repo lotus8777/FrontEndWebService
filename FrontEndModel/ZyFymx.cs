@@ -85,8 +85,7 @@ namespace FE.Model.Hrp275
 
         [Column(TypeName = "numeric")]
         public decimal? Zlxz { get; set; }
-        [Column("scbz_yh")]
-        public decimal? ScbzYh { get; set; }
+        public decimal? Scbz_Yh { get; set; }
 
         public decimal? Cjbz { get; set; }
 
@@ -99,8 +98,7 @@ namespace FE.Model.Hrp275
         public decimal? Yjcs { get; set; }
 
         public decimal? Spbh { get; set; }
-        [Column("jscs_jcy")]
-        public decimal? JscsJcy { get; set; }
+        public decimal? Jscs_Jcy { get; set; }
 
         [StringLength(20)]
         public string Wenjianbm { get; set; }
@@ -174,7 +172,7 @@ namespace FE.Model.Hrp275
         [Column(TypeName = "numeric")]
         public decimal? Jmbz { get; set; }
 
-        [Column("yb_sfkb",TypeName = "numeric")]
-        public decimal? YbSfkb { get; set; }
+        [Column(TypeName = "numeric")]
+        public decimal? Yb_Sfkb { get; set; }
     }
 }
