@@ -108,6 +108,7 @@
     <Content Include="Web.config" />
     <Content Include="WebServiceYygh.asmx" />
     <Content Include="XMLFile1.xml" />
+    <Content Include="XMLFile2.xml" />
     <Content Include="zy.xml" />
   </ItemGroup>
   <ItemGroup>

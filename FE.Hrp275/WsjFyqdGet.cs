@@ -9,10 +9,10 @@ namespace FE.Model.Local
 
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <remarks/>
-    [SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true)]
-    [XmlRootAttribute(Namespace = "", IsNullable = false,ElementName = "interface")]
+    [Serializable()]
+    [System.ComponentModel.DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot(Namespace = "", IsNullable = false,ElementName = "interface")]
     public class WsjFyqdGetIn
     {
         /// <remarks/>
@@ -37,10 +37,10 @@ namespace FE.Model.Local
 
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <remarks/>
-    [SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true)]
-    [XmlRootAttribute(Namespace = "", IsNullable = false,ElementName= "YyghInterface")]
+    [Serializable()]
+    [System.ComponentModel.DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot(Namespace = "", IsNullable = false,ElementName= "YyghInterface")]
     public partial class WsjFyqdGetOut
     {
         /// <remarks/>
@@ -54,9 +54,9 @@ namespace FE.Model.Local
     }
 
     /// <remarks/>
-    [SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true)]
+    [Serializable()]
+    [System.ComponentModel.DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
     //[XmlRoot("interface")]
     public partial class WsjFyqdGetInterface
     {
@@ -64,14 +64,14 @@ namespace FE.Model.Local
         public YyghInterfaceInterfaceJbxx jbxx { get; set; }
 
         /// <remarks/>
-        [XmlArrayItemAttribute("item", IsNullable = false)]
+        [XmlArrayItem("item", IsNullable = false)]
         public YyghInterfaceInterfaceItem[] fyqd { get; set; }
     }
 
     /// <remarks/>
-    [SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true)]
+    [Serializable()]
+    [System.ComponentModel.DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
     public partial class YyghInterfaceInterfaceJbxx
     {
         /// <remarks/>
@@ -113,8 +113,8 @@ namespace FE.Model.Local
 
     /// <remarks/>
     //[System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true)]
+    [System.ComponentModel.DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
     public class YyghInterfaceInterfaceItem
     {
         /// <remarks/>
@@ -130,14 +130,14 @@ namespace FE.Model.Local
         public decimal zfxj { get; set; }
 
         /// <remarks/>
-        [XmlArrayItemAttribute("fyitem")]
+        [XmlArrayItem("fyitem")]
         public YyghInterfaceInterfaceItemFyitem[] fyitem { get; set; }
     }
 
     /// <remarks/>
     //[System.SerializableAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [XmlTypeAttribute(AnonymousType = true)]
+    [System.ComponentModel.DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
     public partial class YyghInterfaceInterfaceItemFyitem
     {
         /// <remarks/>

@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OpExpenseInvoices.cs" />
+    <Compile Include="InpExpenseInvoices.cs" />
     <Compile Include="GhclParameter.cs" />
     <Compile Include="ksyspb.cs" />
     <Compile Include="WsjFyqdGet.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="NpgSqlConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToXElement.cs" />
+    <Compile Include="WsjGhclInParam.cs" />
     <Compile Include="WsjGhks.cs" />
   </ItemGroup>
   <ItemGroup>

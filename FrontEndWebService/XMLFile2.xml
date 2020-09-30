@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<YyghInterface>
+	<RtnValue>1</RtnValue>
+	<bzxx>获取出院费用清单成功</bzxx>
+	<interface>
+		<HospitalCode>9104</HospitalCode>
+		<Operator>613</Operator>
+		<CVX_CardType>08</CVX_CardType>
+		<ICInfo />
+		<ChargeType>4</ChargeType>
+		<YLLB />
+		<DisAudNo />
+		<FeeTotal>30.00</FeeTotal>
+		<ZFFY>0</ZFFY>
+		<yjje>0.00</yjje>
+		<DisMark>0</DisMark>
+		<OperatorName />
+		<Clinic>
+			<ClinicNo />
+			<ClinicDate>2019-06-13T14:56:42.117</ClinicDate>
+			<DeptCode>201</DeptCode>
+			<DeptGBCode></DeptGBCode>
+			<DeptName>一病区</DeptName>
+			<DocName>沈旭明</DocName>
+			<DocSfzh></DocSfzh>
+			<DisCode>Z00.001</DisCode>
+			<DisName>健康查体</DisName>
+			<DisDesc></DisDesc>
+			<FeeDetail>1</FeeDetail>
+			<CYZD>
+				<Item>Z00.001</Item>
+			</CYZD>
+		</Clinic>
+		<zyfymx>
+			<I07>30.00</I07>
+		</zyfymx>
+	</interface>
+</YyghInterface>

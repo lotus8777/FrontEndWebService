@@ -136,13 +136,11 @@ namespace FrontEndWebService
                 {
                     rtnXml = ExecuteOracleProcedure(procedureName, inXml, connStrOra);
                 }
-                else if (!string.IsNullOrEmpty(connStrSql))
-                {
-                    rtnXml = ExecuteSqlServerProcedure(procedureName, inXml, connStrSql);
-                }
                 else
                 {
-                    rtnXml = ReturnXml(-1, "调用HIS存储过程发生错误！~r~n数据库连接配置错误", null);
+                    rtnXml = !string.IsNullOrEmpty(connStrSql)
+                        ? ExecuteSqlServerProcedure(procedureName, inXml, connStrSql)
+                        : ReturnXml(-1, "调用HIS存储过程发生错误！~r~n数据库连接配置错误", null);
                 }
             }
             catch (Exception ex)

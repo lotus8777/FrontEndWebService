@@ -1,0 +1,46 @@
+﻿<YyghInterface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<RtnValue>1</RtnValue>
+	<bzxx>获取出院费用清单成功</bzxx>
+	<interface>
+		<HospitalCode>9104</HospitalCode>
+		<Operator>613</Operator>
+		<CVX_CardType>02</CVX_CardType>
+		<ICInfo>330183D156000005000FF4E744B31675</ICInfo>
+		<ChargeType>4</ChargeType>
+		<YLLB>21</YLLB>
+		<DisAudNo />
+		<FeeTotal>23069.15</FeeTotal>
+		<ZFFY>0</ZFFY>
+		<yjje>2000.00</yjje>
+		<DisMark>0</DisMark>
+		<OperatorName />
+		<Clinic>
+			<ClinicNo>Z28133</ClinicNo>
+			<ClinicDate>2020-09-30T09:22:44.623</ClinicDate>
+			<DeptCode>201</DeptCode>
+			<DeptGBCode />
+			<DeptName>一病区</DeptName>
+			<DocName>熊裕凤</DocName>
+			<DocSfzh>YB201433110340826198910183427</DocSfzh>
+			<DisCode>F10.500</DisCode>
+			<DisName>酒精所致的精神病性障碍</DisName>
+			<DisDesc />
+			<FeeDetail>1665</FeeDetail>
+			<CYZD>
+				<Item>F10.500</Item>
+				<Item>G47.900</Item>
+			</CYZD>
+		</Clinic>
+		<zyfymx>
+			<I99>1520.00</I99>
+			<I01>1907.45</I01>
+			<I04>1125.00</I04>
+			<I05>652.00</I05>
+			<I06>1586.20</I06>
+			<I07>250.00</I07>
+			<I08>7591.90</I08>
+			<I10>67.20</I10>
+			<I99>8369.40</I99>
+		</zyfymx>
+	</interface>
+</YyghInterface>
