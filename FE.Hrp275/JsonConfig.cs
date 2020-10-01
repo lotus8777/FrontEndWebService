@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FE.Handle.Request
+﻿namespace FE.Model.Local
 {
-    public class GenericConfig
+    public class JsonConfig
     {
-        
         public string YYBH { get; set; }
         public string CZGH { get; set; }
-        public string HZYB_BRXZ { get; set; }
-        public string WXYB_BRXZ { get; set; }
-        public int CFXQ { get; set; } = 1;
         public int WebCFXQ { get; set; } = 1;
         /// <summary>
         /// 省一卡通
@@ -26,5 +16,13 @@ namespace FE.Handle.Request
         public int ZJZCFZG { get; set; }
         public int ZJZCFFG { get; set; }
         public int PTZCF { get; set; }
+        public string HZYB_YYBH { get; set; }
+        public string YDJS_CZGH { get; set; }
+        public string HZYB_BRXZ { get; set; }
+        public string WXYB_BRXZ { get; set; }
+        public string SJYB_SJYB { get; set; }
+        public int CFXQ { get; set; }
+        public int PAYWEB_CFXQ { get; set; }
+        public string YDJS_RUN { get; set; }
     }
 }

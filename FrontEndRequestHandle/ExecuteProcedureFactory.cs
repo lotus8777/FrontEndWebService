@@ -18,7 +18,7 @@ namespace FE.Handle.Request
     public class ExecuteProcedureFactory
     {
         private readonly FrontEndContext _ctx;
-        private readonly GenericConfig _config;
+        private readonly JsonConfig _config;
         public ExecuteProcedureFactory(FrontEndContext context)
         {
             _ctx = context;
@@ -648,12 +648,13 @@ namespace FE.Handle.Request
                 throw e;
             }
         }
+
         /// <summary>
         /// 是否能预约挂号
         /// </summary>
         /// <param name="inParam"></param>
         /// <returns></returns>
-        private bool CanYyGh(WsjGhclInParam inParam)
+        private void CanYyGh(WsjGhclInParam inParam)
         {
             try
             {
@@ -678,7 +679,6 @@ namespace FE.Handle.Request
                 var lsbrxm = hy.Brxm;
                 if (!string.IsNullOrEmpty(lsbrxm) && string.IsNullOrEmpty(inParam.ghxx.pzhm))
                     throw new Exception("该号已经被占用，请重新选择");
-                return true;
             }
             catch (Exception e)
             {
@@ -790,7 +790,7 @@ namespace FE.Handle.Request
                 var ksdm = xml.Element("ksdm")?.Value;
                 var ksrq = Convert.ToDateTime(xml.Element("ksrq")?.Value);
                 var zzrq = Convert.ToDateTime(xml.Element("zzrq")?.Value);
-                var list = getKsyspb(ksdm, ksrq, zzrq);
+                var list = GetKsyspb(ksdm, ksrq, zzrq);
                 var interfaceXml = new XElement("interface");
                 foreach (var item in list)
                 {
@@ -808,7 +808,7 @@ namespace FE.Handle.Request
             }
             return root.ToString();
         }
-        private IList<ksyspb> getKsyspb(string ksdm, DateTime kssj, DateTime jssj)
+        private IList<ksyspb> GetKsyspb(string ksdm, DateTime kssj, DateTime jssj)
         {
             try
             {
@@ -926,11 +926,11 @@ namespace FE.Handle.Request
         /// <returns></returns>
         public string GetInpatientInvoices(string actNumber)
         {
-            var xml = new XElement("YyghInterface");
+            XElement xml;
             try
             {
                 var patient = VerifyInpatient(actNumber);
-                var cvxCardType = GetCvxCardType(_config.HZYB_BRXZ, _config.WXYB_BRXZ, patient.Brxz.ToString(CultureInfo.InvariantCulture));
+                var cvxCardType = GetCvxCardType(patient.Brxz.ToString(CultureInfo.InvariantCulture));
                 if (cvxCardType != "08")
                 {
                     var noUpload = _ctx.ZyFymxSet.Any(p => p.Zyh == patient.Zyh && p.Scbz == 0 && p.Jscs == 0);
@@ -958,7 +958,7 @@ namespace FE.Handle.Request
                        Clinic = clinic
                    }
                 };
-                xml = ConvertToObject<InpExpenseInvoices>.XmlSerializeToXElement(inpInvoices);
+                xml = ConvertToObject<InpExpenseInvoices>.SerializeToXElement(inpInvoices);
                 var listNode = xml.Descendants().FirstOrDefault(p=>p.Name== "interface");
                 var feeXElement=new XElement("zyfymx");
                 foreach (var item in feeSummary)
@@ -1071,7 +1071,7 @@ namespace FE.Handle.Request
         /// <returns></returns>
         public string GetOutpatientInvoices(string actNumber)
         {
-            var xml = new XElement("YyghInterface");
+           // XElement xml;
             try
             {
                 //获取病人信息
@@ -1080,63 +1080,69 @@ namespace FE.Handle.Request
                 if (jzls.Brbh <= 0) throw new Exception("获取门诊病人档案失败");
                 var patient = _ctx.MzBrdaSet.Find(jzls.Brbh);
                 if (patient == null || patient.Brxz <= 0) throw new Exception("获取病人基本信息失败");
-                var clinic = _ctx.Database.SqlQuery<Clinic>($"exec proc_wjj_outclinic {jzls.Jzxh}").FirstOrDefault();
+                var clinic = _ctx.Database.SqlQuery<OpClinic>($"exec proc_wjj_outclinic {jzls.Jzxh}").FirstOrDefault();
                 if (clinic == null) throw new Exception("获取门诊clinic信息失败");
                 if (string.IsNullOrEmpty(clinic.DisName)||string.IsNullOrEmpty(clinic.DisCode)) throw new Exception("没有诊断或诊断信息获取失败，请医生检查诊断信息");
-
+                var cyzd=new List<string>()
+                {
+                    clinic.DisCode,
+                    clinic.DisCode
+                };
+                clinic.CYZD = cyzd;
             //获取费用清单
                 var details = GetOutpatientFeeDetails((int)patient.Brid, (int)(patient.Qybr ?? 0));
-                clinic.FeeDetail = details.Select(p => p.Items.Count).DefaultIfEmpty(0).Sum();
+                clinic.FeeDetail = details.Select(p => p.Item.Count).DefaultIfEmpty(0).Sum();
                 //组装xml语句
-                xml.Add(
-                    new XElement("RtnValue", 1),
-                    new XElement("bzxx", "获取门诊费用清单成功"),
-                    new XElement("interface",
-                        new XElement("HospitalCode", _config.YYBH),
-                        new XElement("Operator", _config.CZGH),
-                        new XElement("CVX_CardType",
-                            GetCvxCardType(_config.HZYB_BRXZ, _config.WXYB_BRXZ, patient.Brxz.ToString())),
-                        new XElement("ICInfo", GetIcInfor(patient.Ickh, patient.Ybkh, patient.Icxx)),
-                        new XElement("ChargeType", 1),
-                        new XElement("YLLB", 11), //门诊的医疗类别为11，固定值
-                        new XElement("DisAudNo"),
-                        new XElement("FeeTotal", details.Sum(p => p.itemCost)),
-                        new XElement("ZFFY", 0),
-                        new XElement("yjje", 0),
-                        new XElement("DisMark", 0),
-                        new XElement("OperatorName"),
-                        clinic.ToXml(),
-                        GetOutpatientFeeXml(details)
-                    )
-                );
+                var opExpense = new OpExpenseInvoices()
+                {
+                    OpInterface = new OpExpenseInvoicesInterface()
+                    {
+                        HospitalCode = _config.YYBH,
+                        Operator = _config.CZGH,
+                        CVX_CardType = GetCvxCardType(patient.Brxz.ToString()),
+                        ICInfo = GetIcInfor(patient),
+                        FeeTotal = details.Sum(p=>p.itemCost),
+                        Clinic = clinic,
+                        list = details
+                    }
+                };
+                return ConvertToObject<OpExpenseInvoices>.SerializeToXElement(opExpense).ToString();
+                //xml.Add(
+                //    new XElement("RtnValue", 1),
+                //    new XElement("bzxx", "获取门诊费用清单成功"),
+                //    new XElement("interface",
+                //        new XElement("HospitalCode", _config.YYBH),
+                //        new XElement("Operator", _config.CZGH),
+                //        new XElement("CVX_CardType",
+                //            GetCvxCardType(_config.HZYB_BRXZ, _config.WXYB_BRXZ, patient.Brxz.ToString())),
+                //        new XElement("ICInfo", GetIcInfor(patient.Ickh, patient.Ybkh, patient.Icxx)),
+                //        new XElement("ChargeType", 1),
+                //        new XElement("YLLB", 11), //门诊的医疗类别为11，固定值
+                //        new XElement("DisAudNo"),
+                //        new XElement("FeeTotal", details.Sum(p => p.itemCost)),
+                //        new XElement("ZFFY", 0),
+                //        new XElement("yjje", 0),
+                //        new XElement("DisMark", 0),
+                //        new XElement("OperatorName"),
+                //        clinic.ToXml(),
+                //        GetOutpatientFeeXml(details)
+                //    )
+                //);
             }
             catch (Exception ex)
             {
-                throw ex;
+                return ReturnXml(-1, ex.Message, null);
             }
-            return xml.ToString();
+
         }
-        /// <summary>
-        /// 获取门诊费用明细XML
-        /// </summary>
-        /// <param name="details"></param>
-        /// <returns></returns>
-        private XElement GetOutpatientFeeXml(IList<Detail> details)
-        {
-            var xml = new XElement("list");
-            foreach (var detail in details)
-            {
-                xml.Add(detail.ToXml());
-            }
-            return xml;
-        }
+
         /// <summary>
         ///     获取门诊费用详单
         /// </summary>
         /// <param name="brid"></param>
         /// <param name="qybr"></param>
         /// <returns></returns>
-        private IList<Detail> GetOutpatientFeeDetails(int brid, int qybr)
+        private List<OpFeeDetail> GetOutpatientFeeDetails(int brid, int qybr)
         {
             var cfsj = DateTime.Now.AddDays(0 - _config.CFXQ);
             var webCfsj = DateTime.Now.AddDays(0 - _config.WebCFXQ);
@@ -1151,20 +1157,25 @@ namespace FE.Handle.Request
             }
             //获取费用清单
             var sql = $"exec proc_wjj_cfyj {brid},'{cfsj}','{webCfsj}','{djsj1}'";
-            var list = _ctx.Database.SqlQuery<Detail>(sql).ToList();
+            var list = _ctx.Database.SqlQuery<OpFeeDetail>(sql).ToList();
             if (list.Any())
             {
                 try
                 {
-                    foreach (var item in list)
+                    foreach (var opFee in list)
                     {
-                        if (item.Type == 1)
+                        if (opFee.Type == 1)
                         {
-                            item.Items = _ctx.Database.SqlQuery<item>($"exec proc_wjj_cfmx {item.itemNo}").ToList();
+                            opFee.Item = _ctx.Database.SqlQuery<OpFeeDetailItem>($"exec proc_wjj_cfmx {opFee.itemNo}").ToList();
                         }
                         else
                         {
-                            item.Items = _ctx.Database.SqlQuery<item>($"exec proc_wjj_yjmx {item.itemNo}").ToList();
+                            opFee.Item = _ctx.Database.SqlQuery<OpFeeDetailItem>($"exec proc_wjj_yjmx {opFee.itemNo}").ToList();
+                        }
+
+                        if (opFee.Item.Any())
+                        {
+                            opFee.itemCost = opFee.Item.Sum(p => p.ItemTotal);
                         }
                     }
                 }
@@ -1186,26 +1197,25 @@ namespace FE.Handle.Request
         /// <param name="wxBrxz">原网新医保病人性质</param>
         /// <param name="brxz">病人性质</param>
         /// <returns></returns>
-        public string GetCvxCardType(string hzBrxz, string wxBrxz, string brxz)
+        public string GetCvxCardType(string brxz)
         {
-            if (hzBrxz == brxz || wxBrxz == brxz)
+            if (_config.HZYB_BRXZ == brxz || _config.WXYB_BRXZ == brxz)
             {
                 return "02";
             }
             return "08";
         }
+
         /// <summary>
         ///     返回医保ic卡信息
         /// </summary>
-        /// <param name="ickh"></param>
-        /// <param name="ybkh"></param>
-        /// <param name="icxx"></param>
+        /// <param name="patient"></param>
         /// <returns></returns>
-        public string GetIcInfor(string ickh, string ybkh, string icxx)
+        public string GetIcInfor(MsBrda patient)
         {
-            if (string.IsNullOrEmpty(ickh)) ickh = "";
-            if (string.IsNullOrEmpty(ybkh)) ybkh = "";
-            if (string.IsNullOrEmpty(icxx)) icxx = "";
+            var ickh = patient.Ickh ?? "";
+            var ybkh = patient.Ybkh ?? "";
+            var icxx = patient.Icxx ?? "";
             if (ickh.Length <= 30)
             {
                 if (ybkh.Length >= 30)
@@ -1314,10 +1324,10 @@ namespace FE.Handle.Request
             return xmlElement.ToString();
         }
 
-        private GenericConfig GetGenericConfig()
+        private JsonConfig GetGenericConfig()
         {
-            var path = $@"{AppContext.BaseDirectory}\appconfig.json";
-            return JsonConvert.DeserializeObject<GenericConfig>(File.ReadAllText(path));
+            var path = $@"{AppContext.BaseDirectory}\appConfig.json";
+            return JsonConvert.DeserializeObject<JsonConfig>(File.ReadAllText(path));
         }
 
         private IList<XElement> GetXmlNodes(string xmlString)

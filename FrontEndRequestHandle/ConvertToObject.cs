@@ -97,7 +97,7 @@ namespace FE.Handle.Request
         /// </summary>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static XElement XmlSerializeToXElement(T t)
+        public static XElement SerializeToXElement(T t)
         {
             XElement xmlElement;
             var setting = new XmlWriterSettings()

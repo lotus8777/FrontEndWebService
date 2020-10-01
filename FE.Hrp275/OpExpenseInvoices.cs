@@ -19,13 +19,14 @@ namespace FE.Model.Local
     public class OpExpenseInvoices
     {
         /// <remarks/>
-        public byte RtnValue { get; set; }
+        public byte RtnValue { get; set; } = 1;
 
         /// <remarks/>
-        public string bzxx { get; set; }
+        public string bzxx { get; set; } = "获取门诊费用清单成功";
 
         /// <remarks/>
-        public OpExpenseInvoicesInterface Interface { get; set; }
+        [XmlElement("interface")]
+        public OpExpenseInvoicesInterface OpInterface { get; set; }
     }
 
     /// <remarks/>
@@ -35,54 +36,54 @@ namespace FE.Model.Local
     public class OpExpenseInvoicesInterface
     {
         /// <remarks/>
-        public ushort HospitalCode { get; set; }
+        public string HospitalCode { get; set; }
 
         /// <remarks/>
-        public ushort Operator { get; set; }
+        public string Operator { get; set; }
 
         /// <remarks/>
-        public byte CVX_CardType { get; set; }
+        public string CVX_CardType { get; set; }
 
         /// <remarks/>
         public string ICInfo { get; set; }
 
         /// <remarks/>
-        public byte ChargeType { get; set; }
+        public byte ChargeType { get; set; } = 1;
 
         /// <remarks/>
-        public byte YLLB { get; set; }
+        public byte YLLB { get; set; } = 11;
 
         /// <remarks/>
-        public object DisAudNo { get; set; }
+        public string DisAudNo { get; set; }
 
         /// <remarks/>
         public decimal FeeTotal { get; set; }
 
         /// <remarks/>
-        public byte ZFFY { get; set; }
+        public byte ZFFY { get; set; } = 0;
 
         /// <remarks/>
-        public byte yjje { get; set; }
+        public byte yjje { get; set; } = 0;
 
         /// <remarks/>
-        public byte DisMark { get; set; }
+        public byte DisMark { get; set; } = 0;
 
         /// <remarks/>
-        public object OperatorName { get; set; }
+        public string OperatorName { get; set; }
 
         /// <remarks/>
-        public OpExpenseInvoicesClinic Clinic { get; set; }
+        public OpClinic Clinic { get; set; }
 
         /// <remarks/>
         [XmlArrayItem("Detail", IsNullable = false)]
-        public OpFeeDetail[] list { get; set; }
+        public List<OpFeeDetail> list { get; set; }
     }
 
     /// <remarks/>
     [Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class OpExpenseInvoicesClinic
+    public class OpClinic
     {
         
         public string ClinicNo { get; set; }
@@ -115,22 +116,12 @@ namespace FE.Model.Local
         public string DisDesc { get; set; }
 
         public int FeeDetail { get; set; }
-
-        public OpDiagnosis[] CYZD { get; set; }
+        [XmlArrayItem("Item")]
+        public List<string> CYZD { get; set; }
 
         
     }
-    /// <summary>
-    /// 门诊诊断信息
-    /// </summary>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    public class OpDiagnosis
-    {
-        /// <remarks/>
-        public string Item { get; set; }
-    }
+
 
     /// <summary>
     /// 门诊费用明细
@@ -154,7 +145,7 @@ namespace FE.Model.Local
 
         /// <remarks/>
         [XmlElement("item")]
-        public OpFeeDetailItem[] item { get; set; }
+        public List<OpFeeDetailItem> Item { get; set; }
     }
 
     /// <remarks/>
@@ -200,7 +191,7 @@ namespace FE.Model.Local
         public string Unit { get; set; }
 
         /// <remarks/>
-        public object Spec { get; set; }
+        public string Spec { get; set; }
 
         /// <remarks/>
         public string MedType { get; set; }

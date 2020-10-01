@@ -53,12 +53,9 @@
   <ItemGroup>
     <Compile Include="OpExpenseInvoices.cs" />
     <Compile Include="InpExpenseInvoices.cs" />
-    <Compile Include="GhclParameter.cs" />
     <Compile Include="ksyspb.cs" />
     <Compile Include="WsjFyqdGet.cs" />
-    <Compile Include="Clinic.cs" />
-    <Compile Include="Detail.cs" />
-    <Compile Include="GlobalProperty.cs" />
+    <Compile Include="JsonConfig.cs" />
     <Compile Include="HosOrder.cs" />
     <Compile Include="NpgSqlConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

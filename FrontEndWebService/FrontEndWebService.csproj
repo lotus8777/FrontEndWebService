@@ -128,7 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="appconfig.json" />
+    <Content Include="appConfig.json" />
     <None Include="Properties\PublishProfiles\10服务器.pubxml" />
     <None Include="Properties\PublishProfiles\yygh.pubxml" />
     <None Include="Properties\PublishProfiles\yygh1.pubxml" />
