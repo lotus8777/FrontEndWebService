@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using ConsoleApp1.old;
-using ConsoleApp1.newService;
 using FE.Context;
-using FE.Handle.Request;
-using ExecProcedureRequest = ConsoleApp1.old.ExecProcedureRequest;
 
 namespace ConsoleApp1
 {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FE.Model.Hrp275
@@ -8,7 +9,9 @@ namespace FE.Model.Hrp275
     [Table("hzyb_jsjl")]
     public  class HzybJsjl
     {
+        [Key,Column(Order = 1)]
         public string Fphm { get; set; }
+        [Key, Column(Order = 2)]
         public decimal Jzlx { get; set; }
         public string Yylsh { get; set; }
         public string Zxlsh { get; set; }

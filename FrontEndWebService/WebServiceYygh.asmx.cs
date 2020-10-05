@@ -1,6 +1,4 @@
 ﻿using FE.Context;
-using FE.Handle.Request;
-using FE.Model.Hrp275;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using System;
@@ -10,6 +8,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Services;
 using System.Xml.Linq;
+using FE.Handle.Request;
+using FE.Model.Hrp275;
 
 namespace FrontEndWebService
 {
@@ -66,7 +66,7 @@ namespace FrontEndWebService
             }
             else if (procedureName == "hos_expense_invoices")
             {
-                rtnXml = epf.GetPatientInvoice(inXmlStr);
+                rtnXml = epf.GetExpenseInvoice(inXmlStr);
             }
             else if (procedureName == "hos_codepay")
             {
@@ -100,6 +100,11 @@ namespace FrontEndWebService
             {
                 rtnXml = epf.GetHosInvoice(inXmlStr);
             }
+            else if (procedureName == "hos_pay_confirm1")
+            {
+                var pcf=new PayConfirmFactory(ctx,inXmlStr);
+                rtnXml = pcf.GetPayConfirm();
+            }
             else
             {
                 rtnXml = ExecDbProcedure(ProcName, inXmlStr);
@@ -107,6 +112,10 @@ namespace FrontEndWebService
 
             try
             {
+                if (rtnXml.Contains(@"<RtnValue>-1</RtnValue>"))
+                {
+                    record.IsSuccess = 0;
+                }
                 record.OutXml = rtnXml;
                 record.ResponseTime = DateTime.Now;
                 ctx.RequestRecords.Add(record);

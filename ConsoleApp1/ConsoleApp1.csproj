@@ -124,13 +124,9 @@
       <Project>{E5A823CB-BDA2-411B-B7B7-FF03EA9343B2}</Project>
       <Name>FE.Context</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FrontEndModel\FE.Model.Hrp275.csproj">
+    <ProjectReference Include="..\FE.Model.Hrp275\FE.Model.Hrp275.csproj">
       <Project>{FCA3F82C-8AB5-4233-B349-A6DBDF7EB695}</Project>
       <Name>FE.Model.Hrp275</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrontEndRequestHandle\FE.Handle.Request.csproj">
-      <Project>{653ddc6f-61ce-40c5-ad20-73451db5c427}</Project>
-      <Name>FE.Handle.Request</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

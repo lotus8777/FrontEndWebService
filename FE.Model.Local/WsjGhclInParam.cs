@@ -114,10 +114,10 @@ namespace FE.Model.Local
         public int jzxh { get; set; }
 
         /// <remarks/>
-        public DateTime jzsj { get; set; }
+        public string jzsj { get; set; }
 
         /// <remarks/>
-        public DateTime jzsj2 { get; set; }
+        public string jzsj2 { get; set; }
 
         /// <remarks/>
         public int zjpb { get; set; }

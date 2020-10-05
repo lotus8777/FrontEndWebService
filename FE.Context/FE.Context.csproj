@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="FrontEndContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,7 +59,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FrontEndModel\FE.Model.Hrp275.csproj">
+    <ProjectReference Include="..\FE.Model.Hrp275\FE.Model.Hrp275.csproj">
       <Project>{FCA3F82C-8AB5-4233-B349-A6DBDF7EB695}</Project>
       <Name>FE.Model.Hrp275</Name>
     </ProjectReference>

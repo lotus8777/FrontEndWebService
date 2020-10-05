@@ -143,16 +143,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FE.Context\FE.Context.csproj">
-      <Project>{e5a823cb-bda2-411b-b7b7-ff03ea9343b2}</Project>
+      <Project>{E5A823CB-BDA2-411B-B7B7-FF03EA9343B2}</Project>
       <Name>FE.Context</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FrontEndModel\FE.Model.Hrp275.csproj">
+    <ProjectReference Include="..\FE.Handle.Request\FE.Handle.Request.csproj">
+      <Project>{653ddc6f-61ce-40c5-ad20-73451db5c427}</Project>
+      <Name>FE.Handle.Request</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FE.Model.Hrp275\FE.Model.Hrp275.csproj">
       <Project>{fca3f82c-8ab5-4233-b349-a6dbdf7eb695}</Project>
       <Name>FE.Model.Hrp275</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrontEndRequestHandle\FE.Handle.Request.csproj">
-      <Project>{653DDC6F-61CE-40C5-AD20-73451DB5C427}</Project>
-      <Name>FE.Handle.Request</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

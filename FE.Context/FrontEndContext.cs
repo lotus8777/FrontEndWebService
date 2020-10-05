@@ -23,6 +23,15 @@ namespace FE.Context
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
         //MzyyGhxx
+        public virtual DbSet<ZyJsmx> ZyJsmxSet { get; set; }
+        public virtual DbSet<ZyCwsz> ZyCwszSet { get; set; }
+        public virtual DbSet<ZyJszf> ZyJszfSet { get; set; }
+        public virtual DbSet<ZyZyjs> ZyZyjsSet { get; set; }
+        public virtual DbSet<MsMzxx> MsMzxxSet { get; set; }
+        public virtual DbSet<MsSfmx> MsSfmxSet { get; set; }
+        public virtual DbSet<HzybJsjl> HzybJsjlSet { get; set; }
+        public virtual DbSet<BocJsjl> BocJsjlSet { get; set; }
+       // public virtual DbSet<MsYjkdyz> MsYjkdyzSet { get; set; }
         public virtual DbSet<GySfxm> GySfxmSet { get; set; }
         public virtual DbSet<ZyBqyz> ZyBqyzSet { get; set; }
         public virtual DbSet<MsyyGhxx> MzyyGhxxSet { get; set; }
@@ -59,6 +68,8 @@ namespace FE.Context
         public virtual DbSet<PayFkrz> PayFkrzSet { get; set; }
         public virtual DbSet<PayFkjl> PayFkjlSet { get; set; }
         public virtual DbSet<MsIdentity> MzIdentitySet { get; set; }
+        public virtual DbSet<GyIdentity> GyIdentitySet { get; set; }
+        public virtual DbSet<ZyIdentity> ZyIdentitySet { get; set; }
         public virtual DbSet<MsYgpj> MzYgpjSet { get; set; }
     }
 }

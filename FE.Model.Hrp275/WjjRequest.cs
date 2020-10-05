@@ -15,5 +15,6 @@ namespace FE.Model.Hrp275
         public string OutXml { get; set; }
         public DateTime RequestTime { get; set; } = DateTime.Now;
         public DateTime ResponseTime { get; set; }
+        public int IsSuccess { get; set; } = 1;
     }
 }

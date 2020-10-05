@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HosPayConfirmIn.cs" />
     <Compile Include="OpExpenseInvoices.cs" />
     <Compile Include="InpExpenseInvoices.cs" />
     <Compile Include="ksyspb.cs" />

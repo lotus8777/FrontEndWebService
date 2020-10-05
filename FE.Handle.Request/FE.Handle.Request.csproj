@@ -57,8 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicFactory.cs" />
     <Compile Include="ExecuteProcedureFactory.cs" />
     <Compile Include="ConvertToObject.cs" />
+    <Compile Include="PayConfirmFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GeneralTools.cs" />
   </ItemGroup>
@@ -67,13 +69,13 @@
       <Project>{E5A823CB-BDA2-411B-B7B7-FF03EA9343B2}</Project>
       <Name>FE.Context</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FE.Hrp275\FE.Model.Local.csproj">
-      <Project>{549B242C-2263-4CED-B119-5EB90366510A}</Project>
-      <Name>FE.Model.Local</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FrontEndModel\FE.Model.Hrp275.csproj">
+    <ProjectReference Include="..\FE.Model.Hrp275\FE.Model.Hrp275.csproj">
       <Project>{FCA3F82C-8AB5-4233-B349-A6DBDF7EB695}</Project>
       <Name>FE.Model.Hrp275</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FE.Model.Local\FE.Model.Local.csproj">
+      <Project>{549B242C-2263-4CED-B119-5EB90366510A}</Project>
+      <Name>FE.Model.Local</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

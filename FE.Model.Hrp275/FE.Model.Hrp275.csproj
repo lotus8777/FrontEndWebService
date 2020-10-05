@@ -91,6 +91,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BocJsjl.cs" />
+    <Compile Include="GyIdentity.cs" />
+    <Compile Include="TempProcYdjs.cs" />
     <Compile Include="GyBrxz.cs" />
     <Compile Include="GySfxm.cs" />
     <Compile Include="GySypc.cs" />
@@ -103,7 +106,7 @@
     <Compile Include="GyYlsf.cs" />
     <Compile Include="HzybDmzd.cs" />
     <Compile Include="HzybKa63.cs" />
-    <Compile Include="hzyb_jsjl.cs" />
+    <Compile Include="HzybJsjl.cs" />
     <Compile Include="MsCf01.cs" />
     <Compile Include="MsCf02.cs" />
     <Compile Include="MsYj01.cs" />
@@ -118,6 +121,9 @@
     <Compile Include="MsFsdYy.cs" />
     <Compile Include="MsGhks.cs" />
     <Compile Include="MsyyGhxx.cs" />
+    <Compile Include="MsMzxx.cs" />
+    <Compile Include="MsSfmx.cs" />
+    <Compile Include="MsYjkdyz.cs" />
     <Compile Include="PayDmzd.cs" />
     <Compile Include="PayFkjl.cs" />
     <Compile Include="PayFkrz.cs" />
@@ -131,9 +137,14 @@
     <Compile Include="ZyBrry.cs" />
     <Compile Include="ZyBqyz.cs" />
     <Compile Include="ZyFymx.cs" />
+    <Compile Include="ZyIdentity.cs" />
     <Compile Include="ZyRyzd.cs" />
     <Compile Include="ZyTbkk.cs" />
     <Compile Include="ZyYpyf.cs" />
+    <Compile Include="ZyCwsz.cs" />
+    <Compile Include="ZyJsmx.cs" />
+    <Compile Include="ZyJszf.cs" />
+    <Compile Include="ZyZyjs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

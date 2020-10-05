@@ -949,8 +949,8 @@ namespace FE.Model.Hrp275
         [ForeignKey("Brxz")]
         public virtual GyBrxz GyBrxz { get; set; }
         [ForeignKey("Zyh")]
-        public virtual IList<ZyTbkk> Jkmx { get; set; }
+        public virtual IList<ZyFymx> ZyFymxs { get; set; }
         [ForeignKey("Zyh")]
-        public virtual IList<ZyFymx> Fymx { get; set; }
+        public virtual IList<ZyTbkk> ZyTbkks { get; set; }
     }
 }
