@@ -129,6 +129,11 @@
       <Name>FE.Model.Hrp275</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="XMLFile1.xml" />
+    <Content Include="XMLFile2.xml" />
+    <Content Include="zy.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

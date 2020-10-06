@@ -73,6 +73,6 @@ namespace FE.Model.Hrp275
         public ZyBrry ZyBrry { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public ICollection<ZyJsmx> ZyJsmxSet { get; set; }
-        public ZyJszf ZyJszf { get; set; }
+
     }
 }

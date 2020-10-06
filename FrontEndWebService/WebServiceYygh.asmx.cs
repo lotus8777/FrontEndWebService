@@ -23,11 +23,11 @@ namespace FrontEndWebService
     // [System.Web.Script.Services.ScriptService]
     public class WebServiceYygh : WebService
     {
-        private FrontEndContext ctx;
+        public FrontEndContext _ctx;
 
         public WebServiceYygh()
         {
-            ctx = new FrontEndContext();
+            _ctx = new FrontEndContext();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace FrontEndWebService
             };
             string rtnXml;
             string procedureName = ProcName.ToLower().Trim();
-            var epf = new ExecuteProcedureFactory(ctx);
+            var epf = new ExecuteProcedureFactory(_ctx);
             if (procedureName == "wsj_get_fsdyyb")
             {
                 rtnXml = epf.GetMzFsdYy(inXmlStr);
@@ -100,9 +100,9 @@ namespace FrontEndWebService
             {
                 rtnXml = epf.GetHosInvoice(inXmlStr);
             }
-            else if (procedureName == "hos_pay_confirm1")
+            else if (procedureName == "hos_pay_confirm")
             {
-                var pcf=new PayConfirmFactory(ctx,inXmlStr);
+                var pcf=new PayConfirmFactory(_ctx,inXmlStr);
                 rtnXml = pcf.GetPayConfirm();
             }
             else
@@ -118,8 +118,8 @@ namespace FrontEndWebService
                 }
                 record.OutXml = rtnXml;
                 record.ResponseTime = DateTime.Now;
-                ctx.RequestRecords.Add(record);
-                ctx.SaveChanges();
+                _ctx.RequestRecords.Add(record);
+                _ctx.SaveChanges();
             }
             catch (Exception e)
             {

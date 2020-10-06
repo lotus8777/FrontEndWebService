@@ -64,7 +64,7 @@ namespace FE.Handle.Request
                         Sjhm = $"YD{_inPara.PayLSH}",
                         MsMzxx_Mzxh = identity.mzxh,
                         BocJsjl_Jlxh = identity.jlxh,
-                        Jzlx = _inPara.OtherPara.Jzlx
+                        Jzlx = 2
                     };
 
                     if (_inPara.YbJsxx.CVX_CardType == "02")
@@ -105,7 +105,7 @@ namespace FE.Handle.Request
                     InsertHzybJsjl();
                     InsertBocJsjl();
                     var xml = GetOpResultXmlString();
-                    throw new Exception("ceshishi");
+                    //throw new Exception("ceshishi");
                     transaction.Commit();
                     return xml;
                 }
@@ -622,7 +622,6 @@ namespace FE.Handle.Request
                         Jsjk = jsjk,
                         Jscs = (int)zyBrry.Jscs + 1
                     };
-
                     InsertZyTbkk(zyBrry);
                     InsertBocJsjl();
                     InsertZyZyjs(zyBrry);
@@ -634,7 +633,7 @@ namespace FE.Handle.Request
                     //GetYlrylb();
                     InsertHzybJsjl();
                     var xml = GetInpResultXmlString(zyBrry.Zyh);
-                    throw new NotImplementedException();
+                    //throw new NotImplementedException();
                     transaction.Commit();
                     return xml;
                 }
