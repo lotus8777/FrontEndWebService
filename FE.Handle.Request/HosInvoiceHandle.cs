@@ -9,12 +9,12 @@ using FE.Model.Local;
 
 namespace FE.Handle.Request
 {
-    public class HosInvoiceHandle : BasicHandle
+    public class HosInvoiceHandle : BasicHandle<HosInvoiceIn>
     {
-        private readonly HosInvoiceIn _inPara;
-        public HosInvoiceHandle(FrontEndContext context, string inXmlStr) : base(context)
+        //private readonly HosInvoiceIn InPara;
+        public HosInvoiceHandle(FrontEndContext context, string inXmlStr) : base(context,inXmlStr)
         {
-            _inPara = ConvertToObject<HosInvoiceIn>.XmlDeserialize(inXmlStr);
+            //InPara = ConvertToObject<HosInvoiceIn>.XmlDeserialize(inXmlStr);
         }
         /// <summary>
         ///     获取发票费用明细
@@ -49,7 +49,7 @@ namespace FE.Handle.Request
             try
             {
                 var invoiceItems = new List<InvoiceItem>();
-                var msYj01 = Ctx.MsYj01Set.Where(p => p.Fphm == _inPara.fphm)
+                var msYj01 = Ctx.MsYj01Set.Where(p => p.Fphm == InPara.fphm)
                     .Include(p => p.MsYj02.Select(y => y.GyYlsf))
                     .Include(p => p.GyKsdm)
                     .FirstOrDefault();
@@ -114,7 +114,7 @@ namespace FE.Handle.Request
         {
 
             var invoiceItems = new List<InvoiceItem>();
-            var msCf01 = Ctx.MsCf01Set.Where(p => p.Fphm == _inPara.fphm)
+            var msCf01 = Ctx.MsCf01Set.Where(p => p.Fphm == InPara.fphm)
                    .Include(p => p.MsCf02.Select(t => t.YkTypk))
                    .Include(p => p.GyKsdm)
                    .FirstOrDefault();

@@ -57,7 +57,8 @@ namespace FrontEndWebService
                 var epf = new ExecuteProcedureFactory(_ctx);
                 if (procedureName == "wsj_get_fsdyyb")
                 {
-                    rtnXml = epf.GetMzFsdYy(inXmlStr);
+                    var wsjFsdYy=new WsjFsdYyHandle(_ctx,inXmlStr);
+                    rtnXml = wsjFsdYy.GetOpFsdYy();
                 }
                 else if (procedureName == "wsj_get_ghks")
                 {

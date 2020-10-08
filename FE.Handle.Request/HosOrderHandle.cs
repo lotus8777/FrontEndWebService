@@ -10,12 +10,12 @@ using FE.Model.Local;
 
 namespace FE.Handle.Request
 {
-    public class HosOrderHandle : BasicHandle
+    public class HosOrderHandle : BasicHandle<HosOrderIn>
     {
-        private HosOrderIn InPara;
-        public HosOrderHandle(FrontEndContext context, string xmlString) : base(context)
+        //private HosOrderIn InPara;
+        public HosOrderHandle(FrontEndContext context, string xmlString) : base(context,xmlString)
         {
-            InPara = ConvertToObject<HosOrderIn>.XmlDeserialize(xmlString);
+            //InPara = ConvertToObject<HosOrderIn>.XmlDeserialize(xmlString);
         }
 
         public string GetHosOrders()

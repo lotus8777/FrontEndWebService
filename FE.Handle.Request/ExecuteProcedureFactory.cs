@@ -163,54 +163,7 @@ namespace FE.Handle.Request
             }
         }
 
-        /// <summary>
-        ///     门诊分时段预约号源
-        /// </summary>
-        /// <param name="inXml"></param>
-        /// <returns></returns>
-        public string GetMzFsdYy(string inXml)
-        {
-            string rtnXml;
-            var xml = XElement.Parse(inXml);
-            var ksdm = xml.Element("ksdm")?.Value;
-            var ysdm = xml.Element("ysdm")?.Value;
-            var gzrq = Convert.ToDateTime(xml.Element("gzrq")?.Value);
-            var zblb = Convert.ToInt32(xml.Element("zblb")?.Value);
-            var yypb = Ctx.MzFsdYySet.Where(p =>
-                    p.Gzrq == gzrq &&
-                    p.Ksdm == ksdm &&
-                    p.Ysdm == ysdm &&
-                    p.Zblb == zblb &&
-                    p.Yylb == 1 &&
-                    p.Ghpb == 0)
-                .ToList();
-            if (yypb.Any())
-            {
-                var document = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
-                    new XElement("YyghInterface",
-                        new XElement("RtnValue", 1),
-                        new XElement("bzxx", ""),
-                        new XElement("interface")
-                    ));
-                foreach (var item in yypb)
-                {
-                    document.Root?.Element("interface")
-                        ?.Add(new XElement("row",
-                            new XElement("jzxh", item.Jzxh),
-                            new XElement("jzsj", item.Jzsj),
-                            new XElement("jzsj2", item.Jzsj.AddMinutes(30))
-                        ));
-                }
 
-                rtnXml = document.ToString();
-            }
-            else
-            {
-                throw new Exception("获取分时段号源出错！");
-            }
-
-            return rtnXml.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
-        }
 
         public string GetMzGhksXml(string inXml)
         {

@@ -10,12 +10,12 @@ using FE.Model.Hrp275;
 using FE.Model.Local;
 namespace FE.Handle.Request
 {
-    public class WsjThclHandle : BasicHandle
+    public class WsjThclHandle : BasicHandle<WsjThclIn>
     {
-        private readonly WsjThclIn _inPara;
-        public WsjThclHandle(FrontEndContext context, string inXmlStr) : base(context)
+        //private readonly WsjThclIn InPara;
+        public WsjThclHandle(FrontEndContext context, string inXmlStr) : base(context,inXmlStr)
         {
-            _inPara = ConvertToObject<WsjThclIn>.XmlDeserialize(inXmlStr);
+            //InPara = ConvertToObject<WsjThclIn>.XmlDeserialize(inXmlStr);
         }
         /// <summary>
         ///     退号处理
@@ -27,7 +27,7 @@ namespace FE.Handle.Request
             {
                 try
                 {
-                    var msYygh = Ctx.MzYyghSet.Where(p => p.Yyxh == _inPara.ghxh)
+                    var msYygh = Ctx.MzYyghSet.Where(p => p.Yyxh == InPara.ghxh)
                         .Include(p => p.MsGhmx)
                         .Include(p => p.MsYj01.MsYj02)
                         .FirstOrDefault();

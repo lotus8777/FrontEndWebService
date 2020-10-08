@@ -11,15 +11,17 @@ using Newtonsoft.Json;
 
 namespace FE.Handle.Request
 {
-    public class BasicHandle
+    public class BasicHandle<T> where T : new()
     {
+        protected readonly T InPara;
         protected readonly JsonConfig Config;
         protected readonly FrontEndContext Ctx;
 
-        public BasicHandle(FrontEndContext context)
+        public BasicHandle(FrontEndContext context, string xmlString)
         {
             Ctx = context;
             Config = GetGenericConfig();
+            InPara = ConvertToObject<T>.XmlDeserialize(xmlString);
         }
 
         private JsonConfig GetGenericConfig()

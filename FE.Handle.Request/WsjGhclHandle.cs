@@ -8,13 +8,13 @@ using FE.Model.Local;
 
 namespace FE.Handle.Request
 {
-    public class WsjGhclHandle : BasicHandle
+    public class WsjGhclHandle : BasicHandle<WsjGhclIn>
     {
-        private readonly WsjGhclIn InPara;
+        //private readonly WsjGhclIn InPara;
 
-        public WsjGhclHandle(FrontEndContext context, string xmlString) : base(context)
+        public WsjGhclHandle(FrontEndContext context, string xmlString) : base(context,xmlString)
         {
-            InPara = ConvertToObject<WsjGhclIn>.XmlDeserialize(xmlString);
+            //InPara = ConvertToObject<WsjGhclIn>.XmlDeserialize(xmlString);
         }
 
         /// <summary>
