@@ -44,7 +44,7 @@ namespace FE.Model.Hrp275
         public DateTime? Zxrq { get; set; }
 
         [Column(TypeName = "numeric")]
-        public int? Zxks { get; set; }
+        public decimal? Zxks { get; set; }
 
         [StringLength(10)]
         public string Zxys { get; set; }

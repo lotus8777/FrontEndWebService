@@ -9,7 +9,7 @@ namespace FE.Model.Hrp275
     {
         [Key]
         [Column(TypeName = "numeric")]
-        public int Ksdm { get; set; }
+        public decimal Ksdm { get; set; }
 
         [StringLength(50)]
         public string Ksmc { get; set; }

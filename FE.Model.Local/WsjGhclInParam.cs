@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.ComponentModel;
 namespace FE.Model.Local
 {
     //class WsjGhclInParam
 
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false, ElementName = "interface")]
     public class WsjGhclInParam
@@ -30,8 +31,8 @@ namespace FE.Model.Local
     }
 
     /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     public class interfaceBrxx
     {
@@ -83,8 +84,8 @@ namespace FE.Model.Local
     }
 
     /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     public class interfaceGhxx
     {

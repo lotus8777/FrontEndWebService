@@ -39,85 +39,97 @@ namespace FrontEndWebService
         [WebMethod(Description = "前置机服务--调用各医院存储过程", EnableSession = false)]
         public string ExecProcedure(string ProcName, string inXmlStr)
         {
-            if (string.IsNullOrEmpty(ProcName))
-            {
-                return ReturnXml(-1, $"存储过程名称为空！/r/n", null);
-            }
-
-            if (string.IsNullOrEmpty(inXmlStr))
-            {
-                return ReturnXml(-1, $"传入参数为空！/r/n", null);
-            }
-            var record = new WjjRequest
-            {
-                ProcedureName = ProcName,
-                InXml = inXmlStr
-            };
+            DateTime requestTime = DateTime.Now;
             string rtnXml;
-            string procedureName = ProcName.ToLower().Trim();
-            var epf = new ExecuteProcedureFactory(_ctx);
-            if (procedureName == "wsj_get_fsdyyb")
-            {
-                rtnXml = epf.GetMzFsdYy(inXmlStr);
-            }
-            else if (procedureName == "wsj_get_ghks")
-            {
-                rtnXml = epf.GetMzGhksXml(inXmlStr);
-            }
-            else if (procedureName == "hos_expense_invoices")
-            {
-                rtnXml = epf.GetExpenseInvoice(inXmlStr);
-            }
-            else if (procedureName == "hos_codepay")
-            {
-                rtnXml = epf.GetCodePayXml(inXmlStr);
-            }
-            else if (procedureName == "wsj_get_yspb")
-            {
-                rtnXml = epf.GetKsYsPb(inXmlStr);
-            }
-            else if (procedureName == "wsj_ghcl")
-            {
-                rtnXml = epf.GetGhcl(inXmlStr);
-            }
-            else if (procedureName == "wsj_thcl")
-            {
-                rtnXml = epf.GetThcl(inXmlStr);
-            }
-            else if (procedureName == "hos_orders")
-            {
-                rtnXml = epf.GetHosOrders(inXmlStr);
-            }
-            else if (procedureName == "wsj_get_dqjzdl")
-            {
-                rtnXml = epf.GetQdJzxh(inXmlStr);
-            }
-            else if (procedureName == "wsj_fyqd_get")
-            {
-                rtnXml = epf.GetWsjFyqd(inXmlStr);
-            }
-            else if (procedureName == "hos_invoice")
-            {
-                rtnXml = epf.GetHosInvoice(inXmlStr);
-            }
-            else if (procedureName == "hos_pay_confirm")
-            {
-                var pcf=new PayConfirmFactory(_ctx,inXmlStr);
-                rtnXml = pcf.GetPayConfirm();
-            }
-            else
-            {
-                rtnXml = ExecDbProcedure(ProcName, inXmlStr);
-            }
-
+            var isSuccess = 1;
             try
             {
-                if (rtnXml.Contains(@"<RtnValue>-1</RtnValue>"))
+                if (string.IsNullOrEmpty(ProcName))
                 {
-                    record.IsSuccess = 0;
+                    return ReturnXml(-1, "存储过程名称为空！/r/n", null);
                 }
-                record.OutXml = rtnXml;
+
+                if (string.IsNullOrEmpty(inXmlStr))
+                {
+                    return ReturnXml(-1, "传入参数为空！/r/n", null);
+                }
+                string procedureName = ProcName.ToLower().Trim();
+                var epf = new ExecuteProcedureFactory(_ctx);
+                if (procedureName == "wsj_get_fsdyyb")
+                {
+                    rtnXml = epf.GetMzFsdYy(inXmlStr);
+                }
+                else if (procedureName == "wsj_get_ghks")
+                {
+                    rtnXml = epf.GetMzGhksXml(inXmlStr);
+                }
+                else if (procedureName == "hos_expense_invoices")
+                {
+                    rtnXml = epf.GetExpenseInvoice(inXmlStr);
+                }
+                else if (procedureName == "hos_codepay")
+                {
+                    rtnXml = epf.GetCodePayXml(inXmlStr);
+                }
+                else if (procedureName == "wsj_get_yspb")
+                {
+                    rtnXml = epf.GetKsYsPb(inXmlStr);
+                }
+                else if (procedureName == "wsj_ghcl")
+                {
+                    rtnXml = epf.GetGhcl(inXmlStr);
+                }
+                else if (procedureName == "wsj_thcl")
+                {
+                    rtnXml = epf.GetThcl(inXmlStr);
+                }
+                else if (procedureName == "hos_orders")
+                {
+                    rtnXml = epf.GetHosOrders(inXmlStr);
+                }
+                else if (procedureName == "wsj_get_dqjzdl")
+                {
+                    rtnXml = epf.GetQdJzxh(inXmlStr);
+                }
+                else if (procedureName == "wsj_fyqd_get")
+                {
+                    rtnXml = epf.GetWsjFyqd(inXmlStr);
+                }
+                else if (procedureName == "hos_invoice")
+                {
+                    var hosInvoice=new HosInvoiceFactory(_ctx,inXmlStr);
+                    rtnXml = hosInvoice.GetHosInvoice();
+                }
+                else if (procedureName == "hos_pay_confirm1")
+                {
+                    var pcf = new PayConfirmFactory(_ctx, inXmlStr);
+                    rtnXml = pcf.GetPayConfirm();
+                }
+                else
+                {
+                    rtnXml = ExecDbProcedure(ProcName, inXmlStr);
+                }
+            }
+            catch (Exception e)
+            {
+                isSuccess = 0;
+                rtnXml = ReturnXml(-1, e.Message, null);
+            }
+            SaveWjjRequest(ProcName,inXmlStr,isSuccess,rtnXml,requestTime);
+            return rtnXml;
+        }
+
+        private void SaveWjjRequest(string procName,string inXml,int isSuccess,string outXml,DateTime requestTime)
+        {
+            try
+            {
+                var record=new WjjRequest();
+                record.ProcedureName = procName;
+                record.InXml = inXml;
+                record.IsSuccess = isSuccess;
+                record.OutXml = outXml;
                 record.ResponseTime = DateTime.Now;
+                record.RequestTime = requestTime;
                 _ctx.RequestRecords.Add(record);
                 _ctx.SaveChanges();
             }
@@ -125,7 +137,6 @@ namespace FrontEndWebService
             {
                 Console.WriteLine(e);
             }
-            return rtnXml;
         }
 
         /// <summary>

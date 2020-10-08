@@ -57,7 +57,6 @@ namespace FE.Model.Local
     [Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    //[XmlRoot("interface")]
     public partial class WsjFyqdGetInterface
     {
         /// <remarks/>

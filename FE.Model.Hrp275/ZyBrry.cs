@@ -205,8 +205,7 @@ namespace FE.Model.Hrp275
         /// <summary>
         ///   Gets or sets the BRKS
         /// </summary>
-        [Column(TypeName = "numeric")]
-        public int Brks { get; set; }
+        public decimal Brks { get; set; }
 
         /// <summary>
         ///   Gets or sets the BRBQ

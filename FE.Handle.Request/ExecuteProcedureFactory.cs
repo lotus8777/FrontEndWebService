@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
@@ -40,10 +41,18 @@ namespace FE.Handle.Request
                     var ghxh = xml.Descendants().FirstOrDefault(p => p.Name == "ghxh")?.Value;
                     var yyxh = Convert.ToInt32(ghxh);
                     var msYygh = _ctx.MzYyghSet.Find(yyxh);
-                    if (msYygh?.Yyrq == null) throw new Exception("获取ms_yygh数据有错误!");
+                    if (msYygh?.Yyrq == null)
+                    {
+                        throw new Exception("获取ms_yygh数据有错误!");
+                    }
+
                     msYygh.Ghbz = 2;
                     var msGhmx = _ctx.MzGhmxSet.Find(msYygh.Ghsbxh);
-                    if (msGhmx == null) throw new Exception("获取ms_ghmx数据有错误!");
+                    if (msGhmx == null)
+                    {
+                        throw new Exception("获取ms_ghmx数据有错误!");
+                    }
+
                     msGhmx.Thbz = 1;
                     var yj02 = _ctx.MsYj02Set.Where(p => p.Yjxh == msYygh.Yjsbxh);
                     if (yj02.Any())
@@ -68,7 +77,11 @@ namespace FE.Handle.Request
                                                                     && p.Ksdm == msYygh.Ksdm
                                                                     && p.Ysdm == msYygh.Ysdm
                                                                     && p.Zblb == msYygh.Zblb);
-                    if (msYspb == null) throw new Exception("获取ms_yspb数据有错误!");
+                    if (msYspb == null)
+                    {
+                        throw new Exception("获取ms_yspb数据有错误!");
+                    }
+
                     --msYspb.Yyrs;
                     --msYspb.Ygrs;
                     --msYspb.Jzxh;
@@ -78,7 +91,11 @@ namespace FE.Handle.Request
                                                                     && p.Ysdm == msYygh.Ysdm
                                                                     && p.Zblb == msYygh.Zblb
                                                                     && p.Jzxh == msYygh.Jzxh);
-                    if (fsdyy == null) throw new Exception("获取ms_fsdyyb数据有错误!");
+                    if (fsdyy == null)
+                    {
+                        throw new Exception("获取ms_fsdyyb数据有错误!");
+                    }
+
                     fsdyy.Ghpb = 0;
                     fsdyy.Brxm = string.Empty;
                     fsdyy.Brid = null;
@@ -93,7 +110,7 @@ namespace FE.Handle.Request
                 catch (Exception e)
                 {
                     transaction.Rollback();
-                    return ReturnXml(-1, "wsj_Thcl" + e.Message, null);
+                    throw new Exception("门诊退号失败"+e.Message);
                 }
             }
 
@@ -181,11 +198,11 @@ namespace FE.Handle.Request
                     }
                 };
 
-                return ConvertToObject<WsjFyqdGetOut>.XmlSerializeToString(outPara);
+                return ConvertToObject<WsjFyqdGetOut>.SerializeXmlToString(outPara);
             }
             catch (Exception e)
             {
-                return ReturnXml(-1, "获取住院费用清单失败" + e.InnerException?.Message, null);
+                throw new Exception("获取住院清单失败"+e.Message);
             }
         }
 
@@ -233,7 +250,7 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                return ReturnXml(-1, "获取医嘱信息失败" + e.Message, null);
+                throw new Exception("获取病人医嘱信息成功" + e.Message);
             }
         }
 
@@ -301,7 +318,7 @@ namespace FE.Handle.Request
                 catch (Exception e)
                 {
                     transaction.Rollback();
-                    return ReturnXml(-1, "wsj_ghcl" + e.Message, null);
+                    throw  new Exception("预约挂号失败" + e.Message);
                 }
             }
 
@@ -318,10 +335,18 @@ namespace FE.Handle.Request
             try
             {
                 var ygpj = _ctx.MzYgpjSet.FirstOrDefault(p => p.Ygdm == czgh && p.Pjlx == 1 && p.Sypb == 0);
-                if (ygpj == null) throw new Exception("取就诊号码(挂号发票号码)失败！");
+                if (ygpj == null)
+                {
+                    throw new Exception("取就诊号码(挂号发票号码)失败！");
+                }
+
                 var syhm = Convert.ToInt32(ygpj.Syhm);
                 var zzhm = Convert.ToInt32(ygpj.Zzhm);
-                if (syhm > zzhm) throw new Exception("票据号码用完了，无法挂号！");
+                if (syhm > zzhm)
+                {
+                    throw new Exception("票据号码用完了，无法挂号！");
+                }
+
                 ygpj.Syhm = (++syhm).ToString();
                 _ctx.SaveChanges();
                 return syhm.ToString();
@@ -337,7 +362,11 @@ namespace FE.Handle.Request
             try
             {
                 var yyghXx = _ctx.MzyyGhxxSet.FirstOrDefault(p => p.Pzhm == pzhm);
-                if (yyghXx == null) throw new Exception("取MSYY_GhXX失败！");
+                if (yyghXx == null)
+                {
+                    throw new Exception("取MSYY_GhXX失败！");
+                }
+
                 yyghXx.Yyzt = 1;
                 _ctx.SaveChanges();
             }
@@ -352,7 +381,11 @@ namespace FE.Handle.Request
             try
             {
                 var yygh = _ctx.MzYyghSet.FirstOrDefault(p => p.Pzhm == inParam.ghxx.pzhm);
-                if (yygh == null) throw new Exception("取MS_YYGH失败！");
+                if (yygh == null)
+                {
+                    throw new Exception("取MS_YYGH失败！");
+                }
+
                 yygh.Ghbz = 1;
                 yygh.Sbxh = inParam.ghxx.ghxh;
                 yygh.Ghsbxh = inParam.ghxx.ghxh;
@@ -529,7 +562,11 @@ namespace FE.Handle.Request
                                                               && p.Ksdm == inParam.ghxx.ksdm
                                                               && p.Ysdm == inParam.ghxx.ysdm
                                                               && p.Zblb == inParam.ghxx.zblb);
-                if (yspb == null) throw new Exception("获取医生排班信息失败！");
+                if (yspb == null)
+                {
+                    throw new Exception("获取医生排班信息失败！");
+                }
+
                 var ygrs = yspb.Ygrs;
                 var jzxhOld = yspb.Jzxh;
                 yspb.Ygrs = ygrs + 1;
@@ -556,7 +593,11 @@ namespace FE.Handle.Request
                                                                 && p.Zblb == inParam.ghxx.zblb
                                                                 && p.Jzxh == inParam.ghxx.jzxh
                                                                 && p.Ghpb == 0);
-                if (fsdyy == null) throw new Exception("获取号源ms_fsdyyb失败！");
+                if (fsdyy == null)
+                {
+                    throw new Exception("获取号源ms_fsdyyb失败！");
+                }
+
                 fsdyy.Ghpb = 1;
                 fsdyy.Brxm = inParam.brxx.brxm;
                 fsdyy.Brid = inParam.brxx.brid;
@@ -574,91 +615,101 @@ namespace FE.Handle.Request
         /// <param name="inParam"></param>
         private void GetTableKey(WsjGhclInParam inParam)
         {
-            try
+            //
+            var keyTable = _ctx.MzIdentitySet.ToList();
+            var keyBrda = keyTable.FirstOrDefault(p => p.Bmc == "MS_BRDA");
+            if (keyBrda == null)
             {
-                //
-                var keyTable = _ctx.MzIdentitySet.ToList();
-                var keyBrda = keyTable.FirstOrDefault(p => p.Bmc == "MS_BRDA");
-                if (keyBrda == null) throw new Exception("取MS_BRDA序号失败！");
-                var brid = keyBrda.Dqz + 1;
-                keyBrda.Dqz = brid;
-                inParam.brxx.brid = brid;
-                var keyYygh = keyTable.FirstOrDefault(p => p.Bmc == "MS_YYGH");
-                if (keyYygh == null) throw new Exception("取MS_YYGH序号失败！");
-                inParam.ghxx.yyxh = keyYygh.Dqz + 1;
-                keyYygh.Dqz = inParam.ghxx.yyxh;
-                var keyGhMx = keyTable.FirstOrDefault(p => p.Bmc == "MS_GHMX");
-                if (keyGhMx == null) throw new Exception("取MS_GHMX序号失败！");
-                inParam.ghxx.ghxh = keyGhMx.Dqz + 1;
-                keyGhMx.Dqz = inParam.ghxx.ghxh;
-                var yj01 = keyTable.FirstOrDefault(p => p.Bmc == "MS_YJ01");
-                if (yj01 == null) throw new Exception("取MS_YJ01序号失败！");
-                inParam.ghxx.yj01xh = yj01.Dqz + 1;
-                yj01.Dqz = inParam.ghxx.yj01xh;
-                var yj02 = keyTable.FirstOrDefault(p => p.Bmc == "MS_YJ02");
-                if (yj02 == null) throw new Exception("取MS_YJ02序号失败！");
-                var count = inParam.ghxx.ZlfList.Count;
-                var arr = new int[count];
-                for (var i = 0; i < count; i++)
-                {
-                    arr[i] = yj02.Dqz + i + 1;
-                }
+                throw new Exception("取MS_BRDA序号失败！");
+            }
 
-                yj02.Dqz = arr[count - 1];
-                inParam.ghxx.yj02xh = arr;
-                _ctx.SaveChanges();
-            }
-            catch (Exception e)
+            var brid = keyBrda.Dqz + 1;
+            keyBrda.Dqz = brid;
+            inParam.brxx.brid = brid;
+            var keyYygh = keyTable.FirstOrDefault(p => p.Bmc == "MS_YYGH");
+            if (keyYygh == null)
             {
-                throw e;
+                throw new Exception("取MS_YYGH序号失败！");
             }
+
+            inParam.ghxx.yyxh = keyYygh.Dqz + 1;
+            keyYygh.Dqz = inParam.ghxx.yyxh;
+            var keyGhMx = keyTable.FirstOrDefault(p => p.Bmc == "MS_GHMX");
+            if (keyGhMx == null)
+            {
+                throw new Exception("取MS_GHMX序号失败！");
+            }
+
+            inParam.ghxx.ghxh = keyGhMx.Dqz + 1;
+            keyGhMx.Dqz = inParam.ghxx.ghxh;
+            var yj01 = keyTable.FirstOrDefault(p => p.Bmc == "MS_YJ01");
+            if (yj01 == null)
+            {
+                throw new Exception("取MS_YJ01序号失败！");
+            }
+
+            inParam.ghxx.yj01xh = yj01.Dqz + 1;
+            yj01.Dqz = inParam.ghxx.yj01xh;
+            var yj02 = keyTable.FirstOrDefault(p => p.Bmc == "MS_YJ02");
+            if (yj02 == null)
+            {
+                throw new Exception("取MS_YJ02序号失败！");
+            }
+
+            var count = inParam.ghxx.ZlfList.Count;
+            var arr = new int[count];
+            for (var i = 0; i < count; i++)
+            {
+                arr[i] = yj02.Dqz + i + 1;
+            }
+
+            yj02.Dqz = arr[count - 1];
+            inParam.ghxx.yj02xh = arr;
+            _ctx.SaveChanges();
         }
 
         public void ProcessMzBrda(WsjGhclInParam inParam, string ybxz)
         {
-            try
+            //判断病人性质
+            if (inParam.brxx.cardtype == 1)
             {
-                //判断病人性质
-                if (inParam.brxx.cardtype == 1)
+                //市民卡处理
+                if (string.IsNullOrEmpty(inParam.brxx.ybkh))
                 {
-                    //市民卡处理
-                    if (string.IsNullOrEmpty(inParam.brxx.ybkh)) throw new Exception("传入医保卡号长度不对");
-                    var left4 = inParam.brxx.ybkh.Substring(0, 4);
-                    if (left4 == "3301")
-                    {
-                        inParam.brxx.brxz = Convert.ToInt32(ybxz);
-                        inParam.brxx.qybr = 1;
-                    }
-                    else
-                    {
-                        inParam.brxx.brxz = 1000;
-                        inParam.brxx.qybr = 5;
-                    }
+                    throw new Exception("传入医保卡号长度不对");
+                }
+
+                var left4 = inParam.brxx.ybkh.Substring(0, 4);
+                if (left4 == "3301")
+                {
+                    inParam.brxx.brxz = Convert.ToInt32(ybxz);
+                    inParam.brxx.qybr = 1;
                 }
                 else
                 {
                     inParam.brxx.brxz = 1000;
                     inParam.brxx.qybr = 5;
                 }
-
-                //判断档案是否存在
-                var record = _ctx.MzBrdaSet
-                    .Where(p => p.Brxm == inParam.brxx.brxm && p.Sfzh == inParam.brxx.sfzh &&
-                                p.Brxz == inParam.brxx.brxz).OrderByDescending(p => p.Brid).FirstOrDefault();
-                if (record != null)
-                {
-                    UpdateMzBrda(record, inParam);
-                    inParam.brxx.brid = (int) record.Brid;
-                }
-                else
-                {
-                    //新建档案
-                    record = CreateMzBrda(inParam);
-                }
             }
-            catch (Exception e)
+            else
             {
-                throw e;
+                inParam.brxx.brxz = 1000;
+                inParam.brxx.qybr = 5;
+            }
+
+            //判断档案是否存在
+            var record = _ctx.MzBrdaSet
+                .Where(p => p.Brxm == inParam.brxx.brxm && p.Sfzh == inParam.brxx.sfzh &&
+                            p.Brxz == inParam.brxx.brxz).OrderByDescending(p => p.Brid).FirstOrDefault();
+            if (record != null)
+            {
+                UpdateMzBrda(record, inParam);
+                inParam.brxx.brid = (int) record.Brid;
+            }
+            else
+            {
+                //新建档案
+                CreateMzBrda(inParam);
             }
         }
 
@@ -677,21 +728,35 @@ namespace FE.Handle.Request
                         p.Yyrq == inParam.ghxx.gzrq && p.Zblb == inParam.ghxx.zblb && p.Ksdm == inParam.ghxx.ksdm &&
                         p.Ysdm == inParam.ghxx.ysdm &&
                         p.Jzxh == inParam.ghxx.jzxh && p.Ghbz == 0);
-                    if (notHas) throw new Exception("该挂号序号已有人预约");
+                    if (notHas)
+                    {
+                        throw new Exception("该挂号序号已有人预约");
+                    }
                 }
                 else
                 {
                     var hasRegistered =
                         _ctx.MzYyghSet.Any(p => p.Pzhm == inParam.ghxx.pzhm && (p.Ghbz == 0 || p.Ghbz == 1));
-                    if (!hasRegistered) throw new Exception("获取预约信息失败");
+                    if (!hasRegistered)
+                    {
+                        throw new Exception("获取预约信息失败");
+                    }
                 }
 
                 var source = _ctx.MzFsdYySet.Where(p =>
                     p.Gzrq == inParam.ghxx.gzrq && p.Zblb == inParam.ghxx.zblb && p.Ksdm == inParam.ghxx.ksdm &&
                     p.Ysdm == inParam.ghxx.ysdm).ToList();
-                if (source.Any(p => p.Brid == inParam.brxx.brid)) throw new Exception("存在同时段同科室同医生预约挂号");
+                if (source.Any(p => p.Brid == inParam.brxx.brid))
+                {
+                    throw new Exception("存在同时段同科室同医生预约挂号");
+                }
+
                 var hy = source.FirstOrDefault(p => p.Jzxh == inParam.ghxx.jzxh);
-                if (hy == null) throw new Exception("取就诊时间失败");
+                if (hy == null)
+                {
+                    throw new Exception("取就诊时间失败");
+                }
+
                 inParam.ghxx.jzsj = hy.Jzsj.ToString(CultureInfo.InvariantCulture);
                 var lsbrxm = hy.Brxm;
                 if (!string.IsNullOrEmpty(lsbrxm) && string.IsNullOrEmpty(inParam.ghxx.pzhm))
@@ -713,7 +778,11 @@ namespace FE.Handle.Request
         {
             var ks = _ctx.MzGhksSet.Find(inParam.ghxx.ksdm);
             //ghje=zlf ghje1=ghf
-            if (ks == null) throw new Exception("无法获取挂号科室及诊疗费用信息");
+            if (ks == null)
+            {
+                throw new Exception("无法获取挂号科室及诊疗费用信息");
+            }
+
             inParam.ghxx.ghlb = (int) ks.Ghlb;
             inParam.ghxx.mzks = (int) (ks.Mzks ?? 101);
             inParam.ghxx.ZlfList = new List<Tuple<int, decimal>>();
@@ -748,7 +817,7 @@ namespace FE.Handle.Request
             }
         }
 
-        private MsBrda CreateMzBrda(WsjGhclInParam inParam)
+        private void CreateMzBrda(WsjGhclInParam inParam)
         {
             try
             {
@@ -771,7 +840,6 @@ namespace FE.Handle.Request
                 };
                 _ctx.MzBrdaSet.Add(brda);
                 _ctx.SaveChanges();
-                return brda;
             }
             catch (Exception e)
             {
@@ -785,12 +853,27 @@ namespace FE.Handle.Request
             {
                 if (inParam.brxx.cardtype == 1)
                 {
-                    if (record.Ybkh != inParam.brxx.ybkh) record.Ybkh = inParam.brxx.ybkh;
+                    if (record.Ybkh != inParam.brxx.ybkh)
+                    {
+                        record.Ybkh = inParam.brxx.ybkh;
+                    }
                 }
 
-                if (record.Qybr != inParam.brxx.qybr) record.Qybr = inParam.brxx.qybr;
-                if (record.Phone != inParam.brxx.tel) record.Phone = inParam.brxx.tel;
-                if (record.Jtdh != inParam.brxx.tel) record.Jtdh = inParam.brxx.tel;
+                if (record.Qybr != inParam.brxx.qybr)
+                {
+                    record.Qybr = inParam.brxx.qybr;
+                }
+
+                if (record.Phone != inParam.brxx.tel)
+                {
+                    record.Phone = inParam.brxx.tel;
+                }
+
+                if (record.Jtdh != inParam.brxx.tel)
+                {
+                    record.Jtdh = inParam.brxx.tel;
+                }
+
                 _ctx.SaveChanges();
             }
             catch (Exception e)
@@ -809,29 +892,22 @@ namespace FE.Handle.Request
         public string GetKsYsPb(string inXml)
         {
             XElement root;
-            try
+            var xml = XElement.Parse(inXml);
+            var ksdm = xml.Element("ksdm")?.Value;
+            var ksrq = Convert.ToDateTime(xml.Element("ksrq")?.Value);
+            var zzrq = Convert.ToDateTime(xml.Element("zzrq")?.Value);
+            var list = GetKsyspb(ksdm, ksrq, zzrq);
+            var interfaceXml = new XElement("interface");
+            foreach (var item in list)
             {
-                var xml = XElement.Parse(inXml);
-                var ksdm = xml.Element("ksdm")?.Value;
-                var ksrq = Convert.ToDateTime(xml.Element("ksrq")?.Value);
-                var zzrq = Convert.ToDateTime(xml.Element("zzrq")?.Value);
-                var list = GetKsyspb(ksdm, ksrq, zzrq);
-                var interfaceXml = new XElement("interface");
-                foreach (var item in list)
-                {
-                    interfaceXml.Add(item.ToXml("row"));
-                }
+                interfaceXml.Add(item.ToXml("row"));
+            }
 
-                root = new XElement("YyghInterface",
-                    new XElement("RtnValue", 1),
-                    new XElement("bzxx"),
-                    interfaceXml
-                );
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            root = new XElement("YyghInterface",
+                new XElement("RtnValue", 1),
+                new XElement("bzxx"),
+                interfaceXml
+            );
 
             return root.ToString();
         }
@@ -844,9 +920,8 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw new Exception("获取科室所有医生排班信息失败0" + e.Message);
-                ;
+                throw new Exception("获取科室所有医生排班信息失败" + e.Message);
+                
             }
         }
 
@@ -858,50 +933,42 @@ namespace FE.Handle.Request
         public string GetMzFsdYy(string inXml)
         {
             string rtnXml;
-            try
+            var xml = XElement.Parse(inXml);
+            var ksdm = xml.Element("ksdm")?.Value;
+            var ysdm = xml.Element("ysdm")?.Value;
+            var gzrq = Convert.ToDateTime(xml.Element("gzrq")?.Value);
+            var zblb = Convert.ToInt32(xml.Element("zblb")?.Value);
+            var yypb = _ctx.MzFsdYySet.Where(p =>
+                    p.Gzrq == gzrq &&
+                    p.Ksdm == ksdm &&
+                    p.Ysdm == ysdm &&
+                    p.Zblb == zblb &&
+                    p.Yylb == 1 &&
+                    p.Ghpb == 0)
+                .ToList();
+            if (yypb.Any())
             {
-                var xml = XElement.Parse(inXml);
-                var ksdm = xml.Element("ksdm")?.Value;
-                var ysdm = xml.Element("ysdm")?.Value;
-                var gzrq = Convert.ToDateTime(xml.Element("gzrq")?.Value);
-                var zblb = Convert.ToInt32(xml.Element("zblb")?.Value);
-                var yypb = _ctx.MzFsdYySet.Where(p =>
-                        p.Gzrq == gzrq &&
-                        p.Ksdm == ksdm &&
-                        p.Ysdm == ysdm &&
-                        p.Zblb == zblb &&
-                        p.Yylb == 1 &&
-                        p.Ghpb == 0)
-                    .ToList();
-                if (yypb.Any())
+                var document = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
+                    new XElement("YyghInterface",
+                        new XElement("RtnValue", 1),
+                        new XElement("bzxx", ""),
+                        new XElement("interface")
+                    ));
+                foreach (var item in yypb)
                 {
-                    var document = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
-                        new XElement("YyghInterface",
-                            new XElement("RtnValue", 1),
-                            new XElement("bzxx", ""),
-                            new XElement("interface")
+                    document.Root?.Element("interface")
+                        ?.Add(new XElement("row",
+                            new XElement("jzxh", item.Jzxh),
+                            new XElement("jzsj", item.Jzsj),
+                            new XElement("jzsj2", item.Jzsj.AddMinutes(30))
                         ));
-                    //var interfaceNode = xmlElement.Element("interface");
-                    foreach (var item in yypb)
-                    {
-                        document.Root?.Element("interface")
-                            ?.Add(new XElement("row",
-                                new XElement("jzxh", item.Jzxh),
-                                new XElement("jzsj", item.Jzsj),
-                                new XElement("jzsj2", item.Jzsj.AddMinutes(30))
-                            ));
-                    }
+                }
 
-                    rtnXml = document.ToString();
-                }
-                else
-                {
-                    rtnXml = GeneralTools.ReturnXml(-1, "没有查询到数据！~r~n", null);
-                }
+                rtnXml = document.ToString();
             }
-            catch (Exception e)
+            else
             {
-                rtnXml = GeneralTools.ReturnXml(-1, "数据查询出现错误！~r~n" + e, null);
+                throw new Exception("获取分时段号源出错！");
             }
 
             return rtnXml.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
@@ -939,25 +1006,26 @@ namespace FE.Handle.Request
         /// <returns></returns>
         public string GetExpenseInvoice(string inXml)
         {
-            try
+            var xml = XElement.Parse(inXml);
+            var actType = xml.Element("acttype")?.Value;
+            var actNumber = xml.Element("actnumber")?.Value;
+            if (string.IsNullOrEmpty(actNumber))
             {
-                var xml = XElement.Parse(inXml);
-                var actType = xml.Element("acttype")?.Value;
-                var actNumber = xml.Element("actnumber")?.Value;
-                if (string.IsNullOrEmpty(actNumber)) throw new Exception("获取actnumber参数失败!");
-                //var jzlsh = xml.Descendants("list").Elements().FirstOrDefault(p => p.Name == "jzlsh")?.Value;
-                //var mzzyhm = xml.Descendants("list").Elements().FirstOrDefault(p => p.Name == "mzzyhm")?.Value;
-                if (string.IsNullOrEmpty(_config.YYBH)) throw new Exception("获取医院编码失败");
-                if (string.IsNullOrEmpty(_config.CZGH)) throw new Exception("获取操作工号失败");
-                return actType == "4" ? GetInpExpenseInvoices(actNumber) : GetOpExpenseInvoices(actNumber);
+                throw new Exception("获取actnumber参数失败!");
             }
-            catch (Exception exception)
+            //var jzlsh = xml.Descendants("list").Elements().FirstOrDefault(p => p.Name == "jzlsh")?.Value;
+            //var mzzyhm = xml.Descendants("list").Elements().FirstOrDefault(p => p.Name == "mzzyhm")?.Value;
+            if (string.IsNullOrEmpty(_config.YYBH))
             {
-                return new XElement("YyghInterface",
-                    new XElement("RtnValue", -1),
-                    new XElement("bzxx", exception.Message)
-                ).ToString();
+                throw new Exception("获取医院编码失败");
             }
+
+            if (string.IsNullOrEmpty(_config.CZGH))
+            {
+                throw new Exception("获取操作工号失败");
+            }
+
+            return actType == "4" ? GetInpExpenseInvoices(actNumber) : GetOpExpenseInvoices(actNumber);
         }
 
         /// <summary>
@@ -974,7 +1042,10 @@ namespace FE.Handle.Request
                 if (cvxCardType != "08")
                 {
                     var noUpload = _ctx.ZyFymxSet.Any(p => p.Zyh == patient.Zyh && p.Scbz == 0 && p.Jscs == 0);
-                    if (noUpload) throw new Exception("本次住院结算有未上传的明细记录");
+                    if (noUpload)
+                    {
+                        throw new Exception("本次住院结算有未上传的明细记录");
+                    }
                 }
 
                 var (cnt1, zjje1, zjje2) = GetInpFee(patient.Zyh, (int) (patient.Yepb ?? 0));
@@ -1012,7 +1083,7 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                return ReturnXml(-1, "获取住院费用失败" + e.Message, null);
+                throw new Exception("获取住院费用失败!->"+e.Message);
             }
 
             return xml.ToString();
@@ -1026,13 +1097,41 @@ namespace FE.Handle.Request
         private ZyBrry VerifyInpatient(string actNumber)
         {
             var patient = _ctx.ZyBrrySet.FirstOrDefault(p => p.Actnumber == actNumber);
-            if (patient == null) throw new Exception("获取住院病人档案失败");
-            if (patient.Cypb == 0) throw new Exception("未完成出院证明操作");
-            if (patient.Cypb == 8) throw new Exception("已完成出院结算");
-            if (patient.Cypb == 99) throw new Exception("本次住院已注销");
-            if (patient.Xgpb == 2) throw new Exception("正在进行费别转换2");
-            if (patient.Xgpb == 9) throw new Exception("正在进行出院结算9");
-            if (patient.Ydjsbz == 0) throw new Exception("该就诊信息移动结算检测未通过");
+            if (patient == null)
+            {
+                throw new Exception("获取住院病人档案失败");
+            }
+
+            if (patient.Cypb == 0)
+            {
+                throw new Exception("未完成出院证明操作");
+            }
+
+            if (patient.Cypb == 8)
+            {
+                throw new Exception("已完成出院结算");
+            }
+
+            if (patient.Cypb == 99)
+            {
+                throw new Exception("本次住院已注销");
+            }
+
+            if (patient.Xgpb == 2)
+            {
+                throw new Exception("正在进行费别转换2");
+            }
+
+            if (patient.Xgpb == 9)
+            {
+                throw new Exception("正在进行出院结算9");
+            }
+
+            if (patient.Ydjsbz == 0)
+            {
+                throw new Exception("该就诊信息移动结算检测未通过");
+            }
+
             return patient;
         }
 
@@ -1063,14 +1162,21 @@ namespace FE.Handle.Request
                 zjje1 = mx.Sum(p => p.zjje);
             }
 
-            if (cnt2 + cnt1 == 0) throw new Exception("本次住院结算无费用明细数据");
+            if (cnt2 + cnt1 == 0)
+            {
+                throw new Exception("本次住院结算无费用明细数据");
+            }
+
             return (cnt1, zjje1, zjje2);
         }
 
         private InpClinic GetInpClinicInfo(int zyh, int count)
         {
             var clinic = _ctx.Database.SqlQuery<InpClinic>($"exec proc_wjj_inclinic {zyh}").FirstOrDefault();
-            if (clinic == null) throw new Exception("获取住院相关信息失败");
+            if (clinic == null)
+            {
+                throw new Exception("获取住院相关信息失败");
+            }
             //获取诊断
             clinic.CYZD = GetInpClinicDiagnose(zyh).ToArray();
             clinic.FeeDetail = count;
@@ -1092,7 +1198,11 @@ namespace FE.Handle.Request
                             AND zr.ZYH = {zyh}
                             AND zr.zdlb IN (3, 4)";
             var query = _ctx.Database.SqlQuery<string>(sql).ToList();
-            if (!query.Any()) throw new Exception("出入院诊断获取失败！");
+            if (!query.Any())
+            {
+                throw new Exception("出入院诊断获取失败！");
+            }
+
             return query;
         }
 
@@ -1110,7 +1220,11 @@ namespace FE.Handle.Request
                             AND zf.jscs =0
                             GROUP BY gs.zxgb";
             var query = _ctx.Database.SqlQuery<string>(sql).ToList();
-            if (!query.Any()) throw new Exception("费用分类数据获取失败！");
+            if (!query.Any())
+            {
+                throw new Exception("费用分类数据获取失败！");
+            }
+
             return query;
         }
 
@@ -1121,49 +1235,61 @@ namespace FE.Handle.Request
         public string GetOpExpenseInvoices(string actNumber)
         {
             // XElement xml;
-            try
+            //获取病人信息
+            var jzls = _ctx.YsMzJzlsSet.Where(p => p.Actnumber == actNumber && p.Zfpb == 0)
+                .OrderByDescending(p => p.Kssj).FirstOrDefault();
+            if (jzls == null)
             {
-                //获取病人信息
-                var jzls = _ctx.YsMzJzlsSet.Where(p => p.Actnumber == actNumber && p.Zfpb == 0)
-                    .OrderByDescending(p => p.Kssj).FirstOrDefault();
-                if (jzls == null) throw new Exception("获取门诊就诊记录失败");
-                if (jzls.Brbh <= 0) throw new Exception("获取门诊病人档案失败");
-                var patient = _ctx.MzBrdaSet.Find(jzls.Brbh);
-                if (patient == null || patient.Brxz <= 0) throw new Exception("获取病人基本信息失败");
-                var clinic = _ctx.Database.SqlQuery<OpClinic>($"exec proc_wjj_outclinic {jzls.Jzxh}").FirstOrDefault();
-                if (clinic == null) throw new Exception("获取门诊clinic信息失败");
-                if (string.IsNullOrEmpty(clinic.DisName) || string.IsNullOrEmpty(clinic.DisCode))
-                    throw new Exception("没有诊断或诊断信息获取失败，请医生检查诊断信息");
-                clinic.CYZD = new List<string>
-                {
-                    clinic.DisCode
-                };
+                throw new Exception("获取门诊就诊记录失败");
+            }
 
-                //获取费用清单
-                var details = GetOpFeeDetails((int) patient.Brid, (int) (patient.Qybr ?? 0));
-                clinic.FeeDetail = details.Select(p => p.Item.Count).DefaultIfEmpty(0).Sum();
-                //组装xml语句
-                var opExpense = new OpExpenseInvoices
-                {
-                    OpInterface = new OpExpenseInvoicesInterface
-                    {
-                        HospitalCode = _config.YYBH,
-                        Operator = _config.CZGH,
-                        CVX_CardType = GetCvxCardType(patient.Brxz.ToString()),
-                        ICInfo = GetIcInfor(patient),
-                        FeeTotal = details.Sum(p => p.itemCost),
-                        Clinic = clinic,
-                        list = details,
-                        DisAudNo = "",
-                        OperatorName = ""
-                    }
-                };
-                return ConvertToObject<OpExpenseInvoices>.SerializeToXElement(opExpense).ToString();
-            }
-            catch (Exception ex)
+            if (jzls.Brbh <= 0)
             {
-                return ReturnXml(-1, ex.Message, null);
+                throw new Exception("获取门诊病人档案失败");
             }
+
+            var patient = _ctx.MzBrdaSet.Find(jzls.Brbh);
+            if (patient == null || patient.Brxz <= 0)
+            {
+                throw new Exception("获取病人基本信息失败");
+            }
+
+            var clinic = _ctx.Database.SqlQuery<OpClinic>($"exec proc_wjj_outclinic {jzls.Jzxh}").FirstOrDefault();
+            if (clinic == null)
+            {
+                throw new Exception("获取门诊clinic信息失败");
+            }
+
+            if (string.IsNullOrEmpty(clinic.DisName) || string.IsNullOrEmpty(clinic.DisCode))
+            {
+                throw new Exception("没有诊断或诊断信息获取失败，请医生检查诊断信息");
+            }
+
+            clinic.CYZD = new List<string>
+            {
+                clinic.DisCode
+            };
+
+            //获取费用清单
+            var details = GetOpFeeDetails((int) patient.Brid, (int) (patient.Qybr ?? 0));
+            clinic.FeeDetail = details.Select(p => p.Item.Count).DefaultIfEmpty(0).Sum();
+            //组装xml语句
+            var opExpense = new OpExpenseInvoices
+            {
+                OpInterface = new OpExpenseInvoicesInterface
+                {
+                    HospitalCode = _config.YYBH,
+                    Operator = _config.CZGH,
+                    CVX_CardType = GetCvxCardType(patient.Brxz.ToString()),
+                    ICInfo = GetIcInfor(patient),
+                    FeeTotal = details.Sum(p => p.itemCost),
+                    Clinic = clinic,
+                    list = details,
+                    DisAudNo = "",
+                    OperatorName = ""
+                }
+            };
+            return ConvertToObject<OpExpenseInvoices>.SerializeToXElement(opExpense).ToString();
         }
 
         /// <summary>
@@ -1228,8 +1354,6 @@ namespace FE.Handle.Request
         /// <summary>
         ///     返回医保类型代码
         /// </summary>
-        /// <param name="hzBrxz">杭州医保病人性质</param>
-        /// <param name="wxBrxz">原网新医保病人性质</param>
         /// <param name="brxz">病人性质</param>
         /// <returns></returns>
         public string GetCvxCardType(string brxz)
@@ -1259,7 +1383,10 @@ namespace FE.Handle.Request
                     return ybkh;
                 }
 
-                if (icxx.Length > 100) return icxx.Trim().Substring(0, 50).Trim();
+                if (icxx.Length > 100)
+                {
+                    return icxx.Trim().Substring(0, 50).Trim();
+                }
             }
 
             return ickh;
@@ -1352,7 +1479,7 @@ namespace FE.Handle.Request
                 };
                 _ctx.PayFkrzSet.Add(fkrz);
                 _ctx.SaveChanges();
-                return outXml;
+                throw;
             }
         }
 
@@ -1419,33 +1546,10 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                return ReturnXml(-1, "取就诊序号时发生错误，" + e.Message, null);
+                throw new Exception("取就诊序号时发生错误->"+e.Message);
             }
         }
 
-        /// <summary>
-        ///     获取发票费用明细
-        /// </summary>
-        /// <param name="inXmlStr"></param>
-        /// <returns></returns>
-        public string GetHosInvoice(string inXmlStr)
-        {
-            try
-            {
-                var nodeList = GetXmlNodes(inXmlStr);
-                var actNumber = nodeList.FirstOrDefault(p => p.Name == "actnumber")?.Value;
-                var fphm = nodeList.FirstOrDefault(p => p.Name == "fphm")?.Value;
-                var yjfy = _ctx.MsYj02Set
-                    .Include(p => p.GyYlsf)
-                    .Include(p => p.MsYj01)
-                    .FirstOrDefault();
-                return null;
-            }
-            catch (Exception e)
-            {
-                return ReturnXml(-1, e.Message, null);
-                throw;
-            }
-        }
+       
     }
 }

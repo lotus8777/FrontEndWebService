@@ -150,5 +150,9 @@ namespace FE.Model.Hrp275
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MsCf02> MsCf02 { get; set; }
+
+        [ForeignKey("Ksdm")]
+        public virtual GyKsdm GyKsdm { get; set; }
+
     }
 }

@@ -1,49 +1,43 @@
-﻿using System;
+﻿using FE.Context;
+using FE.Model.Hrp275;
+using FE.Model.Local;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using FE.Context;
-using FE.Model.Hrp275;
-using FE.Model.Local;
+
 namespace FE.Handle.Request
 {
     public class PayConfirmFactory : BasicFactory
     {
         private HosPayConfirmIn _inPara;
+
         public PayConfirmFactory(FrontEndContext context, string inXmlStr) : base(context)
         {
             _inPara = ConvertToObject<HosPayConfirmIn>.XmlDeserialize(inXmlStr);
             ValidateHosPayConfirmIn();
         }
+
         /// <summary>
         ///     病人结算处理
         /// </summary>
         /// <returns></returns>
         public string GetPayConfirm()
         {
-            try
+            if (_inPara.actnumber == "4")
             {
-                if (_inPara.actnumber == "4")
-                {
-                    return GetInpPayConfirm();
-                }
-                return GetOpPayConfirm();
+                return GetInpPayConfirm();
             }
-            catch (Exception e)
-            {
-                return ReturnXml(-1, e.Message, null);
-            }
+            return GetOpPayConfirm();
         }
+
         /// <summary>
         ///     门诊病人确认支付逻辑处理
         /// </summary>
         /// <returns></returns>
         private string GetOpPayConfirm()
         {
-
             using (var transaction = _ctx.Database.BeginTransaction())
             {
                 try
@@ -51,11 +45,18 @@ namespace FE.Handle.Request
                     var jzls = _ctx.YsMzJzlsSet.Where(p => p.Actnumber == _inPara.actnumber)
                         .OrderByDescending(p => p.Kssj)
                         .FirstOrDefault();
-                    if (jzls == null) throw new Exception("获取就诊记录失败！");
+                    if (jzls == null)
+                    {
+                        throw new Exception("获取就诊记录失败！");
+                    }
 
                     var brid = jzls.Brbh;
                     var brda = _ctx.MzBrdaSet.Find(brid);
-                    if (string.IsNullOrEmpty(brda?.Brxm)) throw new Exception("获取病人基本信息失败！");
+                    if (string.IsNullOrEmpty(brda?.Brxm))
+                    {
+                        throw new Exception("获取病人基本信息失败！");
+                    }
+
                     var identity = GetOpIdentityKey();
                     _inPara.OtherPara = new OtherPayConfirmPara()
                     {
@@ -112,10 +113,11 @@ namespace FE.Handle.Request
                 catch (Exception e)
                 {
                     transaction.Rollback();
-                    return ReturnXml(-1, e.Message, null);
+                    throw new Exception("门诊结算失败"+e.Message);
                 }
             }
         }
+
         private void InsertMsMzxx(MsBrda brda)
         {
             //插入ms_mzxx
@@ -144,16 +146,31 @@ namespace FE.Handle.Request
             _ctx.MsMzxxSet.Add(mzxx);
             _ctx.SaveChanges();
         }
+
         private void DisposeRecipe(InterfaceFyqdDetail item, IList<MsSfmx> msSfmxSet, IList<GyXtcs> gyXtcsSet)
         {
             var cf01 = _ctx.MsCf01Set.Where(p => p.Cfsb == item.itemNo).Include(p => p.MsCf02).FirstOrDefault();
-            if (cf01 == null) throw new Exception("处方信息不存在，请重试！");
-            if (!string.IsNullOrEmpty(cf01.Fphm)) throw new Exception($"处方{item.itemNo}已经进行了结算，不能重复结算！");
-            if (!cf01.MsCf02.Any()) throw new Exception($"处方{item.itemNo}没有药品信息，请医生检查开方内容！");
+            if (cf01 == null)
+            {
+                throw new Exception("处方信息不存在，请重试！");
+            }
+
+            if (!string.IsNullOrEmpty(cf01.Fphm))
+            {
+                throw new Exception($"处方{item.itemNo}已经进行了结算，不能重复结算！");
+            }
+
+            if (!cf01.MsCf02.Any())
+            {
+                throw new Exception($"处方{item.itemNo}没有药品信息，请医生检查开方内容！");
+            }
             //单据金额
             var hisItemCost = cf01.MsCf02.Sum(p => p.Hjje);
             if (Math.Abs(item.itemCost - hisItemCost) > (decimal)0.05)
+            {
                 throw new Exception("传入处方金额与HIS不符，无法结算，请重试！");
+            }
+
             cf01.Fphm = _inPara.OtherPara.Fphm;
             cf01.Mzxh = _inPara.OtherPara.MsMzxx_Mzxh;
             cf01.Jzxh = _inPara.OtherPara.YsMzJzls_Jzxh;
@@ -192,6 +209,7 @@ namespace FE.Handle.Request
             }
             _ctx.SaveChanges();
         }
+
         /// <summary>
         /// 获取处方的收费项目1西药2中药3成药
         /// </summary>
@@ -223,13 +241,27 @@ namespace FE.Handle.Request
         {
             //诊疗费用
             var yj01 = _ctx.MsYj01Set.Where(p => p.Yjxh == item.itemNo).Include(p => p.MsYj02).FirstOrDefault();
-            if (yj01 == null) throw new Exception("检查单信息不存在，请重试！");
-            if (!string.IsNullOrEmpty(yj01.Fphm)) throw new Exception($"检查单{item.itemNo}已经进行了结算，不能重复结算！");
-            if (!yj01.MsYj02.Any()) throw new Exception($"检查单{item.itemNo}没有检查项目，请医生检查开单内容！");
+            if (yj01 == null)
+            {
+                throw new Exception("检查单信息不存在，请重试！");
+            }
+
+            if (!string.IsNullOrEmpty(yj01.Fphm))
+            {
+                throw new Exception($"检查单{item.itemNo}已经进行了结算，不能重复结算！");
+            }
+
+            if (!yj01.MsYj02.Any())
+            {
+                throw new Exception($"检查单{item.itemNo}没有检查项目，请医生检查开单内容！");
+            }
             //his单据金额
             var hisItemCost = yj01.MsYj02.Sum(p => p.Hjje);
             if (Math.Abs(item.itemCost - hisItemCost) > (decimal)0.05)
+            {
                 throw new Exception("传入检查单金额与HIS不符，无法结算，请重试！");
+            }
+
             yj01.Fphm = _inPara.OtherPara.Fphm;
             yj01.Mzxh = _inPara.OtherPara.MsMzxx_Mzxh;
             yj01.Jzxh = _inPara.OtherPara.YsMzJzls_Jzxh;
@@ -271,6 +303,7 @@ namespace FE.Handle.Request
             }
             _ctx.SaveChanges();
         }
+
         /// <summary>
         /// 获取最终输出值
         /// </summary>
@@ -348,6 +381,7 @@ namespace FE.Handle.Request
             _ctx.BocJsjlSet.Add(bocJsjl);
             _ctx.SaveChanges();
         }
+
         /// <summary>
         /// 插入Hzyb_Jsjl表
         /// </summary>
@@ -401,12 +435,12 @@ namespace FE.Handle.Request
             _ctx.HzybJsjlSet.Add(hzybJsjl);
             _ctx.SaveChanges();
         }
+
         /// <summary>
         /// 获取门诊结算相关表的关键字段
         /// </summary>
         private (int mzxh, int jlxh) GetOpIdentityKey()
         {
-
             var msIdentity = _ctx.MzIdentitySet
                 .Find("MS_MZXX");
             var gyIdentity = _ctx.GyIdentitySet.Find("BOC_JSJL");
@@ -424,67 +458,62 @@ namespace FE.Handle.Request
 
             throw new Exception("获取MS_MZXX,BOC_JSJL序列号失败！");
         }
+
         /// <summary>
         /// 获取住院结算相关表的关键字段
         /// ZY_ZYJS，ZY_TBKK，BOC_JSJL
         /// </summary>
         private (int bocJlxh, int zyjsJlxh, int jkxh) GetInpIdentityKey()
         {
-            try
-            {
-                int bocJlxh = 0, zyjsJlxh = 0, jkxh = 0;
+            int bocJlxh = 0, zyjsJlxh = 0, jkxh = 0;
 
-                if (_inPara.PayJsxx.Zfje > 0)
+            if (_inPara.PayJsxx.Zfje > 0)
+            {
+                var zyIdentity = _ctx.ZyIdentitySet.Where(p => p.Bmc == "ZY_ZYJS" || p.Bmc == "ZY_TBKK").ToList();
+                foreach (var item in zyIdentity)
                 {
-                    var zyIdentity = _ctx.ZyIdentitySet.Where(p => p.Bmc == "ZY_ZYJS" || p.Bmc == "ZY_TBKK").ToList();
-                    foreach (var item in zyIdentity)
+                    if (item != null)
                     {
-                        if (item != null)
+                        if (item.Bmc == "ZY_ZYJS")
                         {
-                            if (item.Bmc == "ZY_ZYJS")
-                            {
-                                zyjsJlxh = item.Dqz + 1;
-                                item.Dqz = zyjsJlxh;
-                            }
-                            else if (item.Bmc == "ZY_TBKK")
-                            {
-                                jkxh = item.Dqz + 1;
-                                item.Dqz = jkxh;
-                            }
+                            zyjsJlxh = item.Dqz + 1;
+                            item.Dqz = zyjsJlxh;
+                        }
+                        else if (item.Bmc == "ZY_TBKK")
+                        {
+                            jkxh = item.Dqz + 1;
+                            item.Dqz = jkxh;
                         }
                     }
                 }
-                else
+            }
+            else
+            {
+                var zyIdentity = _ctx.ZyIdentitySet.Find("ZY_ZYJS");
+                if (zyIdentity != null)
                 {
-                    var zyIdentity = _ctx.ZyIdentitySet.Find("ZY_ZYJS");
-                    if (zyIdentity != null)
+                    if (zyIdentity.Bmc == "ZY_ZYJS")
                     {
-                        if (zyIdentity.Bmc == "ZY_ZYJS")
-                        {
-                            zyjsJlxh = zyIdentity.Dqz + 1;
-                            zyIdentity.Dqz = zyjsJlxh;
-                        }
+                        zyjsJlxh = zyIdentity.Dqz + 1;
+                        zyIdentity.Dqz = zyjsJlxh;
                     }
                 }
-
-                var gyIdentity = _ctx.GyIdentitySet.Find("BOC_JSJL");
-                if (gyIdentity != null)
-                {
-                    bocJlxh = gyIdentity.Dqz + 1;
-                    gyIdentity.Dqz = bocJlxh;
-                }
-
-
-                if (bocJlxh < 0 || zyjsJlxh < 0 || jkxh < 0) throw new Exception("获取ZY_ZYJS,BOC_JSJL,ZY_TBKK序列号失败！");
-                _ctx.SaveChanges();
-                return (bocJlxh, zyjsJlxh, jkxh);
             }
-            catch (Exception e)
+
+            var gyIdentity = _ctx.GyIdentitySet.Find("BOC_JSJL");
+            if (gyIdentity != null)
             {
-                Console.WriteLine(e);
-                throw;
+                bocJlxh = gyIdentity.Dqz + 1;
+                gyIdentity.Dqz = bocJlxh;
             }
 
+            if (bocJlxh < 0 || zyjsJlxh < 0 || jkxh < 0)
+            {
+                throw new Exception("获取ZY_ZYJS,BOC_JSJL,ZY_TBKK序列号失败！");
+            }
+
+            _ctx.SaveChanges();
+            return (bocJlxh, zyjsJlxh, jkxh);
         }
 
         /// <summary>
@@ -520,66 +549,103 @@ namespace FE.Handle.Request
             }
             return finalRylb;
         }
+
         /// <summary>
         ///     HosPayConfirm入参数据校验
         /// </summary>
         private void ValidateHosPayConfirmIn()
         {
             var detailCount = _inPara.fyqd.list.Count;
-            if (detailCount < 1) throw new Exception("/interface/fyqd/list/Detail节点没有数据，无法结算，请重试！");
-            if (string.IsNullOrEmpty(_inPara.actnumber)) throw new Exception("获取actnumber失败！");
-            if (string.IsNullOrEmpty(_inPara.PayLSH)) throw new Exception("获取结算流水号失败！");
-            if (string.IsNullOrEmpty(_inPara.PayDateTime)) throw new Exception("获取结算日期失败！");
+            if (detailCount < 1)
+            {
+                throw new Exception("/interface/fyqd/list/Detail节点没有数据，无法结算，请重试！");
+            }
+
+            if (string.IsNullOrEmpty(_inPara.actnumber))
+            {
+                throw new Exception("获取actnumber失败！");
+            }
+
+            if (string.IsNullOrEmpty(_inPara.PayLSH))
+            {
+                throw new Exception("获取结算流水号失败！");
+            }
+
+            if (string.IsNullOrEmpty(_inPara.PayDateTime))
+            {
+                throw new Exception("获取结算日期失败！");
+            }
+
             if (_inPara.PayJsxx.Fyze != _inPara.PayJsxx.Bxje + _inPara.PayJsxx.Zfje)
+            {
                 throw new Exception("fyze金额与zfje+bxje不符，无法结算，请重试！！");
+            }
+
             if (_inPara.PayJsxx.Fyze != _inPara.YbJsxx.ResultInfo.FeeTotal)
+            {
                 throw new Exception("PayJsxx.Fyze!=ybjsxx.ResultInfo.FeeTotal总额不等，不能结算");
+            }
+
             if (_inPara.PayJsxx.Bxje != _inPara.YbJsxx.ResultInfo.YBJJZF + _inPara.YbJsxx.ResultInfo.YYCDFY)
+            {
                 throw new Exception("PayJsxx_Bxje不等于ybjsxx_ResultInfo_YBJJZF与ybjsxx_ResultInfo_YYCDFY之和，不能结算");
+            }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.ZXJYLSH))
             {
                 throw new Exception("_inPara.YbJsxx.BusnissCycle数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.BusnissCycle))
             {
                 throw new Exception("_inPara.YbJsxx.BusnissCycle数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.JZLSH))
             {
                 throw new Exception("_inPara.YbJsxx.JZLSH数据不能为空");
             }
+
             if (_inPara.YbJsxx.icinfo == null)
             {
                 throw new Exception("_inPara.YbJsxx.icinfo数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.YYJYLSH))
             {
                 throw new Exception("_inPara.YbJsxx.YYJYLSH数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.YLLB))
             {
                 throw new Exception("_inPara.YbJsxx.YLLB数据错误");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.DJH))
             {
                 throw new Exception("_inPara.YbJsxx.DJH数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.PayDate))
             {
                 throw new Exception("_inPara.YbJsxx.PayDate数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.icinfo.icxx))
             {
                 throw new Exception("_inPara.YbJsxx.icinfo.icxx数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.icinfo.grbh))
             {
                 throw new Exception("_inPara.YbJsxx.icinfo.grbh数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.icinfo.sfzh))
             {
                 throw new Exception("_inPara.YbJsxx.icinfo.sfzh数据不能为空");
             }
+
             if (string.IsNullOrEmpty(_inPara.YbJsxx.icinfo.tcqydm))
             {
                 throw new Exception("_inPara.YbJsxx.icinfo.tcqydm数据不能为空");
@@ -595,7 +661,10 @@ namespace FE.Handle.Request
                     var zyBrry = GetAndVerifyZyBrry(_inPara.actnumber);
 
                     if (_inPara.PayJsxx.yjje != zyBrry.ZyTbkks.Where(p => p.Zfpb == 0).Sum(p => p.Jkje))
+                    {
                         throw new Exception("传入的yjje金额与实际jkje不符，无法结算，请重试！");
+                    }
+
                     var medicare = GetMedicareType();
                     var identity = GetInpIdentityKey();
                     var sjhm = $"yd{identity.jkxh}";
@@ -640,14 +709,13 @@ namespace FE.Handle.Request
                 catch (Exception e)
                 {
                     transaction.Rollback();
-                    return ReturnXml(-1, e.Message, null);
+                    throw  new Exception("住院结算失败！"+e.Message);
                 }
             }
-
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="zyBrry"></param>
         private void UpdateZyBrry(ZyBrry zyBrry)
@@ -671,9 +739,7 @@ namespace FE.Handle.Request
 
                 _ctx.SaveChanges();
             }
-
         }
-
 
         private void UpdateZyTbkk(ZyBrry zyBrry)
         {
@@ -698,7 +764,6 @@ namespace FE.Handle.Request
 
         private void InsertZyJsmx(ZyBrry zyBrry)
         {
-
             var query = zyBrry.ZyFymxs.GroupBy(p => new { p.Zyh, p.Jscs, p.Fyks, p.Fyxm, p })
                 .Select(t => new
                 {
@@ -794,13 +859,41 @@ namespace FE.Handle.Request
                 .Include(p => p.ZyTbkks)
                 .Include(p => p.ZyFymxs)
                 .FirstOrDefault();
-            if (patient == null) throw new Exception("获取住院病人档案失败");
-            if (patient.Cypb == 0) throw new Exception("未完成出院证明操作");
-            if (patient.Cypb == 8) throw new Exception("已完成出院结算");
-            if (patient.Cypb == 99) throw new Exception("本次住院已注销");
-            if (patient.Xgpb == 2) throw new Exception("正在进行费别转换2");
-            if (patient.Xgpb == 9) throw new Exception("正在进行出院结算9");
-            if (patient.Ydjsbz == 0) throw new Exception("该就诊信息移动结算检测未通过");
+            if (patient == null)
+            {
+                throw new Exception("获取住院病人档案失败");
+            }
+
+            if (patient.Cypb == 0)
+            {
+                throw new Exception("未完成出院证明操作");
+            }
+
+            if (patient.Cypb == 8)
+            {
+                throw new Exception("已完成出院结算");
+            }
+
+            if (patient.Cypb == 99)
+            {
+                throw new Exception("本次住院已注销");
+            }
+
+            if (patient.Xgpb == 2)
+            {
+                throw new Exception("正在进行费别转换2");
+            }
+
+            if (patient.Xgpb == 9)
+            {
+                throw new Exception("正在进行出院结算9");
+            }
+
+            if (patient.Ydjsbz == 0)
+            {
+                throw new Exception("该就诊信息移动结算检测未通过");
+            }
+
             return patient;
         }
 

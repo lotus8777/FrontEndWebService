@@ -49,10 +49,10 @@ namespace FE.Model.Local
         public int ChargeType { get; set; } = 4;
 
         /// <remarks/>
-        public string YLLB { get; set; } 
+        public string YLLB { get; set; }
 
         /// <remarks/>
-        public string DisAudNo { get; set; } 
+        public string DisAudNo { get; set; } = "";
 
         /// <remarks/>
         public decimal FeeTotal { get; set; }

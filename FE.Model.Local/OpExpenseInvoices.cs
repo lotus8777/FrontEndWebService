@@ -1,228 +1,162 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Xml.Serialization;
-
 namespace FE.Model.Local
 {
-
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <summary>
-    /// 门诊费用清单
+    ///     门诊费用清单
     /// </summary>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    [XmlRoot(Namespace = "", IsNullable = false,ElementName = "YyghInterface")]
+    [XmlRoot(Namespace = "", IsNullable = false, ElementName = "YyghInterface")]
     public class OpExpenseInvoices
     {
-        /// <remarks/>
+        /// <remarks />
         public byte RtnValue { get; set; } = 1;
-
-        /// <remarks/>
+        /// <remarks />
         public string bzxx { get; set; } = "获取门诊费用清单成功";
-
-        /// <remarks/>
+        /// <remarks />
         [XmlElement("interface")]
         public OpExpenseInvoicesInterface OpInterface { get; set; }
     }
-
-    /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    /// <remarks />
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     public class OpExpenseInvoicesInterface
     {
-        /// <remarks/>
+        /// <remarks />
         public string HospitalCode { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string Operator { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string CVX_CardType { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string ICInfo { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public byte ChargeType { get; set; } = 1;
-
-        /// <remarks/>
+        /// <remarks />
         public byte YLLB { get; set; } = 11;
-
-        /// <remarks/>
+        /// <remarks />
         public string DisAudNo { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public decimal FeeTotal { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public byte ZFFY { get; set; } = 0;
-
-        /// <remarks/>
+        /// <remarks />
         public byte yjje { get; set; } = 0;
-
-        /// <remarks/>
+        /// <remarks />
         public byte DisMark { get; set; } = 0;
-
-        /// <remarks/>
+        /// <remarks />
         public string OperatorName { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public OpClinic Clinic { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         [XmlArrayItem("Detail", IsNullable = false)]
         public List<OpFeeDetail> list { get; set; }
     }
-
-    /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    /// <remarks />
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     public class OpClinic
     {
-        
         public string ClinicNo { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public DateTime ClinicDate { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DeptCode { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DeptGBCode { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DeptName { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DocName { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DocSfzh { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DisCode { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DisName { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DisDesc { get; set; }
-
         public int FeeDetail { get; set; }
-        [XmlArrayItem("Item")]
-        public List<string> CYZD { get; set; }
-
-        
+        [XmlArrayItem("Item")] public List<string> CYZD { get; set; }
     }
-
-
     /// <summary>
-    /// 门诊费用明细
+    ///     门诊费用明细
     /// </summary>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     public class OpFeeDetail
     {
-        /// <remarks/>
+        /// <remarks />
         public int Type { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string Name { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public int itemNo { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public decimal itemCost { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         [XmlElement("item")]
         public List<OpFeeDetailItem> Item { get; set; }
     }
-
-    /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    /// <remarks />
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     public class OpFeeDetailItem
     {
-        /// <remarks/>
+        /// <remarks />
         public decimal itemNumber { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public int XMLB { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string SFLB { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public int DetailType { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string ItemCode { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string ItemHospCode { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string ItemHospName { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public int SDFlag { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public decimal Price { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public decimal Amount { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public decimal Amount_T { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string Unit { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string Spec { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string MedType { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public decimal ItemTotal { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public int SelfDeal { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public int SelfPay { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DayTimes { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public decimal Dosage { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public decimal SelfPayRate { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public int QEZFBZ { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string DisAudNo_DJ { get; set; }
-
-        /// <remarks/>
+        /// <remarks />
         public string Usage { get; set; }
     }
-
-
 }

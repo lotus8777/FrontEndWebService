@@ -61,7 +61,7 @@ namespace FE.Model.Hrp275
         public int? Brbq { get; set; }
 
         [Column(TypeName = "numeric")]
-        public int? Brks { get; set; }
+        public decimal? Brks { get; set; }
 
         [Column(TypeName = "numeric")]
         public int? Czbq { get; set; }

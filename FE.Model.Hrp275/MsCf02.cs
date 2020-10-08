@@ -196,5 +196,6 @@ namespace FE.Model.Hrp275
         public decimal? Yb_Sfkb { get; set; }
 
         public virtual MsCf01 MsCf01 { get; set; }
+        public virtual YkTypk YkTypk { get; set; }
     }
 }
