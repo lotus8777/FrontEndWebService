@@ -57,13 +57,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicFactory.cs" />
+    <Compile Include="BasicHandle.cs" />
     <Compile Include="ExecuteProcedureFactory.cs" />
     <Compile Include="ConvertToObject.cs" />
-    <Compile Include="HosInvoiceFactory.cs" />
-    <Compile Include="PayConfirmFactory.cs" />
+    <Compile Include="HosInvoiceHandle.cs" />
+    <Compile Include="PayConfirmHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GeneralTools.cs" />
+    <Compile Include="WsjGhclHandle.cs" />
+    <Compile Include="WsjThclHandle.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FE.Context\FE.Context.csproj">

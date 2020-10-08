@@ -41,5 +41,10 @@ namespace FE.Model.Hrp275
 
         [ForeignKey("Ksdm")]
         public virtual MsGhks MzGhks { get; set; }
+        [ForeignKey("Ghsbxh")]
+        public virtual MsGhmx MsGhmx { get; set; }
+
+        [ForeignKey("Yjsbxh")]
+        public virtual MsYj01 MsYj01 { get; set; }
     }
 }

@@ -9,11 +9,11 @@ using System.Xml.Linq;
 
 namespace FE.Handle.Request
 {
-    public class PayConfirmFactory : BasicFactory
+    public class PayConfirmHandle : BasicHandle
     {
         private HosPayConfirmIn _inPara;
 
-        public PayConfirmFactory(FrontEndContext context, string inXmlStr) : base(context)
+        public PayConfirmHandle(FrontEndContext context, string inXmlStr) : base(context)
         {
             _inPara = ConvertToObject<HosPayConfirmIn>.XmlDeserialize(inXmlStr);
             ValidateHosPayConfirmIn();
@@ -38,11 +38,11 @@ namespace FE.Handle.Request
         /// <returns></returns>
         private string GetOpPayConfirm()
         {
-            using (var transaction = _ctx.Database.BeginTransaction())
+            using (var transaction = Ctx.Database.BeginTransaction())
             {
                 try
                 {
-                    var jzls = _ctx.YsMzJzlsSet.Where(p => p.Actnumber == _inPara.actnumber)
+                    var jzls = Ctx.YsMzJzlsSet.Where(p => p.Actnumber == _inPara.actnumber)
                         .OrderByDescending(p => p.Kssj)
                         .FirstOrDefault();
                     if (jzls == null)
@@ -51,7 +51,7 @@ namespace FE.Handle.Request
                     }
 
                     var brid = jzls.Brbh;
-                    var brda = _ctx.MzBrdaSet.Find(brid);
+                    var brda = Ctx.MzBrdaSet.Find(brid);
                     if (string.IsNullOrEmpty(brda?.Brxm))
                     {
                         throw new Exception("获取病人基本信息失败！");
@@ -70,14 +70,14 @@ namespace FE.Handle.Request
 
                     if (_inPara.YbJsxx.CVX_CardType == "02")
                     {
-                        _inPara.OtherPara.Brxz = Convert.ToInt32(_config.HZYB_BRXZ);
+                        _inPara.OtherPara.Brxz = Convert.ToInt32(Config.HZYB_BRXZ);
                         _inPara.OtherPara.Ybpb = 1;
                     }
 
                     //_inPara.OtherPara.HzybJsjl_Jylsh = identity.jylsh;
 
                     //判断节点数据
-                    var gyXtcsSet = _ctx.GyXtcsSet.Where(p => (p.Csmc == "XYF"
+                    var gyXtcsSet = Ctx.GyXtcsSet.Where(p => (p.Csmc == "XYF"
                                                                || p.Csmc == "CYF"
                                                                || p.Csmc == "ZYF")
                                                               && p.Xtsb == 0).ToList();
@@ -87,7 +87,7 @@ namespace FE.Handle.Request
                     }
                     InsertMsMzxx(brda);
                     //临时表数据获取
-                    var msSfmxSet = _ctx.MsSfmxSet.Where(p => p.Mzxh == _inPara.OtherPara.MsMzxx_Mzxh).ToList();
+                    var msSfmxSet = Ctx.MsSfmxSet.Where(p => p.Mzxh == _inPara.OtherPara.MsMzxx_Mzxh).ToList();
                     foreach (var item in _inPara.fyqd.list)
                     {
                         if (item.Type == 1)
@@ -135,7 +135,7 @@ namespace FE.Handle.Request
                 Mzlb = 1,
                 Qybr = 1,
                 Ylje = _inPara.PayJsxx.Zfje,
-                Czgh = _config.CZGH,
+                Czgh = Config.CZGH,
                 Paylsh = _inPara.PayLSH,
                 Sjfp = _inPara.OtherPara.Fphm,
                 Jkda = 1,
@@ -143,13 +143,13 @@ namespace FE.Handle.Request
                 Zfpb = 0,
                 Sffs = _inPara.PayJsxx.PayMethod
             };
-            _ctx.MsMzxxSet.Add(mzxx);
-            _ctx.SaveChanges();
+            Ctx.MsMzxxSet.Add(mzxx);
+            Ctx.SaveChanges();
         }
 
         private void DisposeRecipe(InterfaceFyqdDetail item, IList<MsSfmx> msSfmxSet, IList<GyXtcs> gyXtcsSet)
         {
-            var cf01 = _ctx.MsCf01Set.Where(p => p.Cfsb == item.itemNo).Include(p => p.MsCf02).FirstOrDefault();
+            var cf01 = Ctx.MsCf01Set.Where(p => p.Cfsb == item.itemNo).Include(p => p.MsCf02).FirstOrDefault();
             if (cf01 == null)
             {
                 throw new Exception("处方信息不存在，请重试！");
@@ -200,14 +200,14 @@ namespace FE.Handle.Request
                     Fphm = _inPara.OtherPara.Fphm,
                     Jgid = 1
                 };
-                _ctx.MsSfmxSet.Add(temp);
+                Ctx.MsSfmxSet.Add(temp);
             }
             else
             {
                 temp.Zjje += hisItemCost;
                 temp.Zfje += 0;
             }
-            _ctx.SaveChanges();
+            Ctx.SaveChanges();
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace FE.Handle.Request
         private void DisposeTreatment(InterfaceFyqdDetail item, IList<MsSfmx> msSfmxSet)
         {
             //诊疗费用
-            var yj01 = _ctx.MsYj01Set.Where(p => p.Yjxh == item.itemNo).Include(p => p.MsYj02).FirstOrDefault();
+            var yj01 = Ctx.MsYj01Set.Where(p => p.Yjxh == item.itemNo).Include(p => p.MsYj02).FirstOrDefault();
             if (yj01 == null)
             {
                 throw new Exception("检查单信息不存在，请重试！");
@@ -293,7 +293,7 @@ namespace FE.Handle.Request
                         Fphm = _inPara.OtherPara.Fphm,
                         Jgid = 1
                     };
-                    _ctx.MsSfmxSet.Add(temp);
+                    Ctx.MsSfmxSet.Add(temp);
                 }
                 else
                 {
@@ -301,7 +301,7 @@ namespace FE.Handle.Request
                     temp.Zfje += yj.Hjje * yj.Zfbl;
                 }
             }
-            _ctx.SaveChanges();
+            Ctx.SaveChanges();
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace FE.Handle.Request
             //            group f by f.Zxgb
             //    into tGroup
             //            select new { Item = tGroup.Key, Zjje = tGroup.Sum(y => y.Zjje) };
-            var query = _ctx.MsSfmxSet.Where(p => p.Mzxh == _inPara.OtherPara.MsMzxx_Mzxh).Include(p => p.GySfxm)
+            var query = Ctx.MsSfmxSet.Where(p => p.Mzxh == _inPara.OtherPara.MsMzxx_Mzxh).Include(p => p.GySfxm)
                 .GroupBy(p => p.GySfxm.Zxgb)
                 .Select(p => new { Key = p.Key, Zjje = p.Sum(t => t.Zjje) })
                 .ToList();
@@ -339,7 +339,7 @@ namespace FE.Handle.Request
 
         private string GetInpResultXmlString(int zyh)
         {
-            var query = _ctx.ZyJsmxSet
+            var query = Ctx.ZyJsmxSet
                 .Where(p => p.Zyh == zyh && p.Jscs == _inPara.OtherPara.Jscs)
                 //.Include(p => p.GySfxm)
                 .GroupBy(p => p.GySfxm.Zxgb)
@@ -375,11 +375,11 @@ namespace FE.Handle.Request
                 Jyje = _inPara.PayJsxx.Zfje,
                 Jyrq = Convert.ToDateTime(_inPara.PayDateTime),
                 Pjh = _inPara.OtherPara.Sjhm,
-                Czgh = _config.YDJS_CZGH,
+                Czgh = Config.YDJS_CZGH,
                 Zfpb = 0
             };
-            _ctx.BocJsjlSet.Add(bocJsjl);
-            _ctx.SaveChanges();
+            Ctx.BocJsjlSet.Add(bocJsjl);
+            Ctx.SaveChanges();
         }
 
         /// <summary>
@@ -432,8 +432,8 @@ namespace FE.Handle.Request
                 Zfpb = 0,
                 Sybxbz = "0"
             };
-            _ctx.HzybJsjlSet.Add(hzybJsjl);
-            _ctx.SaveChanges();
+            Ctx.HzybJsjlSet.Add(hzybJsjl);
+            Ctx.SaveChanges();
         }
 
         /// <summary>
@@ -441,9 +441,9 @@ namespace FE.Handle.Request
         /// </summary>
         private (int mzxh, int jlxh) GetOpIdentityKey()
         {
-            var msIdentity = _ctx.MzIdentitySet
+            var msIdentity = Ctx.MzIdentitySet
                 .Find("MS_MZXX");
-            var gyIdentity = _ctx.GyIdentitySet.Find("BOC_JSJL");
+            var gyIdentity = Ctx.GyIdentitySet.Find("BOC_JSJL");
             if (msIdentity != null && gyIdentity != null)
             {
                 var mzxh = msIdentity.Dqz + 1;
@@ -452,7 +452,7 @@ namespace FE.Handle.Request
                 var jlxh = gyIdentity.Dqz + 1;
                 gyIdentity.Dqz = jlxh;
 
-                _ctx.SaveChanges();
+                Ctx.SaveChanges();
                 return (mzxh, jlxh);
             }
 
@@ -469,7 +469,7 @@ namespace FE.Handle.Request
 
             if (_inPara.PayJsxx.Zfje > 0)
             {
-                var zyIdentity = _ctx.ZyIdentitySet.Where(p => p.Bmc == "ZY_ZYJS" || p.Bmc == "ZY_TBKK").ToList();
+                var zyIdentity = Ctx.ZyIdentitySet.Where(p => p.Bmc == "ZY_ZYJS" || p.Bmc == "ZY_TBKK").ToList();
                 foreach (var item in zyIdentity)
                 {
                     if (item != null)
@@ -489,7 +489,7 @@ namespace FE.Handle.Request
             }
             else
             {
-                var zyIdentity = _ctx.ZyIdentitySet.Find("ZY_ZYJS");
+                var zyIdentity = Ctx.ZyIdentitySet.Find("ZY_ZYJS");
                 if (zyIdentity != null)
                 {
                     if (zyIdentity.Bmc == "ZY_ZYJS")
@@ -500,7 +500,7 @@ namespace FE.Handle.Request
                 }
             }
 
-            var gyIdentity = _ctx.GyIdentitySet.Find("BOC_JSJL");
+            var gyIdentity = Ctx.GyIdentitySet.Find("BOC_JSJL");
             if (gyIdentity != null)
             {
                 bocJlxh = gyIdentity.Dqz + 1;
@@ -512,7 +512,7 @@ namespace FE.Handle.Request
                 throw new Exception("获取ZY_ZYJS,BOC_JSJL,ZY_TBKK序列号失败！");
             }
 
-            _ctx.SaveChanges();
+            Ctx.SaveChanges();
             return (bocJlxh, zyjsJlxh, jkxh);
         }
 
@@ -654,7 +654,7 @@ namespace FE.Handle.Request
 
         private string GetInpPayConfirm()
         {
-            using (var transaction = _ctx.Database.BeginTransaction())
+            using (var transaction = Ctx.Database.BeginTransaction())
             {
                 try
                 {
@@ -724,12 +724,12 @@ namespace FE.Handle.Request
             zyBrry.Jscs = _inPara.OtherPara.Jscs;
             zyBrry.Cypb = 8;
             zyBrry.Xgpb = 0;
-            _ctx.SaveChanges();
+            Ctx.SaveChanges();
         }
 
         private void UpdateZyCwsz(int zyh)
         {
-            var zyCwsz = _ctx.ZyCwszSet.Where(p => p.Zyh == zyh).ToList();
+            var zyCwsz = Ctx.ZyCwszSet.Where(p => p.Zyh == zyh).ToList();
             if (zyCwsz.Any())
             {
                 foreach (var item in zyCwsz)
@@ -737,7 +737,7 @@ namespace FE.Handle.Request
                     item.Zyh = null;
                 }
 
-                _ctx.SaveChanges();
+                Ctx.SaveChanges();
             }
         }
 
@@ -748,7 +748,7 @@ namespace FE.Handle.Request
             {
                 item.Jscs = _inPara.OtherPara.Jscs;
             }
-            _ctx.SaveChanges();
+            Ctx.SaveChanges();
         }
 
         private void UpdateZyFymx(ZyBrry zyBrry)
@@ -759,7 +759,7 @@ namespace FE.Handle.Request
                 item.Jscs = _inPara.OtherPara.Jscs;
             }
 
-            _ctx.SaveChanges();
+            Ctx.SaveChanges();
         }
 
         private void InsertZyJsmx(ZyBrry zyBrry)
@@ -787,10 +787,10 @@ namespace FE.Handle.Request
                         Zfje = item.Zfje,
                         Zlje = item.Zlje
                     };
-                    _ctx.ZyJsmxSet.Add(zyJsmx);
+                    Ctx.ZyJsmxSet.Add(zyJsmx);
                 }
             }
-            _ctx.SaveChanges();
+            Ctx.SaveChanges();
         }
 
         private void InsertZyTbkk(ZyBrry zyBrry)
@@ -804,11 +804,11 @@ namespace FE.Handle.Request
                 Jkfs = 3,
                 Sjhm = _inPara.OtherPara.Sjhm,
                 Jscs = (int)zyBrry.Jscs + 1,
-                Czgh = _config.YDJS_CZGH,
+                Czgh = Config.YDJS_CZGH,
                 Zfpb = 0
             };
-            _ctx.ZyTbkkSet.Add(zyTbkk);
-            _ctx.SaveChanges();
+            Ctx.ZyTbkkSet.Add(zyTbkk);
+            Ctx.SaveChanges();
         }
 
         private void InsertZyZyjs(ZyBrry zyBrry)
@@ -828,7 +828,7 @@ namespace FE.Handle.Request
                 Jkhj = _inPara.PayJsxx.yjje + _inPara.PayJsxx.Zfje,
                 Xjje = 0,
                 Fphm = _inPara.OtherPara.Fphm,
-                Czgh = _config.YDJS_CZGH,
+                Czgh = Config.YDJS_CZGH,
                 Zfpb = 0,
                 Qtje = 0,
                 Qtfs = null,
@@ -844,8 +844,8 @@ namespace FE.Handle.Request
                 Dzpj = _inPara.ElectronicInvoiceNumber,
                 Jsjkxh = _inPara.OtherPara.ZyTbkk_Jkxh
             };
-            _ctx.ZyZyjsSet.Add(zyZyjs);
-            _ctx.SaveChanges();
+            Ctx.ZyZyjsSet.Add(zyZyjs);
+            Ctx.SaveChanges();
         }
 
         /// <summary>
@@ -855,7 +855,7 @@ namespace FE.Handle.Request
         /// <returns></returns>
         private ZyBrry GetAndVerifyZyBrry(string actNumber)
         {
-            var patient = _ctx.ZyBrrySet.Where(p => p.Actnumber == actNumber)
+            var patient = Ctx.ZyBrrySet.Where(p => p.Actnumber == actNumber)
                 .Include(p => p.ZyTbkks)
                 .Include(p => p.ZyFymxs)
                 .FirstOrDefault();

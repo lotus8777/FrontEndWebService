@@ -77,11 +77,13 @@ namespace FrontEndWebService
                 }
                 else if (procedureName == "wsj_ghcl")
                 {
-                    rtnXml = epf.GetGhcl(inXmlStr);
+                    var wsjGhcl=new WsjGhclHandle(_ctx,inXmlStr);
+                    rtnXml = wsjGhcl.GetWsjGhcl();
                 }
                 else if (procedureName == "wsj_thcl")
                 {
-                    rtnXml = epf.GetThcl(inXmlStr);
+                    var wsjThcl=new WsjThclHandle(_ctx,inXmlStr);
+                    rtnXml = wsjThcl.GetWsjThcl();
                 }
                 else if (procedureName == "hos_orders")
                 {
@@ -97,12 +99,12 @@ namespace FrontEndWebService
                 }
                 else if (procedureName == "hos_invoice")
                 {
-                    var hosInvoice=new HosInvoiceFactory(_ctx,inXmlStr);
+                    var hosInvoice=new HosInvoiceHandle(_ctx,inXmlStr);
                     rtnXml = hosInvoice.GetHosInvoice();
                 }
                 else if (procedureName == "hos_pay_confirm1")
                 {
-                    var pcf = new PayConfirmFactory(_ctx, inXmlStr);
+                    var pcf = new PayConfirmHandle(_ctx, inXmlStr);
                     rtnXml = pcf.GetPayConfirm();
                 }
                 else

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 using System.ComponentModel;
+using System.Xml.Serialization;
+
 namespace FE.Model.Local
 {
-    //class WsjGhclInParam
 
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <remarks/>
@@ -15,26 +12,29 @@ namespace FE.Model.Local
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false, ElementName = "interface")]
-    public class WsjGhclInParam
+    public class WsjGhclIn
     {
         /// <remarks/>
-        public string zzjgdm { get; set; }
+        public uint zzjgdm { get; set; }
 
         /// <remarks/>
-        public interfaceBrxx brxx { get; set; }
+        public GhclBrxx brxx { get; set; }
 
         /// <remarks/>
-        public interfaceGhxx ghxx { get; set; }
+        public GhclGhxx ghxx { get; set; }
 
         /// <remarks/>
         public int source_type { get; set; }
+
+        public decimal ghje { get; set; }
+      
     }
 
     /// <remarks/>
     [Serializable]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class interfaceBrxx
+    public class GhclBrxx
     {
         /// <remarks/>
         public string sfzh { get; set; }
@@ -75,6 +75,7 @@ namespace FE.Model.Local
 
         /// <remarks/>
         public int yldylb { get; set; }
+
         [XmlIgnore]
         public int brid { get; set; }
         [XmlIgnore]
@@ -87,7 +88,7 @@ namespace FE.Model.Local
     [Serializable]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class interfaceGhxx
+    public class GhclGhxx
     {
         /// <remarks/>
         public int ghlb { get; set; }
@@ -139,19 +140,53 @@ namespace FE.Model.Local
         public int yyxh { get; set; }
         [XmlIgnore]
         public string pzhm { get; set; }
+
         [XmlIgnore]
-        public int[] yj02xh
-        {
-            get;
-            set;
-
-        }
-
+        public int[] yj02xh { get; set; }
         /// <summary>
         /// 费用序号，费用金额
         /// </summary>
         [XmlIgnore]
-        public IList<Tuple<int, decimal>> ZlfList { get; set; }
+        public List<Tuple<int, decimal>> ZlfList { get; set; }
+    }
+
+
+    // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
+    /// <remarks/>
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot(Namespace = "", IsNullable = false, ElementName = "YyghInterface")]
+    public class WsjGhclOut
+    {
+        /// <remarks/>
+        public int RtnValue { get; set; } = 1;
+
+        /// <remarks/>
+        public string bzxx { get; set; } = "门诊预约挂号成功";
+
+        [XmlElement("interface")]
+        public GhclOutInterface GhclOutInterface { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class GhclOutInterface
+    {
+        /// <remarks/>
+        public GhclOutInterfaceRow row { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class GhclOutInterfaceRow
+    {
+        /// <remarks/>
+        public int ghxh { get; set; }
     }
 
 

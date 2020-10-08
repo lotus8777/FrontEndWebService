@@ -11,15 +11,15 @@ using Newtonsoft.Json;
 
 namespace FE.Handle.Request
 {
-    public class BasicFactory
+    public class BasicHandle
     {
-        protected readonly JsonConfig _config;
-        protected readonly FrontEndContext _ctx;
+        protected readonly JsonConfig Config;
+        protected readonly FrontEndContext Ctx;
 
-        public BasicFactory(FrontEndContext context)
+        public BasicHandle(FrontEndContext context)
         {
-            _ctx = context;
-            _config = GetGenericConfig();
+            Ctx = context;
+            Config = GetGenericConfig();
         }
 
         private JsonConfig GetGenericConfig()

@@ -9,10 +9,10 @@ using FE.Model.Local;
 
 namespace FE.Handle.Request
 {
-    public class HosInvoiceFactory : BasicFactory
+    public class HosInvoiceHandle : BasicHandle
     {
         private readonly HosInvoiceIn _inPara;
-        public HosInvoiceFactory(FrontEndContext context, string inXmlStr) : base(context)
+        public HosInvoiceHandle(FrontEndContext context, string inXmlStr) : base(context)
         {
             _inPara = ConvertToObject<HosInvoiceIn>.XmlDeserialize(inXmlStr);
         }
@@ -49,14 +49,14 @@ namespace FE.Handle.Request
             try
             {
                 var invoiceItems = new List<InvoiceItem>();
-                var msYj01 = _ctx.MsYj01Set.Where(p => p.Fphm == _inPara.fphm)
+                var msYj01 = Ctx.MsYj01Set.Where(p => p.Fphm == _inPara.fphm)
                     .Include(p => p.MsYj02.Select(y => y.GyYlsf))
                     .Include(p => p.GyKsdm)
                     .FirstOrDefault();
                 if (msYj01?.MsYj02 != null)
                 {
                     var fyxh = msYj01.MsYj02.Select(p => p.Ylxh).Distinct();
-                    var ybFydz = _ctx.YbFydzSet.Where(p => fyxh.Contains(p.Fyxh)
+                    var ybFydz = Ctx.YbFydzSet.Where(p => fyxh.Contains(p.Fyxh)
                                                            && p.Kssj <= msYj01.Kdrq
                                                            && (p.Zzsj == null || p.Zzsj >= msYj01.Kdrq))
                         .ToList();
@@ -114,14 +114,14 @@ namespace FE.Handle.Request
         {
 
             var invoiceItems = new List<InvoiceItem>();
-            var msCf01 = _ctx.MsCf01Set.Where(p => p.Fphm == _inPara.fphm)
+            var msCf01 = Ctx.MsCf01Set.Where(p => p.Fphm == _inPara.fphm)
                    .Include(p => p.MsCf02.Select(t => t.YkTypk))
                    .Include(p => p.GyKsdm)
                    .FirstOrDefault();
             if (msCf01?.MsCf02 != null)
             {
                 var ypxh = msCf01.MsCf02.Select(p => p.Ypxh).Distinct();
-                var ypYpdz = _ctx.YbYpdzNewSet.Where(p => ypxh.Contains(p.Ypxh)
+                var ypYpdz = Ctx.YbYpdzNewSet.Where(p => ypxh.Contains(p.Ypxh)
                     && p.Kssj <= msCf01.Kfrq
                     && (p.Zzsj >= msCf01.Kfrq || p.Zzsj == null))
                     .ToList();

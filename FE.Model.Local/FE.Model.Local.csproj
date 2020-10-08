@@ -61,8 +61,10 @@
     <Compile Include="HosOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToXElement.cs" />
-    <Compile Include="WsjGhclInParam.cs" />
+    <Compile Include="WsjGhcl.cs" />
     <Compile Include="WsjGhks.cs" />
+    <Compile Include="WsjThcl.cs" />
+    <Compile Include="YyghInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
