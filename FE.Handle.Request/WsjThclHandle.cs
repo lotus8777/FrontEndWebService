@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,37 +27,21 @@ namespace FE.Handle.Request
             {
                 try
                 {
-                    var msYygh = Ctx.MzYyghSet.Find(_inPara.ghxh);
+                    var msYygh = Ctx.MzYyghSet.Where(p => p.Yyxh == _inPara.ghxh)
+                        .Include(p => p.MsGhmx)
+                        .Include(p => p.MsYj01.MsYj02)
+                        .FirstOrDefault();
                     if (msYygh?.Yyrq == null)
                     {
                         throw new Exception("获取ms_yygh数据有错误!");
                     }
                     msYygh.Ghbz = 2;
-                    var msGhmx = Ctx.MzGhmxSet.Find(msYygh.Ghsbxh);
-                    if (msGhmx == null)
-                    {
-                        throw new Exception("获取ms_ghmx数据有错误!");
-                    }
-                    msGhmx.Thbz = 1;
-                    //删除MS_yj02
-                    var yj02 = Ctx.MsYj02Set.Where(p => p.Yjxh == msYygh.Yjsbxh);
-                    if (yj02.Any())
-                    {
-                        Ctx.MsYj02Set.RemoveRange(yj02);
-                    }
-                    //删除MS_YJ01
-                    if (msYygh.Yjsbxh != null)
-                    {
-                        var yj01 = new MsYj01
-                        {
-                            Yjxh = msYygh.Yjsbxh.Value
-                        };
-                        Ctx.MsYj01Set.Attach(yj01);
-                        Ctx.MsYj01Set.Remove(yj01);
-                    }
+                    msYygh.MsGhmx.Thbz = 1;
+                    Ctx.MsYj02Set.RemoveRange(msYygh.MsYj01.MsYj02);
+                    Ctx.MsYj01Set.Remove(msYygh.MsYj01);
                     //获取工作日期
                     var gzrq = msYygh.Yyrq.Value.Date;
-                    //修改ms_yspb信息，释放号源
+                    //修改ms_yspb信息，释放排班
                     var msYspb = Ctx.MzYspbSet.FirstOrDefault(p => p.Gzrq == gzrq
                                                                     && p.Ksdm == msYygh.Ksdm
                                                                     && p.Ysdm == msYygh.Ysdm
@@ -68,6 +53,7 @@ namespace FE.Handle.Request
                     --msYspb.Yyrs;
                     --msYspb.Ygrs;
                     --msYspb.Jzxh;
+                    //释放号源
                     var fsdyy = Ctx.MzFsdYySet.FirstOrDefault(p => p.Gzrq == gzrq
                                                                     && p.Ksdm == msYygh.Ksdm
                                                                     && p.Ysdm == msYygh.Ysdm

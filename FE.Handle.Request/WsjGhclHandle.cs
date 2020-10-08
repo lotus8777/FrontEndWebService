@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FE.Context;
 using FE.Model.Hrp275;
 using FE.Model.Local;
@@ -12,7 +10,6 @@ namespace FE.Handle.Request
 {
     public class WsjGhclHandle : BasicHandle
     {
-
         private readonly WsjGhclIn InPara;
 
         public WsjGhclHandle(FrontEndContext context, string xmlString) : base(context)
@@ -72,9 +69,9 @@ namespace FE.Handle.Request
 
                     var wsjGhclOut = new WsjGhclOut
                     {
-                        GhclOutInterface = new GhclOutInterface()
+                        GhclOutInterface = new GhclOutInterface
                         {
-                            row = new GhclOutInterfaceRow()
+                            row = new GhclOutInterfaceRow
                             {
                                 ghxh = InPara.ghxx.yyxh
                             }
@@ -82,7 +79,6 @@ namespace FE.Handle.Request
                     };
 
                     return ConvertToObject<WsjGhclOut>.SerializeXmlToString(wsjGhclOut);
-
                 }
                 catch (Exception e)
                 {
@@ -90,7 +86,6 @@ namespace FE.Handle.Request
                     throw new Exception("预约挂号失败->" + e.Message);
                 }
             }
-
         }
 
 
@@ -122,7 +117,7 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                throw new Exception("获取就诊号码失败" + e.Message);
+                throw new Exception("获取就诊号码失败->" + e.Message);
             }
         }
 
@@ -141,7 +136,7 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                throw new Exception("更新MSYY_GhXX失败" + e.Message);
+                throw new Exception("更新MSYY_GhXX失败->" + e.Message);
             }
         }
 
@@ -163,7 +158,7 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                throw new Exception("更新Ms_yygh失败" + e.Message);
+                throw new Exception("更新Ms_yygh失败->" + e.Message);
             }
         }
 
@@ -197,7 +192,7 @@ namespace FE.Handle.Request
             }
             catch (Exception e)
             {
-                throw new Exception("插入Ms_yygh失败" + e.Message);
+                throw new Exception("插入Ms_yygh失败->" + e.Message);
             }
         }
 
@@ -251,7 +246,6 @@ namespace FE.Handle.Request
         /// <summary>
         ///     插入Ms_yj01数据
         /// </summary>
-        /// <param name="InPara"></param>
         private void InsertMzYj01()
         {
             try
@@ -282,7 +276,6 @@ namespace FE.Handle.Request
         /// <summary>
         ///     插入Ms_yj02数据
         /// </summary>
-        /// <param name="InPara"></param>
         private void InsertMzYj02()
         {
             try
@@ -318,17 +311,16 @@ namespace FE.Handle.Request
         }
 
         /// <summary>
-        ///     更新医生排班可挂号数量
+        ///更新医生排班可挂号数量
         /// </summary>
-        /// <param name="InPara"></param>
         private void UpdateMzYspb()
         {
             try
             {
                 var yspb = Ctx.MzYspbSet.FirstOrDefault(p => p.Gzrq == InPara.ghxx.gzrq
-                                                              && p.Ksdm == InPara.ghxx.ksdm
-                                                              && p.Ysdm == InPara.ghxx.ysdm
-                                                              && p.Zblb == InPara.ghxx.zblb);
+                                                             && p.Ksdm == InPara.ghxx.ksdm
+                                                             && p.Ysdm == InPara.ghxx.ysdm
+                                                             && p.Zblb == InPara.ghxx.zblb);
                 if (yspb == null)
                 {
                     throw new Exception("获取医生排班信息失败！");
@@ -349,17 +341,16 @@ namespace FE.Handle.Request
         /// <summary>
         ///     锁定号源
         /// </summary>
-        /// <param name="InPara"></param>
         private void LockMzFsdyy()
         {
             try
             {
                 var fsdyy = Ctx.MzFsdYySet.FirstOrDefault(p => p.Gzrq == InPara.ghxx.gzrq
-                                                                && p.Ksdm == InPara.ghxx.ksdm
-                                                                && p.Ysdm == InPara.ghxx.ysdm
-                                                                && p.Zblb == InPara.ghxx.zblb
-                                                                && p.Jzxh == InPara.ghxx.jzxh
-                                                                && p.Ghpb == 0);
+                                                               && p.Ksdm == InPara.ghxx.ksdm
+                                                               && p.Ysdm == InPara.ghxx.ysdm
+                                                               && p.Zblb == InPara.ghxx.zblb
+                                                               && p.Jzxh == InPara.ghxx.jzxh
+                                                               && p.Ghpb == 0);
                 if (fsdyy == null)
                 {
                     throw new Exception("获取号源ms_fsdyyb失败！");
@@ -379,7 +370,6 @@ namespace FE.Handle.Request
         /// <summary>
         ///     获取各个表的Key值
         /// </summary>
-        /// <param name="InPara"></param>
         private void GetTableKey()
         {
             //
@@ -539,7 +529,6 @@ namespace FE.Handle.Request
         /// <summary>
         ///     获取挂号费用
         /// </summary>
-        /// <param name="InPara"></param>
         private void GetMedicalFee()
         {
             var ks = Ctx.MzGhksSet.Find(InPara.ghxx.ksdm);
@@ -568,8 +557,8 @@ namespace FE.Handle.Request
                 {
                     //特需
                     InPara.ghxx.ZlfList.Add(new Tuple<int, decimal>(Config.TXZCF, ks.Ghf));
-                    //@ghxh = 1579
                 }
+                //@ghxh = 1579
                 else if (ks.Ghlb == 3 && ks.Ghf > 10)
                 {
                     //正高
@@ -647,8 +636,5 @@ namespace FE.Handle.Request
                 throw new Exception("档案更新失败" + e.Message);
             }
         }
-
     }
-
-
 }
