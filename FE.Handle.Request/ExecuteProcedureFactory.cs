@@ -15,13 +15,13 @@ namespace FE.Handle.Request
 {
     public class ExecuteProcedureFactory
     {
-        private readonly JsonConfig _config;
-        private readonly FrontEndContext _ctx;
+        private readonly JsonConfig Config;
+        private readonly FrontEndContext Ctx;
 
         public ExecuteProcedureFactory(FrontEndContext context)
         {
-            _ctx = context;
-            _config = GetGenericConfig();
+            Ctx = context;
+            Config = GetGenericConfig();
         }
 
 
@@ -44,7 +44,7 @@ namespace FE.Handle.Request
                     throw new Exception("查询时间不能为空!");
                 }
 
-                var patient = _ctx.ZyBrrySet.Where(p => p.Actnumber == inPara.actnumber)
+                var patient = Ctx.ZyBrrySet.Where(p => p.Actnumber == inPara.actnumber)
                     .Include(p => p.KsBrks)
                     .Include(p => p.ZyTbkks)
                     .Include(p => p.GyBrxz)
@@ -78,7 +78,7 @@ namespace FE.Handle.Request
                         zfxj = t.Sum(a => a.Zjje)
                     }).ToArray();
 
-                var sfxmList = _ctx.GySfxmSet.ToList();
+                var sfxmList = Ctx.GySfxmSet.ToList();
 
                 foreach (var item in fyqd)
                 {
@@ -116,53 +116,7 @@ namespace FE.Handle.Request
             }
         }
 
-        public string GetHosOrders(string inXmlStr)
-        {
-            try
-            {
-                var xmlNodes = GetXmlNodes(inXmlStr);
-                var actNumber = xmlNodes.FirstOrDefault(p => p.Name == "actnumber")?.Value;
-                var zyBrry = _ctx.ZyBrrySet.FirstOrDefault(p => p.Actnumber == actNumber);
-                if (zyBrry?.Csny == null)
-                {
-                    throw new Exception("检索病人信息失败！");
-                }
-
-                var head = new HosOrderHead
-                {
-                    jzlsh = zyBrry.Zyh,
-                    mzzyhm = zyBrry.Zyhm,
-                    brxm = zyBrry.Brxm,
-                    brxb = zyBrry.Brxb,
-                    brnl = (int) (DateTime.Now - zyBrry.Csny.Value).TotalDays / 365 + 1,
-                    lxdh = zyBrry.Dwdh,
-                    jtdz = zyBrry.Gzdw
-                };
-                var orders = _ctx.Database.SqlQuery<HosOrderItem>($"exec proc_hos_orders {zyBrry.Zyh} ").ToList();
-                if (!orders.Any())
-                {
-                    throw new Exception("检索病人医嘱信息失败！");
-                }
-
-                var listNode = new XElement("list");
-                foreach (var order in orders)
-                {
-                    listNode.Add(order.ToXml("item"));
-                }
-
-                var root = new XElement("interface",
-                    new XElement("RtnValue", 1),
-                    new XElement("bzxx", "获取病人医嘱信息成功"),
-                    head.ToXml("head"),
-                    listNode
-                );
-                return root.ToString();
-            }
-            catch (Exception e)
-            {
-                throw new Exception("获取病人医嘱信息成功" + e.Message);
-            }
-        }
+    
 
 
 
@@ -200,7 +154,7 @@ namespace FE.Handle.Request
         {
             try
             {
-                return _ctx.Database.SqlQuery<ksyspb>($"exec proc_wjj_yspb '{ksdm}','{kssj}','{jssj}'").ToList();
+                return Ctx.Database.SqlQuery<ksyspb>($"exec proc_wjj_yspb '{ksdm}','{kssj}','{jssj}'").ToList();
             }
             catch (Exception e)
             {
@@ -222,7 +176,7 @@ namespace FE.Handle.Request
             var ysdm = xml.Element("ysdm")?.Value;
             var gzrq = Convert.ToDateTime(xml.Element("gzrq")?.Value);
             var zblb = Convert.ToInt32(xml.Element("zblb")?.Value);
-            var yypb = _ctx.MzFsdYySet.Where(p =>
+            var yypb = Ctx.MzFsdYySet.Where(p =>
                     p.Gzrq == gzrq &&
                     p.Ksdm == ksdm &&
                     p.Ysdm == ysdm &&
@@ -263,7 +217,7 @@ namespace FE.Handle.Request
             var xml = XElement.Parse(inXml);
             var mode = Convert.ToInt32(xml.Element("mode")?.Value ?? "1");
             string rtnXml;
-            var query = _ctx.Database.SqlQuery<WsjGhks>("exec proc_get_ghks").Where(p => p.kfyypb == mode).ToList();
+            var query = Ctx.Database.SqlQuery<WsjGhks>("exec proc_get_ghks").Where(p => p.kfyypb == mode).ToList();
             if (query.Any())
             {
                 var document = new XDocument(new XDeclaration("1.0", "utf-8", "yes"),
@@ -299,12 +253,12 @@ namespace FE.Handle.Request
             }
             //var jzlsh = xml.Descendants("list").Elements().FirstOrDefault(p => p.Name == "jzlsh")?.Value;
             //var mzzyhm = xml.Descendants("list").Elements().FirstOrDefault(p => p.Name == "mzzyhm")?.Value;
-            if (string.IsNullOrEmpty(_config.YYBH))
+            if (string.IsNullOrEmpty(Config.YYBH))
             {
                 throw new Exception("获取医院编码失败");
             }
 
-            if (string.IsNullOrEmpty(_config.CZGH))
+            if (string.IsNullOrEmpty(Config.CZGH))
             {
                 throw new Exception("获取操作工号失败");
             }
@@ -325,7 +279,7 @@ namespace FE.Handle.Request
                 var cvxCardType = GetCvxCardType(patient.Brxz.ToString(CultureInfo.InvariantCulture));
                 if (cvxCardType != "08")
                 {
-                    var noUpload = _ctx.ZyFymxSet.Any(p => p.Zyh == patient.Zyh && p.Scbz == 0 && p.Jscs == 0);
+                    var noUpload = Ctx.ZyFymxSet.Any(p => p.Zyh == patient.Zyh && p.Scbz == 0 && p.Jscs == 0);
                     if (noUpload)
                     {
                         throw new Exception("本次住院结算有未上传的明细记录");
@@ -334,7 +288,7 @@ namespace FE.Handle.Request
 
                 var (cnt1, zjje1, zjje2) = GetInpFee(patient.Zyh, (int) (patient.Yepb ?? 0));
                 //预交款
-                var yjk = _ctx.ZyTbkkSet.Where(p => p.Zyh == patient.Zyh && p.Zfpb == 0 && p.Jscs == 0)
+                var yjk = Ctx.ZyTbkkSet.Where(p => p.Zyh == patient.Zyh && p.Zfpb == 0 && p.Jscs == 0)
                     ?.Select(p => p.Jkje).DefaultIfEmpty(0).Sum();
                 var clinic = GetInpClinicInfo(patient.Zyh, cnt1);
                 var feeSummary = GetInpFeeSummary(patient.Zyh);
@@ -343,8 +297,8 @@ namespace FE.Handle.Request
                 {
                     InpInterface = new InpExpenseInvoicesInterface
                     {
-                        HospitalCode = _config.YYBH,
-                        Operator = _config.CZGH,
+                        HospitalCode = Config.YYBH,
+                        Operator = Config.CZGH,
                         CVX_CardType = cvxCardType,
                         ICInfo = patient.Cardno ?? "",
                         YLLB = patient.Yllb,
@@ -380,7 +334,7 @@ namespace FE.Handle.Request
         /// <returns></returns>
         private ZyBrry VerifyInpatient(string actNumber)
         {
-            var patient = _ctx.ZyBrrySet.FirstOrDefault(p => p.Actnumber == actNumber);
+            var patient = Ctx.ZyBrrySet.FirstOrDefault(p => p.Actnumber == actNumber);
             if (patient == null)
             {
                 throw new Exception("获取住院病人档案失败");
@@ -425,7 +379,7 @@ namespace FE.Handle.Request
             var cnt2 = 0;
             decimal zjje1;
             decimal zjje2 = 0;
-            var mx = _ctx.ZyFymxSet
+            var mx = Ctx.ZyFymxSet
                 .Where(p => p.Jscs == 0 && p.Zyh == zyh)
                 .GroupBy(p => p.Yefbz).Select(t => new
                 {
@@ -456,7 +410,7 @@ namespace FE.Handle.Request
 
         private InpClinic GetInpClinicInfo(int zyh, int count)
         {
-            var clinic = _ctx.Database.SqlQuery<InpClinic>($"exec proc_wjj_inclinic {zyh}").FirstOrDefault();
+            var clinic = Ctx.Database.SqlQuery<InpClinic>($"exec proc_wjj_inclinic {zyh}").FirstOrDefault();
             if (clinic == null)
             {
                 throw new Exception("获取住院相关信息失败");
@@ -481,7 +435,7 @@ namespace FE.Handle.Request
                             WHERE zr.ZDXH = gj.jbxh
                             AND zr.ZYH = {zyh}
                             AND zr.zdlb IN (3, 4)";
-            var query = _ctx.Database.SqlQuery<string>(sql).ToList();
+            var query = Ctx.Database.SqlQuery<string>(sql).ToList();
             if (!query.Any())
             {
                 throw new Exception("出入院诊断获取失败！");
@@ -503,7 +457,7 @@ namespace FE.Handle.Request
                             AND zf.zyh = {zyh}
                             AND zf.jscs =0
                             GROUP BY gs.zxgb";
-            var query = _ctx.Database.SqlQuery<string>(sql).ToList();
+            var query = Ctx.Database.SqlQuery<string>(sql).ToList();
             if (!query.Any())
             {
                 throw new Exception("费用分类数据获取失败！");
@@ -520,7 +474,7 @@ namespace FE.Handle.Request
         {
             // XElement xml;
             //获取病人信息
-            var jzls = _ctx.YsMzJzlsSet.Where(p => p.Actnumber == actNumber && p.Zfpb == 0)
+            var jzls = Ctx.YsMzJzlsSet.Where(p => p.Actnumber == actNumber && p.Zfpb == 0)
                 .OrderByDescending(p => p.Kssj).FirstOrDefault();
             if (jzls == null)
             {
@@ -532,13 +486,13 @@ namespace FE.Handle.Request
                 throw new Exception("获取门诊病人档案失败");
             }
 
-            var patient = _ctx.MzBrdaSet.Find(jzls.Brbh);
+            var patient = Ctx.MzBrdaSet.Find(jzls.Brbh);
             if (patient == null || patient.Brxz <= 0)
             {
                 throw new Exception("获取病人基本信息失败");
             }
 
-            var clinic = _ctx.Database.SqlQuery<OpClinic>($"exec proc_wjj_outclinic {jzls.Jzxh}").FirstOrDefault();
+            var clinic = Ctx.Database.SqlQuery<OpClinic>($"exec proc_wjj_outclinic {jzls.Jzxh}").FirstOrDefault();
             if (clinic == null)
             {
                 throw new Exception("获取门诊clinic信息失败");
@@ -562,8 +516,8 @@ namespace FE.Handle.Request
             {
                 OpInterface = new OpExpenseInvoicesInterface
                 {
-                    HospitalCode = _config.YYBH,
-                    Operator = _config.CZGH,
+                    HospitalCode = Config.YYBH,
+                    Operator = Config.CZGH,
                     CVX_CardType = GetCvxCardType(patient.Brxz.ToString()),
                     ICInfo = GetIcInfor(patient),
                     FeeTotal = details.Sum(p => p.itemCost),
@@ -584,8 +538,8 @@ namespace FE.Handle.Request
         /// <returns></returns>
         private List<OpFeeDetail> GetOpFeeDetails(int brid, int qybr)
         {
-            var cfsj = DateTime.Now.AddDays(0 - _config.CFXQ);
-            var webCfsj = DateTime.Now.AddDays(0 - _config.WebCFXQ);
+            var cfsj = DateTime.Now.AddDays(0 - Config.CFXQ);
+            var webCfsj = DateTime.Now.AddDays(0 - Config.WebCFXQ);
             DateTime djsj1;
             if (qybr == 1 || qybr == 5)
             {
@@ -598,7 +552,7 @@ namespace FE.Handle.Request
 
             //获取费用清单
             var sql = $"exec proc_wjj_cfyj {brid},'{cfsj}','{webCfsj}','{djsj1}'";
-            var list = _ctx.Database.SqlQuery<OpFeeDetail>(sql).ToList();
+            var list = Ctx.Database.SqlQuery<OpFeeDetail>(sql).ToList();
             if (list.Any())
             {
                 try
@@ -607,12 +561,12 @@ namespace FE.Handle.Request
                     {
                         if (opFee.Type == 1)
                         {
-                            opFee.Item = _ctx.Database.SqlQuery<OpFeeDetailItem>($"exec proc_wjj_cfmx {opFee.itemNo}")
+                            opFee.Item = Ctx.Database.SqlQuery<OpFeeDetailItem>($"exec proc_wjj_cfmx {opFee.itemNo}")
                                 .ToList();
                         }
                         else
                         {
-                            opFee.Item = _ctx.Database.SqlQuery<OpFeeDetailItem>($"exec proc_wjj_yjmx {opFee.itemNo}")
+                            opFee.Item = Ctx.Database.SqlQuery<OpFeeDetailItem>($"exec proc_wjj_yjmx {opFee.itemNo}")
                                 .ToList();
                         }
 
@@ -642,7 +596,7 @@ namespace FE.Handle.Request
         /// <returns></returns>
         public string GetCvxCardType(string brxz)
         {
-            if (_config.HZYB_BRXZ == brxz || _config.WXYB_BRXZ == brxz)
+            if (Config.HZYB_BRXZ == brxz || Config.WXYB_BRXZ == brxz)
             {
                 return "02";
             }
@@ -695,15 +649,15 @@ namespace FE.Handle.Request
                         Xrrq = DateTime.Now,
                         Instr = inXmlStr
                     };
-                    _ctx.PayFkrzSet.Add(fkrz);
-                    _ctx.SaveChanges();
+                    Ctx.PayFkrzSet.Add(fkrz);
+                    Ctx.SaveChanges();
                 }
                 catch (Exception e)
                 {
                     throw new Exception("业务日志保存失败/r/n" + e.Message);
                 }
 
-                var record = _ctx.PayFkjlSet.Find(yyjsls);
+                var record = Ctx.PayFkjlSet.Find(yyjsls);
                 if (record == null)
                 {
                     throw new Exception("PAY_FKJL查询失败");
@@ -725,8 +679,8 @@ namespace FE.Handle.Request
                         Xrrq = DateTime.Now,
                         Instr = outXml
                     };
-                    _ctx.PayFkrzSet.Add(fkrz);
-                    _ctx.SaveChanges();
+                    Ctx.PayFkrzSet.Add(fkrz);
+                    Ctx.SaveChanges();
                     return outXml;
                 }
 
@@ -741,7 +695,7 @@ namespace FE.Handle.Request
                     record.Pay2 = pay;
                     record.Zffs = zffs;
                     record.State = 1;
-                    _ctx.SaveChanges();
+                    Ctx.SaveChanges();
                 }
                 catch (Exception e)
                 {
@@ -761,8 +715,8 @@ namespace FE.Handle.Request
                     Xrrq = DateTime.Now,
                     Instr = outXml
                 };
-                _ctx.PayFkrzSet.Add(fkrz);
-                _ctx.SaveChanges();
+                Ctx.PayFkrzSet.Add(fkrz);
+                Ctx.SaveChanges();
                 throw;
             }
         }
@@ -810,7 +764,7 @@ namespace FE.Handle.Request
                 var gzrq = Convert.ToDateTime(nodeList.FirstOrDefault(p => p.Name == "gzrq")?.Value);
                 var ysdm = nodeList.FirstOrDefault(p => p.Name == "ysdm")?.Value;
                 var zblb = Convert.ToInt32(nodeList.FirstOrDefault(p => p.Name == "zblb")?.Value);
-                var yspb = _ctx.MzYspbSet.FirstOrDefault(p => p.Ksdm == ksdm
+                var yspb = Ctx.MzYspbSet.FirstOrDefault(p => p.Ksdm == ksdm
                                                               && p.Ysdm == ysdm
                                                               && p.Zblb == zblb
                                                               && p.Gzrq == gzrq

@@ -1,36 +1,366 @@
-
-<interface>
-	<RtnValue>1</RtnValue>
-	<bzxx>成功</bzxx>
-	<sfxmmx>
-		<item>
-			<item_no>1941265</item_no>
-			<item_class>甲</item_class>
-			<item_code>102</item_code>
-			<item_name>门诊诊查费(二级医院)</item_name>
-			<item_spec>
-			</item_spec>
-			<units>次</units>
-			<ammount>1.00</ammount>
-			<unitprice>15.00</unitprice>
-			<price>15.00</price>
-			<zxksbm>101</zxksbm>
-			<zxksmc>精神科</zxksmc>
-			<zfbl>100</zfbl>
-		</item>
-		<item>
-			<item_no>2460588</item_no>
-			<item_class>乙</item_class>
-			<item_code>1639</item_code>
-			<item_name>丙戊酸钠缓释片(德巴金)</item_name>
-			<item_spec>0.5g*30</item_spec>
-			<units>瓶</units>
-			<ammount>1.00</ammount>
-			<unitprice>62.11</unitprice>
-			<price>62.11</price>
-			<zxksbm>101</zxksbm>
-			<zxksmc>精神科</zxksmc>
-			<zfbl>0</zfbl>
-		</item>
-	</sfxmmx>
+﻿<interface>
+    <RtnValue>1</RtnValue>
+    <bzxx>获取住院病人医嘱成功</bzxx>
+    <head>
+        <jzlsh>14722</jzlsh>
+        <mzzyhm>115674</mzzyhm>
+        <brxm>叶忠平</brxm>
+        <brxb>1</brxb>
+        <brnl>52</brnl>
+        <nldw>岁</nldw>
+        <lxdh>63373911</lxdh>
+        <jtdz>场口镇</jtdz>
+    </head>
+    <list>
+        <item>
+            <ORDER_NO>597419</ORDER_NO>
+            <ORDER_SUB_NO>2035809</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>利培酮片(索乐)[基]60片/1mg/片</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>口服</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/21 10:52:16</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/21 10:52:16</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/21/2017 10:52:16</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/21/2017 10:52:16</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>597419</ORDER_NO>
+            <ORDER_SUB_NO>2035816</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>苯海索片[基]/2mg/片</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>口服</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/21 10:52:16</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/21 10:52:16</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/21/2017 10:52:16</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/21/2017 10:52:16</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>597419</ORDER_NO>
+            <ORDER_SUB_NO>2035817</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>帕罗西汀片(乐友)[基]20片/20mg/片</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>口服</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/21 10:52:16</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/21 10:52:16</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/21/2017 10:52:16</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/21/2017 10:52:16</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>597419</ORDER_NO>
+            <ORDER_SUB_NO>2035818</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>美托洛尔片[基]/25mg/片</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>口服</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/21 10:52:16</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/21 10:52:16</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/21/2017 10:52:16</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/21/2017 10:52:16</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>595314</ORDER_NO>
+            <ORDER_SUB_NO>2029810</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>艾司唑仑针/2mg/支</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>肌注</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/15 22:16:30</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/15 22:16:30</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/15/2017 22:16:30</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/15/2017 22:16:30</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>595314</ORDER_NO>
+            <ORDER_SUB_NO>2029811</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>注射费</ORDER_CLASS>
+            <ORDER_TEXT>肌肉注射/次</ORDER_TEXT>
+            <DOSAGE />
+            <ADMINISTRATION>肌注</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/15 22:16:30</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/15 22:16:30</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/16/2017 00:00:00</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/16/2017 00:00:00</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>595314</ORDER_NO>
+            <ORDER_SUB_NO>2029812</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>一次性材料</ORDER_CLASS>
+            <ORDER_TEXT>一次性针筒[5ML]/支</ORDER_TEXT>
+            <DOSAGE />
+            <ADMINISTRATION>肌注</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/15 22:16:30</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/15 22:16:30</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/16/2017 00:00:00</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/16/2017 00:00:00</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>592170</ORDER_NO>
+            <ORDER_SUB_NO>2019227</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>艾司唑仑针/2mg/支</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>肌注</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/8 22:26:48</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/8 22:26:48</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/08/2017 22:26:48</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/08/2017 22:26:48</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>592170</ORDER_NO>
+            <ORDER_SUB_NO>2019228</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>注射费</ORDER_CLASS>
+            <ORDER_TEXT>肌肉注射/次</ORDER_TEXT>
+            <DOSAGE />
+            <ADMINISTRATION>肌注</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/8 22:26:48</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/8 22:26:48</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/09/2017 00:00:00</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/09/2017 00:00:00</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>592170</ORDER_NO>
+            <ORDER_SUB_NO>2019229</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>0</REPEAT_INDICATOR>
+            <ORDER_CLASS>一次性材料</ORDER_CLASS>
+            <ORDER_TEXT>一次性针筒[5ML]/支</ORDER_TEXT>
+            <DOSAGE />
+            <ADMINISTRATION>肌注</ADMINISTRATION>
+            <START_DATE_TIME>2017/9/8 22:26:48</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/8 22:26:48</STOP_DATE_TIME>
+            <DURATION>1天</DURATION>
+            <FREQUENCY>立即</FREQUENCY>
+            <FREQ_DETAIL>立即</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/09/2017 00:00:00</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/09/2017 00:00:00</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>580063</ORDER_NO>
+            <ORDER_SUB_NO>1979734</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>1</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>利培酮片(索乐)[基]60片/1mg/片</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>口服</ADMINISTRATION>
+            <START_DATE_TIME>2017/8/14 11:00:28</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/21 10:49:59</STOP_DATE_TIME>
+            <DURATION>38天</DURATION>
+            <FREQUENCY>晚</FREQUENCY>
+            <FREQ_DETAIL>晚</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/21/2017 00:00:00</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/21/2017 00:00:00</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>580062</ORDER_NO>
+            <ORDER_SUB_NO>1979732</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>1</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>苯海索片[基]/2mg/片</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>口服</ADMINISTRATION>
+            <START_DATE_TIME>2017/8/14 11:00:18</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/21 10:49:59</STOP_DATE_TIME>
+            <DURATION>38天</DURATION>
+            <FREQUENCY>每天2次</FREQUENCY>
+            <FREQ_DETAIL>每天2次</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/21/2017 00:00:00</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/21/2017 00:00:00</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>580061</ORDER_NO>
+            <ORDER_SUB_NO>1979730</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>1</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>美托洛尔片[基]/25mg/片</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>口服</ADMINISTRATION>
+            <START_DATE_TIME>2017/8/14 11:00:05</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/21 10:49:59</STOP_DATE_TIME>
+            <DURATION>38天</DURATION>
+            <FREQUENCY>每天2次</FREQUENCY>
+            <FREQ_DETAIL>每天2次</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/21/2017 00:00:00</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/21/2017 00:00:00</LAST_PERFORM_DATE_TIME>
+        </item>
+        <item>
+            <ORDER_NO>580060</ORDER_NO>
+            <ORDER_SUB_NO>1979728</ORDER_SUB_NO>
+            <REPEAT_INDICATOR>1</REPEAT_INDICATOR>
+            <ORDER_CLASS>西药</ORDER_CLASS>
+            <ORDER_TEXT>帕罗西汀片(乐友)[基]20片/20mg/片</ORDER_TEXT>
+            <DOSAGE>mg</DOSAGE>
+            <ADMINISTRATION>口服</ADMINISTRATION>
+            <START_DATE_TIME>2017/8/14 10:59:43</START_DATE_TIME>
+            <STOP_DATE_TIME>2017/9/21 10:49:59</STOP_DATE_TIME>
+            <DURATION>38天</DURATION>
+            <FREQUENCY>早</FREQUENCY>
+            <FREQ_DETAIL>早</FREQ_DETAIL>
+            <PERFORM_SCHEDULE>09/21/2017 00:00:00</PERFORM_SCHEDULE>
+            <PERFORM_RESULT />
+            <ORDERING_DEPT>一病区</ORDERING_DEPT>
+            <DOCTOR>秦立坤</DOCTOR>
+            <STOP_DOCTOR>秦立坤</STOP_DOCTOR>
+            <NURSE />
+            <STOP_NURSE />
+            <ORDER_STATUS>3</ORDER_STATUS>
+            <DRUG_BILLING_ATTR>0</DRUG_BILLING_ATTR>
+            <BILLING_ATTR>0</BILLING_ATTR>
+            <LAST_PERFORM_DATE_TIME>09/21/2017 00:00:00</LAST_PERFORM_DATE_TIME>
+        </item>
+    </list>
 </interface>

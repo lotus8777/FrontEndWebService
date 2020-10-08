@@ -87,7 +87,8 @@ namespace FrontEndWebService
                 }
                 else if (procedureName == "hos_orders")
                 {
-                    rtnXml = epf.GetHosOrders(inXmlStr);
+                    var hosOrder=new HosOrderHandle(_ctx,inXmlStr);
+                    rtnXml = hosOrder.GetHosOrders();
                 }
                 else if (procedureName == "wsj_get_dqjzdl")
                 {

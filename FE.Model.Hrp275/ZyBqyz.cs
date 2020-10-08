@@ -131,5 +131,13 @@ namespace FE.Model.Hrp275
         public decimal? Yefbz { get; set; }
         public decimal? Ybzfpb { get; set; }
         public decimal? Yb_Sfkb { get; set; }
+        [ForeignKey("Srks")]
+        public virtual GyKsdm GyKsdm { get; set; }
+        [ForeignKey("Ysgh")]
+        public virtual GyYgdm GyYgdm { get; set; }
+        [ForeignKey("Ypyf")]
+        public virtual ZyYpyf ZyYpyf { get; set; }
+        [ForeignKey("Sypc")]
+        public virtual GySypc GySypc { get; set; }
     }
 }
