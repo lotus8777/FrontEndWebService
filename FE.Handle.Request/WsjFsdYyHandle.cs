@@ -6,7 +6,7 @@ using FE.Model.Local;
 
 namespace FE.Handle.Request
 {
-    public class WsjFsdYyHandle : BasicHandle<WsjFsdYyIn>
+    public class WsjFsdYyHandle : BasicHandle<WsjFsdYyIn>, IHandle
     {
         public WsjFsdYyHandle(FrontEndContext context, string xmlString) : base(context, xmlString)
         {
@@ -16,14 +16,14 @@ namespace FE.Handle.Request
         ///     门诊分时段预约号源
         /// </summary>
         /// <returns></returns>
-        public string GetOpFsdYy()
+        public  string GetResultXml()
         {
             try
             {
                 //医院排班
 
                 DateTime gzrq = Convert.ToDateTime(InPara.gzrq);
-                var yypb = Ctx.MzFsdYySet.Where(p =>
+                var yypb = Ctx.MsFsdYySet.Where(p =>
                         p.Gzrq == gzrq &&
                         p.Ksdm == InPara.ksdm &&
                         p.Ysdm == InPara.ysdm &&

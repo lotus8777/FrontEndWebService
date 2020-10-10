@@ -10,15 +10,13 @@ using FE.Model.Local;
 
 namespace FE.Handle.Request
 {
-    public class HosOrderHandle : BasicHandle<HosOrderIn>
+    public class HosOrderHandle : BasicHandle<HosOrderIn>, IHandle
     {
-        //private HosOrderIn InPara;
-        public HosOrderHandle(FrontEndContext context, string xmlString) : base(context,xmlString)
+        public HosOrderHandle(FrontEndContext context, string xmlString) : base(context, xmlString)
         {
-            //InPara = ConvertToObject<HosOrderIn>.XmlDeserialize(xmlString);
         }
 
-        public string GetHosOrders()
+        public string GetResultXml()
         {
             try
             {
@@ -27,11 +25,6 @@ namespace FE.Handle.Request
                 {
                     throw new Exception("检索病人信息失败！");
                 }
-                //var orders = Ctx.Database.SqlQuery<HosOrderItem>($"exec proc_hos_orders {zyBrry.Zyh} ").ToList();
-                //if (!orders.Any())
-                //{
-                //    throw new Exception("检索病人医嘱信息失败！");
-                //}
                 var hosOrderOut = new HosOrderOut
                 {
                     head = new HosOrderHead

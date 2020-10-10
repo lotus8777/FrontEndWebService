@@ -36,14 +36,14 @@ namespace FE.Context
         public virtual DbSet<ZyBqyz> ZyBqyzSet { get; set; }
         public virtual DbSet<MsyyGhxx> MzyyGhxxSet { get; set; }
         public virtual DbSet<WjjRequest> RequestRecords { get; set; }
-        public virtual DbSet<MsFsdYy> MzFsdYySet { get; set; }
+        public virtual DbSet<MsFsdYy> MsFsdYySet { get; set; }
         public virtual DbSet<ZyBrry> ZyBrrySet { get; set; }
         public virtual DbSet<GyDmzd> GyDmzdSet { get; set; }
-        public virtual DbSet<MsGhks> MzGhksSet { get; set; }
-        public virtual DbSet<MsBrda> MzBrdaSet { get; set; }
-        public virtual DbSet<MsGhmx> MzGhmxSet { get; set; }
-        public virtual DbSet<MsYspb> MzYspbSet { get; set; }
-        public virtual DbSet<MsYygh> MzYyghSet { get; set; }
+        public virtual DbSet<MsGhks> MsGhksSet { get; set; }
+        public virtual DbSet<MsBrda> MsBrdaSet { get; set; }
+        public virtual DbSet<MsGhmx> MsGhmxSet { get; set; }
+        public virtual DbSet<MsYspb> MsYspbSet { get; set; }
+        public virtual DbSet<MsYygh> MsYyghSet { get; set; }
         public virtual DbSet<PayDmzd> PayDmzdSet { get; set; }
         public virtual DbSet<GyJbbm> GyJbbmSet { get; set; }
         public virtual DbSet<GyKsdm> GyKsdmSet { get; set; }
@@ -70,6 +70,6 @@ namespace FE.Context
         public virtual DbSet<MsIdentity> MzIdentitySet { get; set; }
         public virtual DbSet<GyIdentity> GyIdentitySet { get; set; }
         public virtual DbSet<ZyIdentity> ZyIdentitySet { get; set; }
-        public virtual DbSet<MsYgpj> MzYgpjSet { get; set; }
+        public virtual DbSet<MsYgpj> MsYgpjSet { get; set; }
     }
 }

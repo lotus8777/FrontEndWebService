@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
@@ -33,7 +34,7 @@ namespace FE.Handle.Request
                 OmitXmlDeclaration = true,
                 Encoding = Encoding.UTF8,
                 //Xml缩进
-                Indent = true
+                Indent = false
             };
             //去除去除默认命名空间xmlns:xsd和xmlns:xsi
             var ns = new XmlSerializerNamespaces();
@@ -49,7 +50,8 @@ namespace FE.Handle.Request
                 outStr = Encoding.UTF8.GetString(stream.ToArray());
                 xmlWriter.Dispose();
             }
-            return outStr;
+            //去掉xml前面的？
+            return Regex.Replace(outStr, "^[^<]","");
         }
 
         /// <summary>

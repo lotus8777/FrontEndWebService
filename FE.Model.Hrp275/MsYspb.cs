@@ -47,6 +47,8 @@ namespace FE.Model.Hrp275
         public decimal? Zzxe { get; set; }
         public decimal? Zjxe { get; set; }
         public virtual ICollection<MsFsdYy> MzFsdYyCollection { get; set; }
-        public virtual MsGhks MzGhks { get; set; }
+        public virtual MsGhks MsGhks { get; set; }
+        [ForeignKey("Ysdm")]
+        public virtual GyYgdm GyYgdm { get; set; }
     }
 }

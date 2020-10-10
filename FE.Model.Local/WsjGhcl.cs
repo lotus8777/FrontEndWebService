@@ -27,6 +27,7 @@ namespace FE.Model.Local
         public int source_type { get; set; }
 
         public decimal ghje { get; set; }
+        public string mode { get; set; }
       
     }
 
@@ -74,7 +75,7 @@ namespace FE.Model.Local
         public string cardnum { get; set; }
 
         /// <remarks/>
-        public int yldylb { get; set; }
+        public string yldylb { get; set; }
 
         [XmlIgnore]
         public int brid { get; set; }
@@ -126,6 +127,8 @@ namespace FE.Model.Local
 
         /// <remarks/>
         public decimal ghje { get; set; }
+
+        public string swyyxh { get; set; }
         [XmlIgnore]
         public int ghxh { get; set; }
         [XmlIgnore]

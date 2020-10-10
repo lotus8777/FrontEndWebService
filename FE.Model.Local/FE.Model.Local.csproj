@@ -54,8 +54,10 @@
     <Compile Include="HosInvoice.cs" />
     <Compile Include="HosPayConfirmIn.cs" />
     <Compile Include="OpExpenseInvoices.cs" />
-    <Compile Include="InpExpenseInvoices.cs" />
+    <Compile Include="ExpenseInvoices.cs" />
     <Compile Include="ksyspb.cs" />
+    <Compile Include="WsjCodePay.cs" />
+    <Compile Include="WsjDqJzDl.cs" />
     <Compile Include="WsjFsdYy.cs" />
     <Compile Include="WsjFyqdGet.cs" />
     <Compile Include="JsonConfig.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="WsjGhcl.cs" />
     <Compile Include="WsjGhks.cs" />
     <Compile Include="WsjThcl.cs" />
+    <Compile Include="WsjYspb.cs" />
     <Compile Include="YyghInterface.cs" />
   </ItemGroup>
   <ItemGroup>

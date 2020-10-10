@@ -4,73 +4,72 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace FE.Model.Local
 {
-
+    //WsjDqJzDlIn
 
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <remarks/>
-    [Serializable]
+    //[Serializable]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false, ElementName = "interface")]
-    public class WsjGhksIn
+    public class WsjDqJzDlIn
     {
-        /// <remarks/>
-        public string zzjgdm { get; set; }
-
-        /// <remarks/>
-        public decimal mode { get; set; }
-    }
-
-
-    // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
-    /// <remarks/>
-    [Serializable]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    [XmlRoot(Namespace = "", IsNullable = false, ElementName = "YyghInterface")]
-    public class WsjGhksOut
-    {
-        /// <remarks/>
-        public int RtnValue { get; set; }
-
-        /// <remarks/>
-        public string bzxx { get; set; }
-
-        /// <remarks/>
-        [XmlArrayItem("row", IsNullable = false)]
-        public List<GhksRow> GhksRows { get; set; }
-    }
-
-    /// <remarks/>
-    [Serializable]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    public class GhksRow
-    {
-        /// <remarks/>
-        public string bzdm { get; set; }
-
         /// <remarks/>
         public string ksdm { get; set; }
 
         /// <remarks/>
-        public string ksmc { get; set; }
+        public string ghks { get; set; }
 
         /// <remarks/>
-        public int zjpb { get; set; }
+        public string ysdm { get; set; }
 
         /// <remarks/>
-        public decimal ghje { get; set; }
+        public string gzrq { get; set; }
 
         /// <remarks/>
-        public string zswz { get; set; }
+        public int zblb { get; set; }
 
         /// <remarks/>
-        public string bzxx { get; set; }
+        public byte ghlb { get; set; }
+
+        /// <remarks/>
+        public string zzjgdm { get; set; }
     }
+
+
+
+    // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
+    /// <remarks/>
+    //[Serializable]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot(Namespace = "", IsNullable = false, ElementName = "YyghInterface")]
+    public class WsjDqJzDlOut
+    {
+        /// <remarks/>
+        public byte RtnValue { get; set; }
+
+        /// <remarks/>
+        public object bzxx { get; set; }
+
+        /// <remarks/>
+        public DqJzCx Jzcx { get; set; }
+    }
+
+    /// <remarks/>
+    //[Serializable]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class DqJzCx
+    {
+        /// <remarks/>
+        public decimal dqcx { get; set; }
+    }
+
+
+
 }

@@ -8,7 +8,7 @@ using FE.Model.Local;
 
 namespace FE.Handle.Request
 {
-    public class WsjGhclHandle : BasicHandle<WsjGhclIn>
+    public class WsjGhclHandle : BasicHandle<WsjGhclIn>, IHandle
     {
         //private readonly WsjGhclIn InPara;
 
@@ -21,7 +21,7 @@ namespace FE.Handle.Request
         ///     挂号处理
         /// </summary>
         /// <returns></returns>
-        public string GetWsjGhcl()
+        public  string GetResultXml()
         {
             using (var transaction = Ctx.Database.BeginTransaction())
             {
@@ -98,7 +98,7 @@ namespace FE.Handle.Request
         {
             try
             {
-                var ygpj = Ctx.MzYgpjSet.FirstOrDefault(p => p.Ygdm == czgh && p.Pjlx == 1 && p.Sypb == 0);
+                var ygpj = Ctx.MsYgpjSet.FirstOrDefault(p => p.Ygdm == czgh && p.Pjlx == 1 && p.Sypb == 0);
                 if (ygpj == null)
                 {
                     throw new Exception("取就诊号码(挂号发票号码)失败！");
@@ -144,7 +144,7 @@ namespace FE.Handle.Request
         {
             try
             {
-                var yygh = Ctx.MzYyghSet.FirstOrDefault(p => p.Pzhm == InPara.ghxx.pzhm);
+                var yygh = Ctx.MsYyghSet.FirstOrDefault(p => p.Pzhm == InPara.ghxx.pzhm);
                 if (yygh == null)
                 {
                     throw new Exception("取MS_YYGH失败！");
@@ -187,7 +187,7 @@ namespace FE.Handle.Request
                     Ghsbxh = InPara.ghxx.ghxh,
                     Yjsbxh = InPara.ghxx.yj01xh
                 };
-                Ctx.MzYyghSet.Add(yygh);
+                Ctx.MsYyghSet.Add(yygh);
                 Ctx.SaveChanges();
             }
             catch (Exception e)
@@ -234,7 +234,7 @@ namespace FE.Handle.Request
                     Jzsj = Convert.ToDateTime(InPara.ghxx.jzsj),
                     Zblb = InPara.ghxx.zblb
                 };
-                Ctx.MzGhmxSet.Add(ghmx);
+                Ctx.MsGhmxSet.Add(ghmx);
                 Ctx.SaveChanges();
             }
             catch (Exception e)
@@ -317,7 +317,7 @@ namespace FE.Handle.Request
         {
             try
             {
-                var yspb = Ctx.MzYspbSet.FirstOrDefault(p => p.Gzrq == InPara.ghxx.gzrq
+                var yspb = Ctx.MsYspbSet.FirstOrDefault(p => p.Gzrq == InPara.ghxx.gzrq
                                                              && p.Ksdm == InPara.ghxx.ksdm
                                                              && p.Ysdm == InPara.ghxx.ysdm
                                                              && p.Zblb == InPara.ghxx.zblb);
@@ -345,7 +345,7 @@ namespace FE.Handle.Request
         {
             try
             {
-                var fsdyy = Ctx.MzFsdYySet.FirstOrDefault(p => p.Gzrq == InPara.ghxx.gzrq
+                var fsdyy = Ctx.MsFsdYySet.FirstOrDefault(p => p.Gzrq == InPara.ghxx.gzrq
                                                                && p.Ksdm == InPara.ghxx.ksdm
                                                                && p.Ysdm == InPara.ghxx.ysdm
                                                                && p.Zblb == InPara.ghxx.zblb
@@ -455,7 +455,7 @@ namespace FE.Handle.Request
             }
 
             //判断档案是否存在
-            var record = Ctx.MzBrdaSet
+            var record = Ctx.MsBrdaSet
                 .Where(p => p.Brxm == InPara.brxx.brxm && p.Sfzh == InPara.brxx.sfzh &&
                             p.Brxz == InPara.brxx.brxz).OrderByDescending(p => p.Brid).FirstOrDefault();
             if (record != null)
@@ -480,7 +480,7 @@ namespace FE.Handle.Request
             {
                 if (string.IsNullOrEmpty(InPara.ghxx.pzhm))
                 {
-                    var notHas = Ctx.MzYyghSet.Any(p =>
+                    var notHas = Ctx.MsYyghSet.Any(p =>
                         p.Yyrq == InPara.ghxx.gzrq && p.Zblb == InPara.ghxx.zblb && p.Ksdm == InPara.ghxx.ksdm &&
                         p.Ysdm == InPara.ghxx.ysdm &&
                         p.Jzxh == InPara.ghxx.jzxh && p.Ghbz == 0);
@@ -492,14 +492,14 @@ namespace FE.Handle.Request
                 else
                 {
                     var hasRegistered =
-                        Ctx.MzYyghSet.Any(p => p.Pzhm == InPara.ghxx.pzhm && (p.Ghbz == 0 || p.Ghbz == 1));
+                        Ctx.MsYyghSet.Any(p => p.Pzhm == InPara.ghxx.pzhm && (p.Ghbz == 0 || p.Ghbz == 1));
                     if (!hasRegistered)
                     {
                         throw new Exception("获取预约信息失败");
                     }
                 }
 
-                var source = Ctx.MzFsdYySet.Where(p =>
+                var source = Ctx.MsFsdYySet.Where(p =>
                     p.Gzrq == InPara.ghxx.gzrq && p.Zblb == InPara.ghxx.zblb && p.Ksdm == InPara.ghxx.ksdm &&
                     p.Ysdm == InPara.ghxx.ysdm).ToList();
                 if (source.Any(p => p.Brid == InPara.brxx.brid))
@@ -531,7 +531,7 @@ namespace FE.Handle.Request
         /// </summary>
         private void GetMedicalFee()
         {
-            var ks = Ctx.MzGhksSet.Find(InPara.ghxx.ksdm);
+            var ks = Ctx.MsGhksSet.Find(InPara.ghxx.ksdm);
             //ghje=zlf ghje1=ghf
             if (ks == null)
             {
@@ -593,7 +593,7 @@ namespace FE.Handle.Request
                     Ickh = InPara.brxx.ybkh,
                     Jdrq = DateTime.Now
                 };
-                Ctx.MzBrdaSet.Add(brda);
+                Ctx.MsBrdaSet.Add(brda);
                 Ctx.SaveChanges();
             }
             catch (Exception e)

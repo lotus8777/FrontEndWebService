@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,47 @@ namespace FE.Model.Local
 
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot(Namespace = "", IsNullable = false, ElementName = "interface")]
+    public class ExpenseInvoicesIn
+    {
+        /// <remarks/>
+        public int acttype { get; set; }
+
+        /// <remarks/>
+        [XmlElement(DataType = "integer")]
+        public string actnumber { get; set; }
+
+        /// <remarks/>
+        public ExpenseInfo list { get; set; }
+    }
+
+    /// <remarks/>
+    [Serializable]
+    [DesignerCategory("code")]
+    [XmlType(AnonymousType = true)]
+    public class ExpenseInfo
+    {
+        /// <remarks/>
+        public string actnumber { get; set; }
+
+        /// <remarks/>
+        public string jzlsh { get; set; }
+
+        /// <remarks/>
+        public string mzzyhm { get; set; }
+    }
+
+
+    // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
+    /// <remarks/>
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false,ElementName = "YyghInterface")]
-    public class InpExpenseInvoices
+    public class ExpenseInvoices
     {
         /// <remarks/>
         public int RtnValue { get; set; } = 1;
@@ -24,14 +61,14 @@ namespace FE.Model.Local
 
         /// <remarks/>
         [XmlElement("interface")]
-        public InpExpenseInvoicesInterface InpInterface { get; set; }
+        public ExpenseInterface Interface { get; set; }
     }
 
     /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class InpExpenseInvoicesInterface
+    public class ExpenseInterface
     {
         /// <remarks/>
         public string HospitalCode { get; set; }
@@ -76,8 +113,8 @@ namespace FE.Model.Local
     }
 
     /// <remarks/>
-    [Serializable()]
-    [System.ComponentModel.DesignerCategory("code")]
+    [Serializable]
+    [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     public class InpClinic
     {
@@ -117,35 +154,6 @@ namespace FE.Model.Local
         public string[] CYZD { get; set; }
     }
 
-    ///// <remarks/>
-    //[Serializable()]
-    //[System.ComponentModel.DesignerCategory("code")]
-    //[XmlType(AnonymousType = true)]
-    //public class InpDiagnosis
-    //{
-    //    /// <remarks/>
-    //    public string Item { get; set; }
-    //}
-
-    ///// <remarks/>
-    //[Serializable()]
-    //[System.ComponentModel.DesignerCategory("code")]
-    //[XmlType(AnonymousType = true)]
-    //public class InpFeeDetail
-    //{
-    //    /// <remarks/>
-    //    [XmlElement("I01", typeof(decimal))]
-    //    [XmlElement("I04", typeof(decimal))]
-    //    [XmlElement("I05", typeof(decimal))]
-    //    [XmlElement("I06", typeof(decimal))]
-    //    [XmlElement("I07", typeof(decimal))]
-    //    [XmlElement("I08", typeof(decimal))]
-    //    [XmlElement("I10", typeof(decimal))]
-    //    [XmlElement("I99", typeof(decimal))]
-    //    [XmlChoiceIdentifier("ItemsElementName")]
-    //    public decimal[] Items { get; set; }
-
-    //}
 
 
 

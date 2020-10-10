@@ -13,7 +13,7 @@ namespace FE.Model.Local
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false,ElementName = "interface")]
-    public class WsjFyqdGetIn
+    public class WsjFyqdIn
     {
         /// <remarks/>
         public string actnumber { get; set; }
@@ -41,7 +41,7 @@ namespace FE.Model.Local
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false,ElementName= "YyghInterface")]
-    public partial class WsjFyqdGetOut
+    public class WsjFyqdOut
     {
         /// <remarks/>
         public byte RtnValue { get; set; }
@@ -57,7 +57,7 @@ namespace FE.Model.Local
     [Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public partial class WsjFyqdGetInterface
+    public class WsjFyqdGetInterface
     {
         /// <remarks/>
         public YyghInterfaceInterfaceJbxx jbxx { get; set; }
@@ -71,7 +71,7 @@ namespace FE.Model.Local
     [Serializable()]
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public partial class YyghInterfaceInterfaceJbxx
+    public class YyghInterfaceInterfaceJbxx
     {
         /// <remarks/>
         public string brxm { get; set; }
@@ -137,7 +137,7 @@ namespace FE.Model.Local
     //[System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public partial class YyghInterfaceInterfaceItemFyitem
+    public class YyghInterfaceInterfaceItemFyitem
     {
         /// <remarks/>
         public decimal fydm { get; set; }

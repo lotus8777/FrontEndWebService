@@ -11,13 +11,13 @@ using Newtonsoft.Json;
 
 namespace FE.Handle.Request
 {
-    public class BasicHandle<T> where T : new()
+    public abstract class BasicHandle<T> where T : new()
     {
         protected readonly T InPara;
         protected readonly JsonConfig Config;
         protected readonly FrontEndContext Ctx;
 
-        public BasicHandle(FrontEndContext context, string xmlString)
+        protected BasicHandle(FrontEndContext context, string xmlString)
         {
             Ctx = context;
             Config = GetGenericConfig();
@@ -29,8 +29,7 @@ namespace FE.Handle.Request
             var path = $@"{AppContext.BaseDirectory}\appConfig.json";
             return JsonConvert.DeserializeObject<JsonConfig>(File.ReadAllText(path));
         }
-
-        protected string ReturnXml(int rtnValue, string bzxx, string data)
+        protected string ReturnXml(int rtnValue, string bzxx, string data=null)
         {
             var xmlElement =
                 new XElement("YyghInterface",

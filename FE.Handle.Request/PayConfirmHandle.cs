@@ -9,13 +9,11 @@ using System.Xml.Linq;
 
 namespace FE.Handle.Request
 {
-    public class PayConfirmHandle : BasicHandle<HosPayConfirmIn>
+    public class PayConfirmHandle : BasicHandle<HosPayConfirmIn>, IHandle
     {
-        //private HosPayConfirmIn InPara;
 
         public PayConfirmHandle(FrontEndContext context, string inXmlStr) : base(context,inXmlStr)
         {
-            //InPara = ConvertToObject<HosPayConfirmIn>.XmlDeserialize(inXmlStr);
             ValidateHosPayConfirmIn();
         }
 
@@ -23,7 +21,7 @@ namespace FE.Handle.Request
         ///     病人结算处理
         /// </summary>
         /// <returns></returns>
-        public string GetPayConfirm()
+        public string GetResultXml()
         {
             if (InPara.actnumber == "4")
             {
@@ -51,20 +49,20 @@ namespace FE.Handle.Request
                     }
 
                     var brid = jzls.Brbh;
-                    var brda = Ctx.MzBrdaSet.Find(brid);
+                    var brda = Ctx.MsBrdaSet.Find(brid);
                     if (string.IsNullOrEmpty(brda?.Brxm))
                     {
                         throw new Exception("获取病人基本信息失败！");
                     }
 
-                    var identity = GetOpIdentityKey();
+                    var (mzxh, jlxh) = GetOpIdentityKey();
                     InPara.OtherPara = new OtherPayConfirmPara()
                     {
                         YsMzJzls_Jzxh = jzls.Jzxh,
                         Fphm = $"YD{InPara.PayLSH}",
                         Sjhm = $"YD{InPara.PayLSH}",
-                        MsMzxx_Mzxh = identity.mzxh,
-                        BocJsjl_Jlxh = identity.jlxh,
+                        MsMzxx_Mzxh = mzxh,
+                        BocJsjl_Jlxh = jlxh,
                         Jzlx = 2
                     };
 
@@ -310,14 +308,6 @@ namespace FE.Handle.Request
         /// <returns></returns>
         private string GetOpResultXmlString()
         {
-            //var query = from a in _ctx.MsSfmxSet.Where(p => p.MsMzxx_Mzxh == InPara.OtherPara.MsMzxx_Mzxh)
-            //            join b in _ctx.GySfxmSet on a.Sfxm equals b.Sfxm into abJoin
-            //            from t in abJoin.DefaultIfEmpty()
-            //            select new { t.Zxgb, a.Zjje }
-            //    into f
-            //            group f by f.Zxgb
-            //    into tGroup
-            //            select new { Item = tGroup.Key, Zjje = tGroup.Sum(y => y.Zjje) };
             var query = Ctx.MsSfmxSet.Where(p => p.Mzxh == InPara.OtherPara.MsMzxx_Mzxh).Include(p => p.GySfxm)
                 .GroupBy(p => p.GySfxm.Zxgb)
                 .Select(p => new { Key = p.Key, Zjje = p.Sum(t => t.Zjje) })
@@ -665,9 +655,9 @@ namespace FE.Handle.Request
                         throw new Exception("传入的yjje金额与实际jkje不符，无法结算，请重试！");
                     }
 
-                    var medicare = GetMedicareType();
-                    var identity = GetInpIdentityKey();
-                    var sjhm = $"yd{identity.jkxh}";
+                    var (ybpb, brxz) = GetMedicareType();
+                    var (bocJlxh, zyjsJlxh, jkxh) = GetInpIdentityKey();
+                    var sjhm = $"yd{jkxh}";
                     var jsjk = zyBrry.ZyTbkks.FirstOrDefault(p => p.Jscs == 0)?.Sjhm;
                     if (string.IsNullOrEmpty(jsjk))
                     {
@@ -680,13 +670,13 @@ namespace FE.Handle.Request
 
                     InPara.OtherPara = new OtherPayConfirmPara()
                     {
-                        Brxz = medicare.brxz,
-                        Ybpb = medicare.ybpb,
+                        Brxz = brxz,
+                        Ybpb = ybpb,
                         Jzlx = 3,
-                        BocJsjl_Jlxh = identity.bocJlxh,
-                        ZyJs_Jlxh = identity.zyjsJlxh,
-                        Fphm = $"YD{identity.zyjsJlxh}",
-                        ZyTbkk_Jkxh = identity.jkxh,
+                        BocJsjl_Jlxh = bocJlxh,
+                        ZyJs_Jlxh = zyjsJlxh,
+                        Fphm = $"YD{zyjsJlxh}",
+                        ZyTbkk_Jkxh = jkxh,
                         Sjhm = sjhm,
                         Jsjk = jsjk,
                         Jscs = (int)zyBrry.Jscs + 1

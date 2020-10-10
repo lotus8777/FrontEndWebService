@@ -4,36 +4,40 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace FE.Model.Local
 {
 
-
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <remarks/>
-    [Serializable]
+    [Serializable()]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    [XmlRoot(Namespace = "", IsNullable = false, ElementName = "interface")]
-    public class WsjGhksIn
+    [XmlRoot(Namespace = "", IsNullable = false,ElementName = "interface")]
+    public class WsjYspbIn
     {
         /// <remarks/>
         public string zzjgdm { get; set; }
 
         /// <remarks/>
-        public decimal mode { get; set; }
+        public string ksdm { get; set; }
+
+        /// <remarks/>
+        public string ksrq { get; set; }
+
+        /// <remarks/>
+        public string zzrq { get; set; }
     }
 
 
     // 注意: 生成的代码可能至少需要 .NET Framework 4.5 或 .NET Core/Standard 2.0。
     /// <remarks/>
-    [Serializable]
+    [Serializable()]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    [XmlRoot(Namespace = "", IsNullable = false, ElementName = "YyghInterface")]
-    public class WsjGhksOut
+    [XmlRoot(Namespace = "", IsNullable = false,ElementName = "YyghInterface")]
+    public class WsjYspbOut
     {
         /// <remarks/>
         public int RtnValue { get; set; }
@@ -43,34 +47,45 @@ namespace FE.Model.Local
 
         /// <remarks/>
         [XmlArrayItem("row", IsNullable = false)]
-        public List<GhksRow> GhksRows { get; set; }
+        public  List<YspbRow> YspbRows { get; set; }
     }
 
     /// <remarks/>
-    [Serializable]
+    [Serializable()]
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
-    public class GhksRow
+    public class YspbRow
     {
         /// <remarks/>
-        public string bzdm { get; set; }
+        public DateTime gzrq { get; set; }
 
         /// <remarks/>
-        public string ksdm { get; set; }
+        public  decimal  zblb { get; set; }
 
         /// <remarks/>
-        public string ksmc { get; set; }
+        public  string  ysdm { get; set; }
 
         /// <remarks/>
-        public int zjpb { get; set; }
+        public string ysxm { get; set; }
+
+        /// <remarks/>
+        public string djyssfzh { get; set; }
+
+        /// <remarks/>
+        public  decimal  ghxe { get; set; }
+
+        /// <remarks/>
+        public  int  zjpb { get; set; }
+
+        /// <remarks/>
+        public  int  ghlb { get; set; }
 
         /// <remarks/>
         public decimal ghje { get; set; }
 
         /// <remarks/>
-        public string zswz { get; set; }
-
-        /// <remarks/>
-        public string bzxx { get; set; }
+        public  int  pbzt { get; set; }
     }
+
+
 }

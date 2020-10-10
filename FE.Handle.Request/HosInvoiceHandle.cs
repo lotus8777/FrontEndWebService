@@ -9,7 +9,7 @@ using FE.Model.Local;
 
 namespace FE.Handle.Request
 {
-    public class HosInvoiceHandle : BasicHandle<HosInvoiceIn>
+    public class HosInvoiceHandle : BasicHandle<HosInvoiceIn>, IHandle
     {
         //private readonly HosInvoiceIn InPara;
         public HosInvoiceHandle(FrontEndContext context, string inXmlStr) : base(context,inXmlStr)
@@ -20,7 +20,7 @@ namespace FE.Handle.Request
         ///     获取发票费用明细
         /// </summary>
         /// <returns></returns>
-        public string GetHosInvoice()
+        public string GetResultXml()
         {
             try
             {

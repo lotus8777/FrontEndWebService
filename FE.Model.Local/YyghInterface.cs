@@ -14,7 +14,7 @@ namespace FE.Model.Local
     [XmlRoot(Namespace = "", IsNullable = false)]
     public class YyghInterface
     {
-        public byte RtnValue { get; set; }
+        public int RtnValue { get; set; }
 
         /// <remarks/>
         public string bzxx { get; set; }

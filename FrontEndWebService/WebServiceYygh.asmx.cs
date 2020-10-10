@@ -46,68 +46,74 @@ namespace FrontEndWebService
             {
                 if (string.IsNullOrEmpty(ProcName))
                 {
-                    return ReturnXml(-1, "存储过程名称为空！/r/n", null);
+                    return ReturnXml(-1, "存储过程名称为空!", null);
                 }
 
                 if (string.IsNullOrEmpty(inXmlStr))
                 {
-                    return ReturnXml(-1, "传入参数为空！/r/n", null);
+                    return ReturnXml(-1, "传入参数为空!", null);
                 }
                 string procedureName = ProcName.ToLower().Trim();
-                var epf = new ExecuteProcedureFactory(_ctx);
+                
                 if (procedureName == "wsj_get_fsdyyb")
                 {
                     var wsjFsdYy=new WsjFsdYyHandle(_ctx,inXmlStr);
-                    rtnXml = wsjFsdYy.GetOpFsdYy();
+                    rtnXml = wsjFsdYy.GetResultXml();
                 }
                 else if (procedureName == "wsj_get_ghks")
                 {
-                    rtnXml = epf.GetMzGhksXml(inXmlStr);
+                    var handle=new WsjGhksHandle(_ctx,inXmlStr);
+                    rtnXml = handle.GetResultXml();
                 }
                 else if (procedureName == "hos_expense_invoices")
                 {
-                    rtnXml = epf.GetExpenseInvoice(inXmlStr);
+                    var epf = new ExpenseInvoicesHandle(_ctx,inXmlStr);
+                    rtnXml = epf.GetResultXml();
                 }
                 else if (procedureName == "hos_codepay")
                 {
-                    rtnXml = epf.GetCodePayXml(inXmlStr);
+                    var wsjCodePay=new WsjCodePayHandle(_ctx,inXmlStr);
+                    rtnXml = wsjCodePay.GetResultXml();
                 }
                 else if (procedureName == "wsj_get_yspb")
                 {
-                    rtnXml = epf.GetKsYsPb(inXmlStr);
+                    var wsjYspb=new WsjYspbHandle(_ctx,inXmlStr);
+                    rtnXml = wsjYspb.GetResultXml();
                 }
                 else if (procedureName == "wsj_ghcl")
                 {
                     var wsjGhcl=new WsjGhclHandle(_ctx,inXmlStr);
-                    rtnXml = wsjGhcl.GetWsjGhcl();
+                    rtnXml = wsjGhcl.GetResultXml();
                 }
                 else if (procedureName == "wsj_thcl")
                 {
                     var wsjThcl=new WsjThclHandle(_ctx,inXmlStr);
-                    rtnXml = wsjThcl.GetWsjThcl();
+                    rtnXml = wsjThcl.GetResultXml();
                 }
                 else if (procedureName == "hos_orders")
                 {
                     var hosOrder=new HosOrderHandle(_ctx,inXmlStr);
-                    rtnXml = hosOrder.GetHosOrders();
+                    rtnXml = hosOrder.GetResultXml();
                 }
                 else if (procedureName == "wsj_get_dqjzdl")
                 {
-                    rtnXml = epf.GetQdJzxh(inXmlStr);
+                    var handle = new WsjDqJzDlHandle(_ctx, inXmlStr);
+                    rtnXml = handle.GetResultXml();
                 }
                 else if (procedureName == "wsj_fyqd_get")
                 {
-                    rtnXml = epf.GetWsjFyqd(inXmlStr);
+                    var wsjFyqd=new WsjFyqdHandle(_ctx,inXmlStr);
+                    rtnXml = wsjFyqd.GetResultXml();
                 }
                 else if (procedureName == "hos_invoice")
                 {
                     var hosInvoice=new HosInvoiceHandle(_ctx,inXmlStr);
-                    rtnXml = hosInvoice.GetHosInvoice();
+                    rtnXml = hosInvoice.GetResultXml();
                 }
                 else if (procedureName == "hos_pay_confirm1")
                 {
                     var pcf = new PayConfirmHandle(_ctx, inXmlStr);
-                    rtnXml = pcf.GetPayConfirm();
+                    rtnXml = pcf.GetResultXml();
                 }
                 else
                 {
@@ -127,13 +133,15 @@ namespace FrontEndWebService
         {
             try
             {
-                var record=new WjjRequest();
-                record.ProcedureName = procName;
-                record.InXml = inXml;
-                record.IsSuccess = isSuccess;
-                record.OutXml = outXml;
-                record.ResponseTime = DateTime.Now;
-                record.RequestTime = requestTime;
+                var record = new WjjRequest
+                {
+                    ProcedureName = procName,
+                    InXml = inXml,
+                    IsSuccess = isSuccess,
+                    OutXml = outXml,
+                    ResponseTime = DateTime.Now,
+                    RequestTime = requestTime
+                };
                 _ctx.RequestRecords.Add(record);
                 _ctx.SaveChanges();
             }

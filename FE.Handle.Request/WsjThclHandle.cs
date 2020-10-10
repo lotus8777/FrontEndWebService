@@ -10,24 +10,22 @@ using FE.Model.Hrp275;
 using FE.Model.Local;
 namespace FE.Handle.Request
 {
-    public class WsjThclHandle : BasicHandle<WsjThclIn>
+    public class WsjThclHandle : BasicHandle<WsjThclIn>, IHandle
     {
-        //private readonly WsjThclIn InPara;
         public WsjThclHandle(FrontEndContext context, string inXmlStr) : base(context,inXmlStr)
         {
-            //InPara = ConvertToObject<WsjThclIn>.XmlDeserialize(inXmlStr);
         }
         /// <summary>
         ///     退号处理
         /// </summary>
         /// <returns></returns>
-        public string GetWsjThcl()
+        public string GetResultXml()
         {
             using (var transaction = Ctx.Database.BeginTransaction())
             {
                 try
                 {
-                    var msYygh = Ctx.MzYyghSet.Where(p => p.Yyxh == InPara.ghxh)
+                    var msYygh = Ctx.MsYyghSet.Where(p => p.Yyxh == InPara.ghxh)
                         .Include(p => p.MsGhmx)
                         .Include(p => p.MsYj01.MsYj02)
                         .FirstOrDefault();
@@ -42,7 +40,7 @@ namespace FE.Handle.Request
                     //获取工作日期
                     var gzrq = msYygh.Yyrq.Value.Date;
                     //修改ms_yspb信息，释放排班
-                    var msYspb = Ctx.MzYspbSet.FirstOrDefault(p => p.Gzrq == gzrq
+                    var msYspb = Ctx.MsYspbSet.FirstOrDefault(p => p.Gzrq == gzrq
                                                                     && p.Ksdm == msYygh.Ksdm
                                                                     && p.Ysdm == msYygh.Ysdm
                                                                     && p.Zblb == msYygh.Zblb);
@@ -54,7 +52,7 @@ namespace FE.Handle.Request
                     --msYspb.Ygrs;
                     --msYspb.Jzxh;
                     //释放号源
-                    var fsdyy = Ctx.MzFsdYySet.FirstOrDefault(p => p.Gzrq == gzrq
+                    var fsdyy = Ctx.MsFsdYySet.FirstOrDefault(p => p.Gzrq == gzrq
                                                                     && p.Ksdm == msYygh.Ksdm
                                                                     && p.Ysdm == msYygh.Ysdm
                                                                     && p.Zblb == msYygh.Zblb

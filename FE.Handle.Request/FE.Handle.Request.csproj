@@ -58,16 +58,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicHandle.cs" />
-    <Compile Include="ExecuteProcedureFactory.cs" />
+    <Compile Include="ExpenseInvoicesHandle.cs" />
     <Compile Include="ConvertToObject.cs" />
     <Compile Include="HosInvoiceHandle.cs" />
     <Compile Include="HosOrderHandle.cs" />
+    <Compile Include="IHandle.cs" />
     <Compile Include="PayConfirmHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GeneralTools.cs" />
+    <Compile Include="WsjCodePayHandle.cs" />
+    <Compile Include="WsjDqJzDlHandle.cs" />
     <Compile Include="WsjFsdYyHandle.cs" />
+    <Compile Include="WsjFyqdHandle.cs" />
     <Compile Include="WsjGhclHandle.cs" />
+    <Compile Include="WsjGhksHandle.cs" />
     <Compile Include="WsjThclHandle.cs" />
+    <Compile Include="WsjYspbHandle.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FE.Context\FE.Context.csproj">
