@@ -64,11 +64,11 @@ namespace FE.Model.Local
     [XmlType(AnonymousType = true)]
     public class OpClinic
     {
-        public string ClinicNo { get; set; }
+        public decimal ClinicNo { get; set; }
         /// <remarks />
         public DateTime ClinicDate { get; set; }
         /// <remarks />
-        public string DeptCode { get; set; }
+        public decimal DeptCode { get; set; }
         /// <remarks />
         public string DeptGBCode { get; set; }
         /// <remarks />
@@ -99,7 +99,7 @@ namespace FE.Model.Local
         /// <remarks />
         public string Name { get; set; }
         /// <remarks />
-        public int itemNo { get; set; }
+        public decimal itemNo { get; set; }
         /// <remarks />
         public decimal itemCost { get; set; }
         /// <remarks />

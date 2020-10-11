@@ -12,8 +12,7 @@ namespace FE.Model.Hrp275
     public class ZyBrry
     {
         [Key]
-        [Column(TypeName = "numeric")]
-        public int Zyh { get; set; }
+        public decimal Zyh { get; set; }
 
         /// <summary>
         ///   Gets or sets the ZYHM
@@ -951,5 +950,9 @@ namespace FE.Model.Hrp275
         public virtual IList<ZyFymx> ZyFymxs { get; set; }
         [ForeignKey("Zyh")]
         public virtual IList<ZyTbkk> ZyTbkks { get; set; }
+        [ForeignKey("Zyh")]
+        public virtual IList<ZyRyzd> ZyRyzds { get; set; }
+        [ForeignKey("Zzys")]
+        public virtual GyYgdm GyYgdm { get; set; }
     }
 }

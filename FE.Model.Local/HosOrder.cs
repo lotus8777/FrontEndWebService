@@ -54,7 +54,7 @@ namespace FE.Model.Local
     public class HosOrderHead
     {
         /// <remarks/>
-        public int jzlsh { get; set; }
+        public decimal jzlsh { get; set; }
 
         /// <remarks/>
         public string mzzyhm { get; set; }

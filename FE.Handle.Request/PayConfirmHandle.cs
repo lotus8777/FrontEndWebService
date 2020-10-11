@@ -23,11 +23,7 @@ namespace FE.Handle.Request
         /// <returns></returns>
         public string GetResultXml()
         {
-            if (InPara.actnumber == "4")
-            {
-                return GetInpPayConfirm();
-            }
-            return GetOpPayConfirm();
+            return InPara.actnumber == "4" ? GetInpPayConfirm() : GetOpPayConfirm();
         }
 
         /// <summary>
@@ -327,7 +323,7 @@ namespace FE.Handle.Request
             return xml.ToString();
         }
 
-        private string GetInpResultXmlString(int zyh)
+        private string GetInpResultXmlString(decimal zyh)
         {
             var query = Ctx.ZyJsmxSet
                 .Where(p => p.Zyh == zyh && p.Jscs == InPara.OtherPara.Jscs)
@@ -717,7 +713,7 @@ namespace FE.Handle.Request
             Ctx.SaveChanges();
         }
 
-        private void UpdateZyCwsz(int zyh)
+        private void UpdateZyCwsz(decimal zyh)
         {
             var zyCwsz = Ctx.ZyCwszSet.Where(p => p.Zyh == zyh).ToList();
             if (zyCwsz.Any())

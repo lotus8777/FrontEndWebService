@@ -13,7 +13,7 @@ namespace FE.Model.Hrp275
         public int Jkxh { get; set; }
 
         [Column(TypeName = "numeric")]
-        public int Zyh { get; set; }
+        public decimal Zyh { get; set; }
 
         public DateTime Jkrq { get; set; }
 

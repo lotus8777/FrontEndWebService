@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace FE.Model.Hrp275
@@ -110,5 +111,6 @@ namespace FE.Model.Hrp275
         public virtual MsYj01 MsYj01 { get; set; }
         [ForeignKey("Ylxh")]
         public virtual GyYlsf GyYlsf { get; set; }
+
     }
 }

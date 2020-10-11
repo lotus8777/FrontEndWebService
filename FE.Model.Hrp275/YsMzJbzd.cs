@@ -101,5 +101,7 @@ namespace FE.Model.Hrp275
         public decimal? Zdxh { get; set; }
 
         public virtual YsMzJzls YsMzJzls { get; set; }
+        [ForeignKey("Jbbh")]
+        public virtual GyJbbm GyJbbm { get; set; }
     }
 }

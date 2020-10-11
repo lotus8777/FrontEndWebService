@@ -48,7 +48,7 @@ namespace FE.Handle.Request
             }
         }
 
-        public List<HosOrderItem> GetHosOrdersItems(int zyh)
+        public List<HosOrderItem> GetHosOrdersItems(decimal zyh)
         {
             try
             {

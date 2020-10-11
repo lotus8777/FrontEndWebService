@@ -12,7 +12,7 @@ namespace FE.Model.Hrp275
         public decimal Jlxh { get; set; }
 
         [Column(TypeName = "numeric")]
-        public int Zyh { get; set; }
+        public decimal Zyh { get; set; }
 
         public DateTime Fyrq { get; set; }
 
@@ -174,5 +174,8 @@ namespace FE.Model.Hrp275
 
         [Column(TypeName = "numeric")]
         public decimal? Yb_Sfkb { get; set; }
+
+        [ForeignKey("Fyxm")]
+        public virtual GySfxm GySfxm { get; set; }
     }
 }

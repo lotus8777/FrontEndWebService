@@ -31,5 +31,8 @@ namespace FE.Model.Hrp275
 
         [Column(TypeName = "numeric")]
         public decimal? Zdlx { get; set; }
+
+        [ForeignKey("Zdxh")]
+        public virtual GyJbbm GyJbbm { get; set; }
     }
 }

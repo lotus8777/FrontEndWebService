@@ -8,11 +8,6 @@ namespace FE.Model.Hrp275
     [Table("ms_cf01")]
     public class MsCf01
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MsCf01()
-        {
-            MsCf02 = new HashSet<MsCf02>();
-        }
 
         [Key]
         [Column(TypeName = "numeric")]
@@ -149,7 +144,7 @@ namespace FE.Model.Hrp275
         public decimal? Tysm { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MsCf02> MsCf02 { get; set; }
+        public virtual IList<MsCf02> MsCf02 { get; set; }
 
         [ForeignKey("Ksdm")]
         public virtual GyKsdm GyKsdm { get; set; }

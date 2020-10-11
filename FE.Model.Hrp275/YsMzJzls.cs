@@ -8,11 +8,6 @@ namespace FE.Model.Hrp275
     [Table("ys_mz_jzls")]
     public class YsMzJzls
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public YsMzJzls()
-        {
-            YsMzJbzd = new HashSet<YsMzJbzd>();
-        }
 
         [Key]
         [Column(TypeName = "numeric")]
@@ -195,7 +190,11 @@ namespace FE.Model.Hrp275
         [Column(TypeName = "numeric")]
         public decimal? Zgqk { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<YsMzJbzd> YsMzJbzd { get; set; }
+        public virtual IList<YsMzJbzd> YsMzJbzds { get; set; }
+
+        [ForeignKey("Ysdm")]
+        public virtual GyYgdm GyYgdm { get; set; }
+        [ForeignKey("Ksdm")]
+        public virtual GyKsdm GyKsdm { get; set; }
     }
 }

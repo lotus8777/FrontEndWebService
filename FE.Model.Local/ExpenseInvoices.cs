@@ -151,7 +151,7 @@ namespace FE.Model.Local
         /// <remarks/>
         public int FeeDetail { get; set; }
         [XmlArrayItem("Item")]
-        public string[] CYZD { get; set; }
+        public List<string> CYZD { get; set; }
     }
 
 
