@@ -46,7 +46,7 @@ namespace FE.Handle.Request
             try
             {
                 var patient = VerifyInpatient();
-                var cvxCardType = GetCvxCardType(patient.Brxz.ToString(CultureInfo.InvariantCulture));
+                var cvxCardType = GetCvxCardType(patient.Brxz);
                 if (cvxCardType != "08")
                 {
                     var noUpload = Ctx.ZyFymxSet.Any(p => p.Zyh == patient.Zyh && p.Scbz == 0 && p.Jscs == 0);
@@ -319,7 +319,7 @@ namespace FE.Handle.Request
                     {
                         HospitalCode = Config.YYBH,
                         Operator = Config.CZGH,
-                        CVX_CardType = GetCvxCardType(patient.Brxz.ToString()),
+                        CVX_CardType = GetCvxCardType(patient.Brxz.Value),
                         ICInfo = GetIcInfor(patient),
                         FeeTotal = details.Sum(p => p.itemCost),
                         Clinic = clinic,
@@ -551,7 +551,7 @@ namespace FE.Handle.Request
         /// </summary>
         /// <param name="brxz">病人性质</param>
         /// <returns></returns>
-        public string GetCvxCardType(string brxz)
+        public string GetCvxCardType(decimal brxz)
         {
             if (Config.HZYB_BRXZ == brxz || Config.WXYB_BRXZ == brxz)
             {

@@ -403,15 +403,17 @@ namespace FE.Handle.Request
                     throw new Exception("传入医保卡号长度不对");
                 }
                 var left4 = InPara.brxx.ybkh.Substring(0, 4);
+                //杭州市医保病人
                 if (left4 == "3301")
                 {
-                    InPara.brxx.brxz = Convert.ToInt32(Config.HZYB_BRXZ);
+                    InPara.brxx.brxz = Config.HZYB_BRXZ;
                     InPara.brxx.qybr = 1;
                 }
                 else
                 {
-                    InPara.brxx.brxz = 1000;
-                    InPara.brxx.qybr = 5;
+                    //省一卡通病人
+                    InPara.brxx.brxz =Config.SYKT;
+                    InPara.brxx.qybr = 0;
                 }
             }
             else
@@ -533,7 +535,17 @@ namespace FE.Handle.Request
         {
             try
             {
-                var mzhm = InPara.brxx.cardnum.Length > 12 ? InPara.brxx.cardnum.Substring(0, 12) : InPara.brxx.cardnum;
+                string mzhm;
+                if (string.IsNullOrEmpty(InPara.brxx.cardnum))
+                {
+                    mzhm = DateTime.Now.ToString("yyMMddHHmmss");
+                }
+                else
+                {
+                   mzhm= InPara.brxx.cardnum.Length > 12 ? InPara.brxx.cardnum.Substring(0, 12) : InPara.brxx.cardnum;
+                }
+
+               
                 var brda = new MsBrda
                 {
                     Brid = InPara.brxx.brid,
