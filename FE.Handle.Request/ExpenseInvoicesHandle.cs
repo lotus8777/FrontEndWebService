@@ -18,6 +18,7 @@ namespace FE.Handle.Request
 
         public ExpenseInvoicesHandle(FrontEndContext context, string xmlString) : base(context, xmlString)
         {
+
         }
 
         /// <summary>
@@ -407,9 +408,9 @@ namespace FE.Handle.Request
                             {
                                 itemNumber = sub.Sbxh,
                                 XMLB = 2,
-                                SFLB = ybFydz?.Hzyb_Sflb ?? "",//加入数据
+                                SFLB = ybFydz?.Hzyb_Sflb ?? "",
                                 DetailType = 2,
-                                ItemCode = ybFydz?.Ybbm ?? "",//加入数据
+                                ItemCode = ybFydz?.Ybbm ?? "",
                                 ItemHospCode = sub.Ylxh.ToString(CultureInfo.InvariantCulture),
                                 ItemHospName = sub.GyYlsf.Fymc,
                                 SDFlag = 0,

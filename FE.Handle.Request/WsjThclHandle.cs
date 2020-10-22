@@ -37,6 +37,19 @@ namespace FE.Handle.Request
                     msYygh.MsGhmx.Thbz = 1;
                     Ctx.MsYj02Set.RemoveRange(msYygh.MsYj01.MsYj02);
                     Ctx.MsYj01Set.Remove(msYygh.MsYj01);
+
+                    //插入退号明细表ms_thmx
+                    var thmx=new MsThmx
+                    {
+                        Sbxh = msYygh.Ghsbxh.Value,
+                        Czgh = Config.CZGH,
+                        Mzlb = 1,
+                        Thrq = DateTime.Now,
+                        Cjbz = 0,
+                        Txbz = 0,
+                        Jgid = 1
+                    };
+                    Ctx.MsThmxSet.Add(thmx);
                     //获取工作日期
                     var gzrq = msYygh.Yyrq.Value.Date;
                     //修改ms_yspb信息，释放排班

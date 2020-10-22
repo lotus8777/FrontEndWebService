@@ -22,7 +22,8 @@ namespace FE.Model.Local
         public InterfacePayJsxx PayJsxx { get; set; }
         public InterfaceYbJsxx YbJsxx { get; set; }
         public InterfaceFyqd fyqd { get; set; }
-        [XmlIgnore] public OtherPayConfirmPara OtherPara { get; set; }
+        [XmlIgnore] 
+        public OtherPayConfirmPara OtherPara { get; set; }
     }
     public class OtherPayConfirmPara
     {

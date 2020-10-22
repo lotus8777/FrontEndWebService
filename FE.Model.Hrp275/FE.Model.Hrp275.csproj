@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="BocJsjl.cs" />
     <Compile Include="GyIdentity.cs" />
+    <Compile Include="MsThmx.cs" />
     <Compile Include="TempProcYdjs.cs" />
     <Compile Include="GyBrxz.cs" />
     <Compile Include="GySfxm.cs" />

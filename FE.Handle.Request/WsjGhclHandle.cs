@@ -5,23 +5,20 @@ using System.Linq;
 using FE.Context;
 using FE.Model.Hrp275;
 using FE.Model.Local;
-
 namespace FE.Handle.Request
 {
     public class WsjGhclHandle : BasicHandle<WsjGhclIn>, IHandle
     {
         //private readonly WsjGhclIn InPara;
-
-        public WsjGhclHandle(FrontEndContext context, string xmlString) : base(context,xmlString)
+        public WsjGhclHandle(FrontEndContext context, string xmlString) : base(context, xmlString)
         {
             //InPara = ConvertToObject<WsjGhclIn>.XmlDeserialize(xmlString);
         }
-
         /// <summary>
         ///     挂号处理
         /// </summary>
         /// <returns></returns>
-        public  string GetResultXml()
+        public string GetResultXml()
         {
             using (var transaction = Ctx.Database.BeginTransaction())
             {
@@ -49,7 +46,6 @@ namespace FE.Handle.Request
                         //更新ms_yygh
                         UpdateMsyyGh();
                     }
-
                     //插入ms_ghmx
                     InsertMzGhmx();
                     var yj2Count = InPara.ghxx.yj02xh.Length;
@@ -60,13 +56,11 @@ namespace FE.Handle.Request
                         //插入ms_yj02
                         InsertMzYj02();
                     }
-
                     //更新挂号人数
                     UpdateMzYspb();
                     //锁定号源
                     LockMzFsdyy();
                     transaction.Commit();
-
                     var wsjGhclOut = new WsjGhclOut
                     {
                         GhclOutInterface = new GhclOutInterface
@@ -77,7 +71,6 @@ namespace FE.Handle.Request
                             }
                         }
                     };
-
                     return ConvertToObject<WsjGhclOut>.SerializeXmlToString(wsjGhclOut);
                 }
                 catch (Exception e)
@@ -87,8 +80,6 @@ namespace FE.Handle.Request
                 }
             }
         }
-
-
         /// <summary>
         ///     获取就诊号码
         /// </summary>
@@ -103,14 +94,12 @@ namespace FE.Handle.Request
                 {
                     throw new Exception("取就诊号码(挂号发票号码)失败！");
                 }
-
                 var syhm = Convert.ToInt32(ygpj.Syhm);
                 var zzhm = Convert.ToInt32(ygpj.Zzhm);
                 if (syhm > zzhm)
                 {
                     throw new Exception("票据号码用完了，无法挂号！");
                 }
-
                 ygpj.Syhm = (++syhm).ToString();
                 Ctx.SaveChanges();
                 return syhm.ToString();
@@ -120,7 +109,6 @@ namespace FE.Handle.Request
                 throw new Exception("获取就诊号码失败->" + e.Message);
             }
         }
-
         private void UpdateMsyyGhxx()
         {
             try
@@ -130,7 +118,6 @@ namespace FE.Handle.Request
                 {
                     throw new Exception("取MSYY_GhXX失败！");
                 }
-
                 yyghXx.Yyzt = 1;
                 Ctx.SaveChanges();
             }
@@ -139,7 +126,6 @@ namespace FE.Handle.Request
                 throw new Exception("更新MSYY_GhXX失败->" + e.Message);
             }
         }
-
         private void UpdateMsyyGh()
         {
             try
@@ -149,7 +135,6 @@ namespace FE.Handle.Request
                 {
                     throw new Exception("取MS_YYGH失败！");
                 }
-
                 yygh.Ghbz = 1;
                 yygh.Sbxh = InPara.ghxx.ghxh;
                 yygh.Ghsbxh = InPara.ghxx.ghxh;
@@ -161,7 +146,6 @@ namespace FE.Handle.Request
                 throw new Exception("更新Ms_yygh失败->" + e.Message);
             }
         }
-
         /// <summary>
         ///     插入Ms_YYGH
         /// </summary>
@@ -195,7 +179,6 @@ namespace FE.Handle.Request
                 throw new Exception("插入Ms_yygh失败->" + e.Message);
             }
         }
-
         /// <summary>
         ///     插入ms_ghmx
         /// </summary>
@@ -214,7 +197,6 @@ namespace FE.Handle.Request
                     //下午挂号时间+13小时
                     ghsj = InPara.ghxx.gzrq.AddHours(13);
                 }
-
                 //插入ms_ghmx
                 var ghmx = new MsGhmx
                 {
@@ -242,7 +224,6 @@ namespace FE.Handle.Request
                 throw new Exception("插入Ms_ghmx失败" + e.Message);
             }
         }
-
         /// <summary>
         ///     插入Ms_yj01数据
         /// </summary>
@@ -272,7 +253,6 @@ namespace FE.Handle.Request
                 throw new Exception("插入Ms_YJ01失败" + e.Message);
             }
         }
-
         /// <summary>
         ///     插入Ms_yj02数据
         /// </summary>
@@ -301,7 +281,6 @@ namespace FE.Handle.Request
                     };
                     Ctx.MsYj02Set.Add(yj02);
                 }
-
                 Ctx.SaveChanges();
             }
             catch (Exception e)
@@ -309,7 +288,6 @@ namespace FE.Handle.Request
                 throw new Exception("插入Ms_YJ02失败" + e.Message);
             }
         }
-
         /// <summary>
         ///更新医生排班可挂号数量
         /// </summary>
@@ -325,7 +303,6 @@ namespace FE.Handle.Request
                 {
                     throw new Exception("获取医生排班信息失败！");
                 }
-
                 var ygrs = yspb.Ygrs;
                 var jzxhOld = yspb.Jzxh;
                 yspb.Ygrs = ygrs + 1;
@@ -337,7 +314,6 @@ namespace FE.Handle.Request
                 throw new Exception("更新已挂人数失败" + e.Message);
             }
         }
-
         /// <summary>
         ///     锁定号源
         /// </summary>
@@ -355,7 +331,6 @@ namespace FE.Handle.Request
                 {
                     throw new Exception("获取号源ms_fsdyyb失败！");
                 }
-
                 fsdyy.Ghpb = 1;
                 fsdyy.Brxm = InPara.brxx.brxm;
                 fsdyy.Brid = InPara.brxx.brid;
@@ -366,7 +341,6 @@ namespace FE.Handle.Request
                 throw new Exception("锁定号源失败" + e.Message);
             }
         }
-
         /// <summary>
         ///     获取各个表的Key值
         /// </summary>
@@ -379,7 +353,6 @@ namespace FE.Handle.Request
             {
                 throw new Exception("取MS_BRDA序号失败！");
             }
-
             var brid = keyBrda.Dqz + 1;
             keyBrda.Dqz = brid;
             InPara.brxx.brid = brid;
@@ -388,7 +361,6 @@ namespace FE.Handle.Request
             {
                 throw new Exception("取MS_YYGH序号失败！");
             }
-
             InPara.ghxx.yyxh = keyYygh.Dqz + 1;
             keyYygh.Dqz = InPara.ghxx.yyxh;
             var keyGhMx = keyTable.FirstOrDefault(p => p.Bmc == "MS_GHMX");
@@ -396,7 +368,6 @@ namespace FE.Handle.Request
             {
                 throw new Exception("取MS_GHMX序号失败！");
             }
-
             InPara.ghxx.ghxh = keyGhMx.Dqz + 1;
             keyGhMx.Dqz = InPara.ghxx.ghxh;
             var yj01 = keyTable.FirstOrDefault(p => p.Bmc == "MS_YJ01");
@@ -404,7 +375,6 @@ namespace FE.Handle.Request
             {
                 throw new Exception("取MS_YJ01序号失败！");
             }
-
             InPara.ghxx.yj01xh = yj01.Dqz + 1;
             yj01.Dqz = InPara.ghxx.yj01xh;
             var yj02 = keyTable.FirstOrDefault(p => p.Bmc == "MS_YJ02");
@@ -412,19 +382,16 @@ namespace FE.Handle.Request
             {
                 throw new Exception("取MS_YJ02序号失败！");
             }
-
             var count = InPara.ghxx.ZlfList.Count;
             var arr = new int[count];
             for (var i = 0; i < count; i++)
             {
                 arr[i] = yj02.Dqz + i + 1;
             }
-
             yj02.Dqz = arr[count - 1];
             InPara.ghxx.yj02xh = arr;
             Ctx.SaveChanges();
         }
-
         public void ProcessMzBrda()
         {
             //判断病人性质
@@ -435,7 +402,6 @@ namespace FE.Handle.Request
                 {
                     throw new Exception("传入医保卡号长度不对");
                 }
-
                 var left4 = InPara.brxx.ybkh.Substring(0, 4);
                 if (left4 == "3301")
                 {
@@ -453,7 +419,6 @@ namespace FE.Handle.Request
                 InPara.brxx.brxz = 1000;
                 InPara.brxx.qybr = 5;
             }
-
             //判断档案是否存在
             var record = Ctx.MsBrdaSet
                 .Where(p => p.Brxm == InPara.brxx.brxm && p.Sfzh == InPara.brxx.sfzh &&
@@ -469,7 +434,6 @@ namespace FE.Handle.Request
                 CreateMzBrda();
             }
         }
-
         /// <summary>
         ///     是否能预约挂号
         /// </summary>
@@ -498,7 +462,6 @@ namespace FE.Handle.Request
                         throw new Exception("获取预约信息失败");
                     }
                 }
-
                 var source = Ctx.MsFsdYySet.Where(p =>
                     p.Gzrq == InPara.ghxx.gzrq && p.Zblb == InPara.ghxx.zblb && p.Ksdm == InPara.ghxx.ksdm &&
                     p.Ysdm == InPara.ghxx.ysdm).ToList();
@@ -506,13 +469,11 @@ namespace FE.Handle.Request
                 {
                     throw new Exception("存在同时段同科室同医生预约挂号");
                 }
-
                 var hy = source.FirstOrDefault(p => p.Jzxh == InPara.ghxx.jzxh);
                 if (hy == null)
                 {
                     throw new Exception("取就诊时间失败");
                 }
-
                 InPara.ghxx.jzsj = hy.Jzsj.ToString(CultureInfo.InvariantCulture);
                 var lsbrxm = hy.Brxm;
                 if (!string.IsNullOrEmpty(lsbrxm) && string.IsNullOrEmpty(InPara.ghxx.pzhm))
@@ -525,7 +486,6 @@ namespace FE.Handle.Request
                 throw new Exception("判断是否可以预约挂号出错" + e.Message);
             }
         }
-
         /// <summary>
         ///     获取挂号费用
         /// </summary>
@@ -537,7 +497,6 @@ namespace FE.Handle.Request
             {
                 throw new Exception("无法获取挂号科室及诊疗费用信息");
             }
-
             InPara.ghxx.ghlb = (int)ks.Ghlb;
             InPara.ghxx.mzks = (int)(ks.Mzks ?? 101);
             InPara.ghxx.ZlfList = new List<Tuple<int, decimal>>();
@@ -545,7 +504,6 @@ namespace FE.Handle.Request
             {
                 InPara.ghxx.ZlfList.Add(new Tuple<int, decimal>(Config.PTZCF, ks.Zlf));
             }
-
             if (ks.Ghf > 0)
             {
                 if (ks.Ghlb == 4)
@@ -571,15 +529,15 @@ namespace FE.Handle.Request
                 }
             }
         }
-
         private void CreateMzBrda()
         {
             try
             {
+                var mzhm = InPara.brxx.cardnum.Length > 12 ? InPara.brxx.cardnum.Substring(0, 12) : InPara.brxx.cardnum;
                 var brda = new MsBrda
                 {
                     Brid = InPara.brxx.brid,
-                    Mzhm = DateTime.Now.ToString("yyMMddHHmmss"),
+                    Mzhm = mzhm,
                     Brxz = InPara.brxx.brxz,
                     Brxm = InPara.brxx.brxm,
                     Brxb = InPara.brxx.brxb,
@@ -601,7 +559,6 @@ namespace FE.Handle.Request
                 throw new Exception("创建MS_BRDA记录失败" + e.Message);
             }
         }
-
         private void UpdateMzBrda(MsBrda record)
         {
             try
@@ -613,22 +570,22 @@ namespace FE.Handle.Request
                         record.Ybkh = InPara.brxx.ybkh;
                     }
                 }
-
                 if (record.Qybr != InPara.brxx.qybr)
                 {
                     record.Qybr = InPara.brxx.qybr;
                 }
-
                 if (record.Phone != InPara.brxx.tel)
                 {
                     record.Phone = InPara.brxx.tel;
                 }
-
                 if (record.Jtdh != InPara.brxx.tel)
                 {
                     record.Jtdh = InPara.brxx.tel;
                 }
-
+                if (record.Mzhm != InPara.brxx.cardnum)
+                {
+                    record.Mzhm = InPara.brxx.cardnum;
+                }
                 Ctx.SaveChanges();
             }
             catch (Exception e)

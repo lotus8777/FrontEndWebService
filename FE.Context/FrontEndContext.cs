@@ -23,6 +23,8 @@ namespace FE.Context
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
         //MzyyGhxx
+
+        public virtual DbSet<MsThmx> MsThmxSet { get; set; }
         public virtual DbSet<ZyJsmx> ZyJsmxSet { get; set; }
         public virtual DbSet<ZyCwsz> ZyCwszSet { get; set; }
         public virtual DbSet<ZyJszf> ZyJszfSet { get; set; }

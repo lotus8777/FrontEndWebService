@@ -65,7 +65,7 @@ namespace FrontEndWebService
                     var handle=new WsjGhksHandle(_ctx,inXmlStr);
                     rtnXml = handle.GetResultXml();
                 }
-                else if (procedureName == "hos_expense_invoices")
+                else if (procedureName == "hos_expense_invoices1")
                 {
                     var epf = new ExpenseInvoicesHandle(_ctx,inXmlStr);
                     rtnXml = epf.GetResultXml();

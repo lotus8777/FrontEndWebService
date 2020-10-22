@@ -112,7 +112,6 @@ namespace FE.Handle.Request
         /// <returns></returns>
         private IList<InvoiceItem> GetRecipeItems()
         {
-
             var invoiceItems = new List<InvoiceItem>();
             var msCf01 = Ctx.MsCf01Set.Where(p => p.Fphm == InPara.fphm)
                    .Include(p => p.MsCf02.Select(t => t.YkTypk))
