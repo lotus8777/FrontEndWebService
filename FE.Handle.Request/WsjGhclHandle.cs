@@ -187,16 +187,7 @@ namespace FE.Handle.Request
             try
             {
                 DateTime ghsj;
-                if (InPara.ghxx.zblb == 1)
-                {
-                    //上午挂号时间+8小时
-                    ghsj = InPara.ghxx.gzrq.AddHours(8);
-                }
-                else
-                {
-                    //下午挂号时间+13小时
-                    ghsj = InPara.ghxx.gzrq.AddHours(13);
-                }
+                ghsj = InPara.ghxx.gzrq.AddHours(InPara.ghxx.zblb == 1 ? 8 : 13);
                 //插入ms_ghmx
                 var ghmx = new MsGhmx
                 {
@@ -594,10 +585,10 @@ namespace FE.Handle.Request
                 {
                     record.Jtdh = InPara.brxx.tel;
                 }
-                if (record.Mzhm != InPara.brxx.cardnum)
-                {
-                    record.Mzhm = InPara.brxx.cardnum;
-                }
+                //if (record.Mzhm != InPara.brxx.cardnum)
+                //{
+                //    record.Mzhm = InPara.brxx.cardnum;
+                //}
                 Ctx.SaveChanges();
             }
             catch (Exception e)

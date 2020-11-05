@@ -44,81 +44,81 @@ namespace FrontEndWebService
             var isSuccess = 1;
             try
             {
-                if (string.IsNullOrEmpty(ProcName))
-                {
-                    return ReturnXml(-1, "存储过程名称为空!", null);
-                }
+                //if (string.IsNullOrEmpty(ProcName))
+                //{
+                //    return ReturnXml(-1, "存储过程名称为空!", null);
+                //}
 
-                if (string.IsNullOrEmpty(inXmlStr))
-                {
-                    return ReturnXml(-1, "传入参数为空!", null);
-                }
-                string procedureName = ProcName.ToLower().Trim();
+                //if (string.IsNullOrEmpty(inXmlStr))
+                //{
+                //    return ReturnXml(-1, "传入参数为空!", null);
+                //}
+                //string procedureName = ProcName.ToLower().Trim();
                 
-                if (procedureName == "wsj_get_fsdyyb")
-                {
-                    var wsjFsdYy=new WsjFsdYyHandle(_ctx,inXmlStr);
-                    rtnXml = wsjFsdYy.GetResultXml();
-                }
-                else if (procedureName == "wsj_get_ghks")
-                {
-                    var handle=new WsjGhksHandle(_ctx,inXmlStr);
-                    rtnXml = handle.GetResultXml();
-                }
-                else if (procedureName == "hos_expense_invoices1")
-                {
-                    var epf = new ExpenseInvoicesHandle(_ctx,inXmlStr);
-                    rtnXml = epf.GetResultXml();
-                }
-                else if (procedureName == "hos_codepay")
-                {
-                    var wsjCodePay=new WsjCodePayHandle(_ctx,inXmlStr);
-                    rtnXml = wsjCodePay.GetResultXml();
-                }
-                else if (procedureName == "wsj_get_yspb")
-                {
-                    var wsjYspb=new WsjYspbHandle(_ctx,inXmlStr);
-                    rtnXml = wsjYspb.GetResultXml();
-                }
-                else if (procedureName == "wsj_ghcl")
-                {
-                    var wsjGhcl=new WsjGhclHandle(_ctx,inXmlStr);
-                    rtnXml = wsjGhcl.GetResultXml();
-                }
-                else if (procedureName == "wsj_thcl")
-                {
-                    var wsjThcl=new WsjThclHandle(_ctx,inXmlStr);
-                    rtnXml = wsjThcl.GetResultXml();
-                }
-                else if (procedureName == "hos_orders")
-                {
-                    var hosOrder=new HosOrderHandle(_ctx,inXmlStr);
-                    rtnXml = hosOrder.GetResultXml();
-                }
-                else if (procedureName == "wsj_get_dqjzdl")
-                {
-                    var handle = new WsjDqJzDlHandle(_ctx, inXmlStr);
-                    rtnXml = handle.GetResultXml();
-                }
-                else if (procedureName == "wsj_fyqd_get")
-                {
-                    var wsjFyqd=new WsjFyqdHandle(_ctx,inXmlStr);
-                    rtnXml = wsjFyqd.GetResultXml();
-                }
-                else if (procedureName == "hos_invoice")
-                {
-                    var hosInvoice=new HosInvoiceHandle(_ctx,inXmlStr);
-                    rtnXml = hosInvoice.GetResultXml();
-                }
-                else if (procedureName == "hos_pay_confirm1")
-                {
-                    var pcf = new PayConfirmHandle(_ctx, inXmlStr);
-                    rtnXml = pcf.GetResultXml();
-                }
-                else
-                {
+                //if (procedureName == "wsj_get_fsdyyb")
+                //{
+                //    var wsjFsdYy=new WsjFsdYyHandle(_ctx,inXmlStr);
+                //    rtnXml = wsjFsdYy.GetResultXml();
+                //}
+                //else if (procedureName == "wsj_get_ghks")
+                //{
+                //    var handle=new WsjGhksHandle(_ctx,inXmlStr);
+                //    rtnXml = handle.GetResultXml();
+                //}
+                //else if (procedureName == "hos_expense_invoices1")
+                //{
+                //    var epf = new ExpenseInvoicesHandle(_ctx,inXmlStr);
+                //    rtnXml = epf.GetResultXml();
+                //}
+                //else if (procedureName == "hos_codepay")
+                //{
+                //    var wsjCodePay=new WsjCodePayHandle(_ctx,inXmlStr);
+                //    rtnXml = wsjCodePay.GetResultXml();
+                //}
+                //else if (procedureName == "wsj_get_yspb")
+                //{
+                //    var wsjYspb=new WsjYspbHandle(_ctx,inXmlStr);
+                //    rtnXml = wsjYspb.GetResultXml();
+                //}
+                //else if (procedureName == "wsj_ghcl")
+                //{
+                //    var wsjGhcl=new WsjGhclHandle(_ctx,inXmlStr);
+                //    rtnXml = wsjGhcl.GetResultXml();
+                //}
+                //else if (procedureName == "wsj_thcl")
+                //{
+                //    var wsjThcl=new WsjThclHandle(_ctx,inXmlStr);
+                //    rtnXml = wsjThcl.GetResultXml();
+                //}
+                //else if (procedureName == "hos_orders")
+                //{
+                //    var hosOrder=new HosOrderHandle(_ctx,inXmlStr);
+                //    rtnXml = hosOrder.GetResultXml();
+                //}
+                //else if (procedureName == "wsj_get_dqjzdl")
+                //{
+                //    var handle = new WsjDqJzDlHandle(_ctx, inXmlStr);
+                //    rtnXml = handle.GetResultXml();
+                //}
+                //else if (procedureName == "wsj_fyqd_get")
+                //{
+                //    var wsjFyqd=new WsjFyqdHandle(_ctx,inXmlStr);
+                //    rtnXml = wsjFyqd.GetResultXml();
+                //}
+                //else if (procedureName == "hos_invoice")
+                //{
+                //    var hosInvoice=new HosInvoiceHandle(_ctx,inXmlStr);
+                //    rtnXml = hosInvoice.GetResultXml();
+                //}
+                //else if (procedureName == "hos_pay_confirm1")
+                //{
+                //    var pcf = new PayConfirmHandle(_ctx, inXmlStr);
+                //    rtnXml = pcf.GetResultXml();
+                //}
+                //else
+                //{
                     rtnXml = ExecDbProcedure(ProcName, inXmlStr);
-                }
+                //}
             }
             catch (Exception e)
             {

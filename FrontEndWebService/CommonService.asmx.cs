@@ -37,31 +37,51 @@ namespace FrontEndWebService
             searchType = searchType?.Trim();
             databaseType = databaseType?.Trim();
             if (string.IsNullOrEmpty(orgCode) || orgCode.Length != 9)
+            {
                 return returnJson(-1, "组织机构代码错误");
+            }
+
             if (string.IsNullOrEmpty(viewParam) || !viewParam.ToLower().StartsWith("select ") || viewParam.ToLower().IndexOf(" v_", StringComparison.Ordinal) == -1)
+            {
                 return returnJson(-1, "查询参数错误");
+            }
+
             string curVerify = GetMd5(orgCode + ":" + viewParam);
             if (curVerify != verifyParam)
+            {
                 return returnJson(-1, "校验参数错误");
+            }
+
             try
             {
                 if (string.IsNullOrEmpty(searchType))
+                {
                     searchType = "his";
+                }
+
                 if (string.IsNullOrEmpty(databaseType))
                 {
                     //富阳区妇幼保健院/富阳区第二人民医院/富阳区第三人民医院/富阳中医骨伤医院--杭州创业SQLServer，其他Oracle
                     if (orgCode == "470331285" || orgCode == "470331293" || orgCode == "470332499" || orgCode == "470332560")
+                    {
                         databaseType = "sqlserver";
+                    }
                     else
+                    {
                         databaseType = "oracle";
+                    }
                 }
                 if (databaseType == "sqlserver")
                 {
                     string connStr;
                     if (searchType == "his" || searchType == "lis" || searchType == "pacs" || searchType == "pe" || searchType == "yyh")
+                    {
                         connStr = ConfigurationManager.AppSettings["conn_sql_" + searchType];
+                    }
                     else
+                    {
                         return returnJson(-1, "类型错误");
+                    }
 
                     using (SqlConnection conn = new SqlConnection { ConnectionString = connStr })
                     {
@@ -76,9 +96,13 @@ namespace FrontEndWebService
                                 dataAdapter.Fill(dataTemp);//将检索结果保存到data_temp数据集
 
                                 if (dataTemp.Tables.Count > 0 && dataTemp.Tables[0].Rows?.Count > 0)
+                                {
                                     return returnJson(1, "成功", ToJson(dataTemp.Tables[0]));
+                                }
                                 else
+                                {
                                     return returnJson(1, "成功");
+                                }
                             }
                         }
                     }
@@ -87,9 +111,13 @@ namespace FrontEndWebService
                 {
                     string connStr;
                     if (searchType == "his" || searchType == "lis" || searchType == "pacs" || searchType == "pe" || searchType == "yyh")
+                    {
                         connStr = ConfigurationManager.AppSettings["conn_ora_" + searchType];
+                    }
                     else
+                    {
                         return returnJson(-1, "类型错误");
+                    }
 
                     using (OracleConnection conn = new OracleConnection { ConnectionString = connStr })
                     {
@@ -104,15 +132,21 @@ namespace FrontEndWebService
                                 dataAdapter.Fill(dataTemp);//将检索结果保存到data_temp数据集
 
                                 if (dataTemp.Tables.Count > 0 && dataTemp.Tables[0].Rows?.Count > 0)
+                                {
                                     return returnJson(1, "成功", ToJson(dataTemp.Tables[0]));
+                                }
                                 else
+                                {
                                     return returnJson(1, "成功");
+                                }
                             }
                         }
                     }
                 }
                 else
+                {
                     return returnJson(-1, "数据库类型错误");
+                }
             }
             catch (Exception ex)
             {
@@ -133,7 +167,10 @@ namespace FrontEndWebService
             jsonString.Append("{\"code\":\"" + code + "\",\"message\":\"" + msg + "\"");
             data = data?.Trim();
             if (!string.IsNullOrEmpty(data))
+            {
                 jsonString.Append(",\"data\":" + data);
+            }
+
             jsonString.Append("}");
             return jsonString.ToString();
         }
@@ -178,9 +215,13 @@ namespace FrontEndWebService
                     Type type = dt.Columns[j].DataType;
                     jsonString.Append("\"" + strKey + "\":");
                     if (j < dt.Columns.Count - 1)
+                    {
                         jsonString.Append("\"" + StringFormat(strValue, type) + "\",");
+                    }
                     else
+                    {
                         jsonString.Append("\"" + StringFormat(strValue, type) + "\"");
+                    }
                 }
                 jsonString.Append("},");
             }
@@ -198,11 +239,17 @@ namespace FrontEndWebService
         private string StringFormat(string strValue, Type type)
         {
             if (type == typeof(string))
+            {
                 strValue = String2Json(strValue);
+            }
             else if (type == typeof(bool))
+            {
                 strValue = strValue.ToLower();
+            }
             else
+            {
                 strValue = string.Format(strValue, type);
+            }
 
             return strValue;
         }
@@ -214,7 +261,11 @@ namespace FrontEndWebService
         /// <returns></returns>
         private string String2Json(string s)
         {
-            if (string.IsNullOrEmpty(s)) return s;
+            if (string.IsNullOrEmpty(s))
+            {
+                return s;
+            }
+
             StringBuilder sb = new StringBuilder();
             char[] charArray = s.ToCharArray();
             if (charArray.Length > 0)
